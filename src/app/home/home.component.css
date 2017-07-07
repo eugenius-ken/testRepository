@@ -22,6 +22,10 @@
     color: graytext!important
 }
 
+a {
+    cursor: pointer;
+}
+
 body {
     width: 100%;
     *zoom:1}

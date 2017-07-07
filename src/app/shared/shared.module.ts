@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
-
-import { ModalComponent } from './modal/modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    declarations: [
-        ModalComponent
+    imports: [
+        ReactiveFormsModule
     ],
     exports: [
-        ModalComponent
+        ReactiveFormsModule
     ]
-
 })
 export class SharedModule { }

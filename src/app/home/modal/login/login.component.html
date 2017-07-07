@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h4 class="modal-title">Вход</h4>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="modal-body">
+        <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group">
+                <label for="email">Email</label>
+                <input formControlName="email" type="email" class="form-control" id="email" />
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="password">Пароль</label>
+                <input formControlName="password" type="password" class="form-control" id="password" />
+            </fieldset>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary float-right" [disabled]="!form.valid">Войти</button>
+    </div>
+</form>
