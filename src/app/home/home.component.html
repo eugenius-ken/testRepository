@@ -9,8 +9,8 @@
             </div>
             <div class="col-md-3 col-sm-6 col-12 menu-container">
                 <ul>
-                    <li><a style="color: #00a8ff;">Перезвонить мне</a></li>
-                    <li><a (click)="open()">Войти</a></li>
+                    <li><a style="color: #00a8ff;" (click)="callMe()">Перезвонить мне</a></li>
+                    <li><a (click)="login()">Войти</a></li>
                 </ul>
             </div>
         </div>
@@ -24,7 +24,7 @@
                 <div class="let-start">
                     <h2 class="let-start_title title title__2">Задумались над тем, как <i class="hightlight">автоматизировать ваш бизнес?</i></h2>
                     <p class="let-start_txt">Начните вместе с нами!</p>
-                    <button class="btn btn__sign btn__blue" data-toggle="modal" data-target="#Register">Зарегистрироваться</button>
+                    <button class="btn btn__sign btn__blue" data-toggle="modal" (click)="register()">Зарегистрироваться</button>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 <div class="free-start">
                     <h2 class="free-start_title title title__2"><b>Попробуйте</b> наше программное обеспечение <b>бесплатно!</b></h2>
                     <p class="free-start_txt">Подключайтесь сейчас- платите через месяц!</p>
-                    <button class="btn btn__sign btn__white" data-toggle="modal" data-target="#Register">Зарегистрироваться</button>
+                    <button class="btn btn__sign btn__white" (click)="register()">Зарегистрироваться</button>
                 </div>
             </div>
             <div class="macbook">
@@ -117,7 +117,7 @@
                 <div class="start-action">
                     <h2 class="start-action_title title title__2">Начните налаживать бизнес <b>прямо сейчас!</b></h2>
                     <p class="start-action_txt">Подключайтесь сейчас - платите через месяц!</p>
-                    <button class="btn btn__sign btn__white" data-toggle="modal" data-target="#Register">Начать сейчас</button>
+                    <button class="btn btn__sign btn__white" (click)="register()">Начать сейчас</button>
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@
             <div class="col-7 col-sm-4 offset-sm-4">
                 <div class="footer-phone">
                     <p>8 800 2000 600</p>
-                    <a href="#" data-toggle="modal" data-target="#CallMe">Перезвоните мне</a>
+                    <a (click)="callMe()">Перезвоните мне</a>
                 </div>
             </div>
         </div>

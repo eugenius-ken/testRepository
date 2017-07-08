@@ -17,7 +17,7 @@ export class ModalRegisterComponent {
     ) {
         this.form = this.fb.group({
             'name': ['', Validators.required],
-            'email': ['', Validators.required]
+            'email': ['', [Validators.required, Validators.email]]
         });
     }
 

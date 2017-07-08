@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-    selector: 'modal-login',
-    templateUrl: './login.component.html'
+    selector: 'modal-call',
+    templateUrl: './call.component.html'
 })
 
-export class ModalLoginComponent {
+export class ModalCallComponent {
     form: FormGroup;
     isSubmitting: boolean = false;
 
@@ -16,13 +16,12 @@ export class ModalLoginComponent {
         private fb: FormBuilder
     ) {
         this.form = this.fb.group({
-            'email': ['', [Validators.required, Validators.email]],
-            'password': ['', Validators.required]
+            'name': ['', Validators.required],
+            'phone': ['+7', Validators.required]
         });
     }
 
     submit() {
         console.log(this.form);
     }
-
 }

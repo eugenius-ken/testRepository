@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4>Регистрация</h4>
+    <h4>Жду звонка</h4>
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
@@ -12,17 +12,16 @@
                 <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите имя</div>
             </fieldset>
             
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid}">
-                <label for="email">Email</label>
-                <input formControlName="email" type="email" class="form-control" id="email" [ngClass]="{
-                    'has-danger': form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid
+            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid}">
+                <label for="phone">Телефон</label>
+                <input formControlName="phone" type="phone" class="form-control" id="phone" [ngClass]="{
+                    'has-danger': form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid">Некорректный email</div>
+                <div class="form-control-feedback" *ngIf="form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid">Введите номер телефона</div>
             </fieldset>
         </fieldset>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary float-right" [disabled]="!form.valid">Регистрация</button>
+        <button type="submit" class="btn btn-primary float-right" [disabled]="!form.valid">Отправить</button>
     </div>
 </form>
-
