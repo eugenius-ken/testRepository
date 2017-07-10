@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  api_url: 'http:moyka24.net'
+  api_url: 'http://176.58.106.54'
 };

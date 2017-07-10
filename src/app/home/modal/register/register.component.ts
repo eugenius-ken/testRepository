@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
     selector: 'modal-register',
@@ -10,10 +11,13 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ModalRegisterComponent {
     form: FormGroup;
     isSubmitting: boolean = false;
-    
+    isSuccess: boolean = false;
+    errorMessage: string = '';
+
     constructor(
         private activeModal: NgbActiveModal,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private userService: UserService
     ) {
         this.form = this.fb.group({
             'name': ['', Validators.required],
@@ -22,6 +26,23 @@ export class ModalRegisterComponent {
     }
 
     submit() {
-        console.log(this.form.value);
+        this.isSuccess = false;
+        this.isSubmitting = true;
+        this.errorMessage = '';
+
+        this.userService.register(this.form.value)
+        .subscribe(data => {
+            this.isSubmitting = false;
+            // this.isSuccess = true;
+            this.errorMessage = 'Ошибка при выполнении запроса. Попробуйте позже';
+        },
+        error => {
+            console.error(error.message);
+            this.isSubmitting = false;
+            switch(error.code) {
+                case 1000: this.errorMessage = 'Данный email занят другим пользователем';
+                default: this.errorMessage = 'Ошибка при выполнении запроса. Попробуйте позже';
+            }
+        });
     }
 }

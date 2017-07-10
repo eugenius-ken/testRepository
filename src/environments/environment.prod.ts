@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api_url: 'http:moyka24.net'
+  api_url: 'http://api.moyka24.net'
 };

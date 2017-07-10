@@ -18,6 +18,10 @@
                 }" />
                 <div class="form-control-feedback" *ngIf="form.controls.password.touched && form.controls.password.dirty && form.controls.password.invalid">Введите пароль</div>
             </fieldset>
+            <fieldset class="form-group" [ngClass]="{'has-danger': errorMessage}">
+                <input type="hidden" class="form-control" id="error" [ngClass]="{'form-control-danger': errorMessage}" />
+                <div class="form-control-feedback" *ngIf="errorMessage">{{errorMessage}}</div>
+            </fieldset>
         </fieldset>
     </div>
     <div class="modal-footer">

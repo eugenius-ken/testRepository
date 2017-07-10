@@ -19,6 +19,14 @@
                 }" />
                 <div class="form-control-feedback" *ngIf="form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid">Некорректный email</div>
             </fieldset>
+            <fieldset class="form-group" [ngClass]="{'has-danger': errorMessage, 'has-success': isSuccess}">
+                <input type="hidden" class="form-control" id="error" [ngClass]="{
+                    'form-control-danger': errorMessage, 
+                    'form-control-success': isSuccess
+                }" />
+                <div class="form-control-feedback" *ngIf="isSuccess">Компания успешно зарегистрирована. На почту выслан логин и пароль для доступа к личному кабинету</div>
+                <div class="form-control-feedback" *ngIf="errorMessage">{{errorMessage}}</div>
+            </fieldset>
         </fieldset>
     </div>
     <div class="modal-footer">
