@@ -1,0 +1,42 @@
+<div class="container-fluid">
+    <div class="container">
+        <div class="float-left logo">
+            Автомойка CRM
+        </div>
+        <div class="float-right">
+            <a class="header"><img src="./assets/img/profile.png" /></a>
+            <a class="header" (click)="logout()"><img src="./assets/img/logout.png" /></a>
+        </div>
+    </div>
+    <div class="col-1">
+    </div>
+</div>
+<div class="container-fluid navigation">
+    <div class="container">
+        <nav class="navbar navbar-light navbar-toggleable">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav">
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'orders'}">
+                        <a class="nav-link" routerLink="orders">Заказы</a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'clients'}">
+                        <a class="nav-link" routerLink="clients">Клиенты</a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'personal'}">
+                        <a class="nav-link" routerLink="personal">Сотрудники</a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'services'}">
+                        <a class="nav-link" routerLink="services">Услуги</a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'settings'}">
+                        <a class="nav-link" routerLink="settings">Настройки</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>

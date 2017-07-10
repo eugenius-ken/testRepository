@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'lk-page',
-    template: `<div>lk</div>
-        <router-outlet></router-outlet>`
+    templateUrl: './lk.component.html'
 })
 export class LkComponent { }

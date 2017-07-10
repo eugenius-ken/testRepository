@@ -27,5 +27,9 @@ export class UserService {
             });
     }
 
+    logout() {
+        this.jwtService.destroyToken();
+    }
+
 
 }

@@ -1,0 +1,67 @@
+.logo {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 15px;
+    color: #848484;
+}
+
+.container {
+    height: 70px;
+    line-height: 70px;
+}
+
+a.header + a.header {
+   margin-left: 15px; 
+}
+
+.container-fluid.navigation {
+    background: #f2f2f2; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#f2f2f2, #ffffff); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#f2f2f2, #ffffff); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#f2f2f2, #ffffff); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#f2f2f2, #ffffff); /* Standard syntax (must be last) */
+}
+
+nav {
+    height: 70px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+a.nav-link {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    color: #8e8e8e;
+    border: 1px solid #d0d0d0;
+    border-radius: 3px;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    padding-top: 0rem;
+    padding-bottom: 0rem; 
+}
+
+.nav-item {
+    width:120px;
+    height: 33px;
+    line-height: 33px;
+}
+
+.nav-item + .nav-item {
+    margin-left: 10px;
+}
+
+.active > a {
+    background-color: #02b7f4;
+    border: 1px solid #02b7f4;
+    color: #ffffff !important;
+    text-shadow: 2px 2px 2px #02a5dc;
+}
+
+@media (max-width: 576px) {
+    .nav-item + .nav-item {
+        margin-left: 0px;
+        margin-top: 10px; 
+    }
+}
