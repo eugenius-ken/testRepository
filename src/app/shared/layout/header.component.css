@@ -15,11 +15,14 @@ a.header + a.header {
 }
 
 .container-fluid.navigation {
-    background: #f2f2f2; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(#f2f2f2, #ffffff); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#f2f2f2, #ffffff); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#f2f2f2, #ffffff); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#f2f2f2, #ffffff); /* Standard syntax (must be last) */
+    background: #f9f9f9; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#f9f9f9, #ffffff); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#f9f9f9, #ffffff); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#f9f9f9, #ffffff); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#f9f9f9, #ffffff); /* Standard syntax (must be last) */
+
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #f2f2f2;
 }
 
 nav {
