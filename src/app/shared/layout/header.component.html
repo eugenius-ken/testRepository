@@ -4,7 +4,8 @@
             Автомойка CRM
         </div>
         <div class="float-right">
-            <a class="header"><img src="./assets/img/profile.png" /></a>
+            <a class="header" routerLink="profile/data" *ngIf="!isProfile"><img src="./assets/img/profile.png" /></a>
+            <a class="header" routerLink="orders" *ngIf="isProfile"><img src="./assets/img/profile_active.png" /></a>
             <a class="header" (click)="logout()"><img src="./assets/img/logout.png" /></a>
         </div>
     </div>
@@ -19,7 +20,7 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
             <div class="collapse navbar-collapse" id="navbarMenu">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" *ngIf="!isProfile">
                     <li class="nav-item" [ngClass]="{'active': activeRoute === 'orders'}">
                         <a class="nav-link" routerLink="orders">Заказы</a>
                     </li>
@@ -32,8 +33,19 @@
                     <li class="nav-item" [ngClass]="{'active': activeRoute === 'services'}">
                         <a class="nav-link" routerLink="services">Услуги</a>
                     </li>
-                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'settings'}">
-                        <a class="nav-link" routerLink="settings">Настройки</a>
+                </ul>
+                <ul class="navbar-nav" *ngIf="isProfile">
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'data'}">
+                        <a class="nav-link" routerLink="profile/data">Профиль</a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'boxes'}">
+                        <a class="nav-link" routerLink="profile/boxes">Боксы</a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'classes'}">
+                        <a class="nav-link" routerLink="profile/classes">Классы машин</a>
+                    </li>
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'cars'}">
+                        <a class="nav-link" routerLink="profile/cars">Машины</a>
                     </li>
                 </ul>
             </div>

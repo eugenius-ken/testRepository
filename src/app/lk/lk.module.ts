@@ -6,14 +6,16 @@ import { SharedModule } from '../shared/shared.module';
 import { LkComponent } from './lk.component';
 import { HeaderComponent } from '../shared/layout/header.component';
 import { OrdersComponent } from '../lk/orders/orders.component';
-import { SettingsComponent } from '../lk/settings/settings.component';
+import { ProfileDataComponent } from './profile/data/data.component';
+import { BoxesComponent } from './profile/boxes/boxes.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
         path: 'lk', component: LkComponent,
         children: [
             { path: 'orders', component: OrdersComponent },
-            { path: 'settings', component: SettingsComponent }
+            { path: 'profile/data', component: ProfileDataComponent },
+            { path: 'profile/boxes', component: BoxesComponent }
         ]
     }
 ]);
@@ -27,7 +29,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         LkComponent,
         HeaderComponent,
         OrdersComponent,
-        SettingsComponent
+        ProfileDataComponent,
+        BoxesComponent
     ]
 })
 export class LkModule { }

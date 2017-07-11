@@ -10,6 +10,7 @@ import { UserService } from '../services/user.service';
 })
 export class HeaderComponent implements OnInit {
     private activeRoute: string = '';
+    private isProfile: boolean = false;
 
     constructor(
         private router: Router,
@@ -17,9 +18,12 @@ export class HeaderComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.isProfile = this.router.url.indexOf('profile') != -1;
         this.activeRoute = this.getChildPath(this.router.url);
+
         this.router.events.subscribe(event => {
             if(event instanceof NavigationEnd){
+                this.isProfile = this.router.url.indexOf('profile') != -1;
                 this.activeRoute = this.getChildPath(event.url);
             }
         });

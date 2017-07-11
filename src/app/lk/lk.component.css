@@ -1,0 +1,67 @@
+.container-fluid { 
+    background-color: #d8d8d8;
+    height: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.container {
+    padding-top: 20px;
+}
+
+input {
+    height: 33px;
+    font-size: 13px;
+}
+
+.btn.btn-success {
+    background-color: #7dc500; 
+    border: none;
+    font-size: 13px;
+    text-shadow: 2px 2px 2px #6ba800;
+}
+
+.form-control-feedback {
+    font-size: 12px;
+}
+
+::-webkit-input-placeholder {
+    color:#c6c6c6;
+    font-size: 13px;
+    background-color: #f2f2f2;
+}
+
+.form-control {
+    background-color: #f2f2f2;
+    border: 1px solid #e8e8e8;
+}
+
+::-moz-placeholder {
+    color:#c6c6c6;
+    font-size: 13px;
+    background-color: #f2f2f2;
+}/* Firefox 19+ */
+
+:-moz-placeholder {
+    color:#c6c6c6;
+    font-size: 13px;
+    background-color: #f2f2f2;
+}/* Firefox 18- */
+
+:-ms-input-placeholder {
+    color:#c6c6c6;
+    font-size: 13px;
+    background-color: #f2f2f2;
+}
+
+h6 {
+    color: #8c8c8c;
+}
+
+.body-container {
+    background-color: #ffffff;
+    border: 1px solid #f2f2f2;
+    border-radius: 3px;
+    padding: 20px;
+}
+
