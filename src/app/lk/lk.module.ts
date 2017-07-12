@@ -11,6 +11,9 @@ import { ProfileDataComponent } from './profile/data/data.component';
 import { BoxesComponent } from './profile/boxes/boxes.component';
 import { ModalBoxAddComponent } from './profile/boxes/modal/box-add.component';
 import { ModalBoxEditComponent } from './profile/boxes/modal/box-edit.component';
+import { ClassesComponent } from './profile/classes/classes.component';
+import { ModalClassAddComponent } from './profile/classes/modal/class-add.component';
+import { ModalClassEditComponent } from './profile/classes/modal/class-edit.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -18,7 +21,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         children: [
             { path: 'orders', component: OrdersComponent },
             { path: 'profile/data', component: ProfileDataComponent },
-            { path: 'profile/boxes', component: BoxesComponent }
+            { path: 'profile/boxes', component: BoxesComponent },
+            { path: 'profile/classes', component: ClassesComponent }
         ]
     }
 ]);
@@ -36,12 +40,17 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ProfileDataComponent,
         BoxesComponent,
         ModalBoxAddComponent,
-        ModalBoxEditComponent
+        ModalBoxEditComponent,
+        ClassesComponent,
+        ModalClassAddComponent,
+        ModalClassEditComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
         ModalBoxAddComponent,
-        ModalBoxEditComponent
+        ModalBoxEditComponent,
+        ModalClassAddComponent,
+        ModalClassEditComponent
     ]
 })
 export class LkModule { }

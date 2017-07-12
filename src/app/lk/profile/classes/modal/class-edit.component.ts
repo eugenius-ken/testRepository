@@ -2,21 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BoxService } from '../../../../shared/services/box.service';
-import { Box } from '../../../../shared/models/box.model';
+import { ClassService } from '../../../../shared/services/class.service';
+import { Class } from '../../../../shared/models/class.model';
 
 @Component({
-    selector: 'modal-box-edit',
-    templateUrl: './box-edit.component.html',
+    selector: 'modal-class-edit',
+    templateUrl: './class-edit.component.html',
     styleUrls: ['../../../lk.component.css']
 })
-export class ModalBoxEditComponent implements OnInit {
+export class ModalClassEditComponent implements OnInit {
     form: FormGroup;
     isSubmitting: boolean = false;
 
     constructor(
         private activeModal: NgbActiveModal,
-        private boxService: BoxService,
+        private classService: ClassService,
         private fb: FormBuilder
     ) {
         this.form = this.fb.group({
@@ -25,11 +25,11 @@ export class ModalBoxEditComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.form.setValue({ 'name': this.boxService.boxToEdit.name });
+        this.form.setValue({ 'name': this.classService.classToEdit.name });
     }
 
     submit() {
-        this.boxService.update(this.form.value)
+        this.classService.update(this.form.value)
             .subscribe(box => {
                 this.activeModal.close(box);
             });
