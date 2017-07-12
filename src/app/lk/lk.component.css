@@ -14,11 +14,30 @@ input {
     font-size: 13px;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
+.btn {
+    font-size: 0.875rem;
+}
+
+.btn.btn-default {
+    background-color: #ffffff;
+    color: #29bcf5;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 2px solid #dbe4eb;
+}
+
 .btn.btn-success {
     background-color: #7dc500; 
     border: none;
-    font-size: 13px;
     text-shadow: 2px 2px 2px #6ba800;
+}
+
+.btn.btn-danger {
+    border: none;
 }
 
 .form-control-feedback {
@@ -90,19 +109,10 @@ table a + a {
     margin-left: 0.5rem;
 }
 
-.btn.btn-default {
-    background-color: #ffffff;
-    color: #29bcf5;
-    font-size: 0.875rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: 2px solid #dbe4eb;
-}
-
 .row {
     padding: 0rem 0.75rem;
 }
 
-button:hover {
-    cursor: pointer;
+.modal-body, .modal-header {
+    color: #8c8c8c;
 }

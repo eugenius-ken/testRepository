@@ -10,13 +10,16 @@
         <tbody>
             <tr *ngFor="let box of boxes">
                 <td>{{box.name}}</td>
-                <td><a><img src="./assets/img/icon_edit.svg" /></a><a><img src="./assets/img/icon_remove.svg" /></a></td>
+                <td>
+                    <a (click)="edit(box)"><img src="./assets/img/icon_edit.svg" /></a>
+                    <a (click)="remove(box)"><img src="./assets/img/icon_remove.svg" /></a>
+                </td>
             </tr>
         </tbody>
     </table>
     <div class="row">
         <div class="col-12">
-            <button type="button" class="btn btn-default float-right">Добавить бокс</button>
+            <button type="button" class="btn btn-default float-right" (click)="add()">Добавить бокс</button>
         </div>
     </div>
 </div>

@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from './shared/services/api.service';
 import { UserService } from './shared/services/user.service';
 import { JwtService } from './shared/services/jwt.service';
-import { BoxesService } from './shared/services/boxes.service';
+import { BoxService } from './shared/services/box.service';
 
 import { HomeModule } from './home/home.module';
 import { LkModule } from './lk/lk.module';
@@ -33,7 +33,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     ApiService,
     UserService,
     JwtService,
-    BoxesService
+    BoxService
   ],
   bootstrap: [AppComponent]
 })

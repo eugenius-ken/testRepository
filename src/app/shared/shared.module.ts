@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
     imports: [
         ReactiveFormsModule,
         CommonModule,
-        HttpModule
+        HttpModule,
+        NgbModule
     ],
     exports: [
         ReactiveFormsModule,
-        CommonModule
+        CommonModule,
+        NgbModule
     ]
 })
 export class SharedModule { }

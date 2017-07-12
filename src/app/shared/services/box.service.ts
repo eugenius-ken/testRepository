@@ -5,8 +5,9 @@ import { ApiService } from './api.service';
 import { Box } from '../models/box.model';
 
 @Injectable()
-export class BoxesService {
+export class BoxService {
     private readonly path: string = '/boxes';
+    boxToEdit: Box;
 
     constructor(
         private apiService: ApiService
@@ -34,7 +35,7 @@ export class BoxesService {
     }
 
     update(box: Box): Observable<Box> {
-        return this.apiService.put(this.path, box)
+        return this.apiService.put(this.path + '/' + this.boxToEdit._id, box)
         .map(data => {
             return data.result;
         });

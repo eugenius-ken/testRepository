@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <h4>Редактировать бокс</h4>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+     <div class="modal-body">
+        <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
+                <input formControlName="name" type="text" class="form-control" id="name" placeholder="Название бокса" [ngClass]="{
+                    'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid
+                }" />
+                <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите название</div>
+            </fieldset>
+        </fieldset>
+    </div> 
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Добавить</button>
+    </div>
+</form>

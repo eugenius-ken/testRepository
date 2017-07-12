@@ -5,9 +5,12 @@ import { SharedModule } from '../shared/shared.module';
 
 import { LkComponent } from './lk.component';
 import { HeaderComponent } from '../shared/layout/header.component';
+import { RemoveConfirmComponent } from './remove-confirm/remove-confirm.component';
 import { OrdersComponent } from '../lk/orders/orders.component';
 import { ProfileDataComponent } from './profile/data/data.component';
 import { BoxesComponent } from './profile/boxes/boxes.component';
+import { ModalBoxAddComponent } from './profile/boxes/modal/box-add.component';
+import { ModalBoxEditComponent } from './profile/boxes/modal/box-edit.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -28,9 +31,17 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
     declarations: [
         LkComponent,
         HeaderComponent,
+        RemoveConfirmComponent,
         OrdersComponent,
         ProfileDataComponent,
-        BoxesComponent
+        BoxesComponent,
+        ModalBoxAddComponent,
+        ModalBoxEditComponent
+    ],
+    entryComponents: [
+        RemoveConfirmComponent,
+        ModalBoxAddComponent,
+        ModalBoxEditComponent
     ]
 })
 export class LkModule { }
