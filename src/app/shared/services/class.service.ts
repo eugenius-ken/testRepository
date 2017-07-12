@@ -7,13 +7,21 @@ import { Class } from '../models/class.model';
 @Injectable()
 export class ClassService {
     private readonly path: string = '/classes';
+    classes: Class[] = [];
     classToEdit: Class;
 
     constructor(
         private apiService: ApiService
-    ) { }
+    ) { 
+        this.getAll()
+        .subscribe(classes => {
+            classes.forEach(c => {
+                this.classes.push(c);
+            });
+        });
+    }
 
-    getAll(): Observable<[Class]> {
+    getAll(): Observable<Class[]> {
         return this.apiService.get(this.path)
             .map(data => {
                 return data.result;

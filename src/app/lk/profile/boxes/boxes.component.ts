@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,23 +13,14 @@ import { RemoveConfirmComponent } from '../../remove-confirm/remove-confirm.comp
     templateUrl: './boxes.component.html',
     styleUrls: ['../../lk.component.css']
 })
-export class BoxesComponent implements OnInit {
-    boxes: [Box];
+export class BoxesComponent {
+    boxes: Box[];
 
     constructor(
         private boxService: BoxService,
         private modalService: NgbModal
-    ) { }
-
-    ngOnInit() {
-        this.boxService.getAll()
-            .subscribe(
-            boxes => {
-                this.boxes = boxes;
-            },
-            error => {
-                console.log(error.errors);
-            });
+    ) {
+        this.boxes = this.boxService.boxes;
     }
 
     add() {

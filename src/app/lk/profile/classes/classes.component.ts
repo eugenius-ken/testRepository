@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,23 +13,14 @@ import { RemoveConfirmComponent } from '../../remove-confirm/remove-confirm.comp
     templateUrl: './classes.component.html',
     styleUrls: ['../../lk.component.css']
 })
-export class ClassesComponent implements OnInit {
-    classes: [Class];
+export class ClassesComponent {
+    classes: Class[];
 
     constructor(
         private classService: ClassService,
         private modalService: NgbModal
-    ) { }
-
-    ngOnInit() {
-        this.classService.getAll()
-            .subscribe(
-            classes => {
-                this.classes = classes;
-            },
-            error => {
-                console.log(error.errors);
-            });
+    ) { 
+        this.classes = this.classService.classes;
     }
 
     add() {

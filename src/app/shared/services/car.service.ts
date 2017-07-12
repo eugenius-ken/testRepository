@@ -2,48 +2,48 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { ApiService } from './api.service';
-import { Box } from '../models/box.model';
+import { Car } from '../models/car.model';
 
 @Injectable()
-export class BoxService {
-    private readonly path: string = '/boxes';
-    boxes: Box[] = [];
-    boxToEdit: Box;
+export class CarService {
+    private readonly path: string = '/cars';
+    cars: Car[] = [];
+    carToEdit: Car;
 
     constructor(
         private apiService: ApiService
     ) {
         this.getAll()
-            .subscribe(boxes => {
-                boxes.forEach(b => {
-                    this.boxes.push(b);
+            .subscribe(cars => {
+                cars.forEach(c => {
+                    this.cars.push(c);
                 });
             });
     }
 
-    getAll(): Observable<Box[]> {
+    getAll(): Observable<[Car]> {
         return this.apiService.get(this.path)
             .map(data => {
                 return data.result;
             });
     }
 
-    get(id: string): Observable<Box> {
+    get(id: string): Observable<Car> {
         return this.apiService.get(this.path + '/' + id)
             .map(data => {
                 return data.result;
             });
     }
 
-    add(box: Box): Observable<Box> {
-        return this.apiService.post(this.path, box)
+    add(car: Car): Observable<Car> {
+        return this.apiService.post(this.path, car)
             .map(data => {
                 return data.result;
             });
     }
 
-    update(box: Box): Observable<Box> {
-        return this.apiService.put(this.path + '/' + this.boxToEdit._id, box)
+    update(car: Car): Observable<Car> {
+        return this.apiService.put(this.path + '/' + this.carToEdit._id, car)
             .map(data => {
                 return data.result;
             });

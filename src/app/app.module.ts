@@ -9,6 +9,7 @@ import { UserService } from './shared/services/user.service';
 import { JwtService } from './shared/services/jwt.service';
 import { BoxService } from './shared/services/box.service';
 import { ClassService } from './shared/services/class.service';
+import { CarService } from './shared/services/car.service';
 
 import { HomeModule } from './home/home.module';
 import { LkModule } from './lk/lk.module';
@@ -35,7 +36,8 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     UserService,
     JwtService,
     BoxService,
-    ClassService
+    ClassService,
+    CarService
   ],
   bootstrap: [AppComponent]
 })
