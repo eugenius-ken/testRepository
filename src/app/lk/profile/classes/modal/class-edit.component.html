@@ -4,6 +4,7 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
      <div class="modal-body">
         <fieldset [disabled]="isSubmitting">
+            <input type="hidden" formControlName="id" />
             <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
                 <input formControlName="name" type="text" class="form-control" id="name" placeholder="Название класса" [ngClass]="{
                     'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid

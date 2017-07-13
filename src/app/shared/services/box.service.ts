@@ -25,15 +25,6 @@ export class BoxService {
             });
     }
 
-    private getAll(): Observable<Box[]> {
-        return this.apiService.get(this.path)
-            .map(data => {
-                return (data.result as any[]).map(b => {
-                    return this.getNewBox(b);
-                });
-            });
-    }
-
     getCurrent(): Observable<Box> {
         return this.boxes
             .map(boxes => boxes.find(b => b.id === this.currentId));
@@ -69,6 +60,15 @@ export class BoxService {
                     this._boxesStorage.splice(i, 1);
                     this._boxes.next(this._boxesStorage);
                 }
+            });
+    }
+
+    private getAll(): Observable<Box[]> {
+        return this.apiService.get(this.path)
+            .map(data => {
+                return (data.result as any[]).map(b => {
+                    return this.getNewBox(b);
+                });
             });
     }
 

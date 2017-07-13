@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -17,6 +18,7 @@ import { RemoveConfirmComponent } from '../../remove-confirm/remove-confirm.comp
     styleUrls: ['../../lk.component.css']
 })
 export class CarsComponent {
+    private subscription: Subscription;
     cars: Car[];
     classes: Class[];
 
@@ -26,7 +28,10 @@ export class CarsComponent {
         private modalService: NgbModal
     ) {
 
-        Observable.zip(
+    }
+
+    ngOnInit() {
+        this.subscription = Observable.zip(
             this.classService.classes,
             this.carService.cars,
             (classes, cars) => {

@@ -1,4 +1,6 @@
 export class Class {
-    _id: string;
-    name: string;
+    constructor(
+        public id: string,
+        public name: string
+    ) { }
 }

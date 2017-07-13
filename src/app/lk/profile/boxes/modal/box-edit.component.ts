@@ -25,7 +25,6 @@ export class ModalBoxEditComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscription =  this.boxService.getCurrent()
             .subscribe(box => {
-                console.log('from edit');
                 this.form = this.fb.group({
                     'id': [box.id, Validators.required],
                     'name': [box.name, Validators.required]

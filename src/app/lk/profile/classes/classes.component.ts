@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -14,34 +15,31 @@ import { RemoveConfirmComponent } from '../../remove-confirm/remove-confirm.comp
     styleUrls: ['../../lk.component.css']
 })
 export class ClassesComponent {
+    private subscription: Subscription;
     classes: Class[];
 
     constructor(
         private classService: ClassService,
         private modalService: NgbModal
-    ) { 
-        this.classService.classes.subscribe(classes => {
+    ) { }
+
+    ngOnInit() {
+        this.subscription = this.classService.classes.subscribe(classes => {
             this.classes = classes;
         });
     }
 
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
+
     add() {
-        let modal = this.modalService.open(ModalClassAddComponent);
-        modal.result.then(
-            (classObj: Class) => {
-                this.classes.push(classObj);
-            }, reason => { });
+        this.modalService.open(ModalClassAddComponent);
     }
 
     edit(classObj: Class) {
-        this.classService.classToEdit = classObj;
-        let modal = this.modalService.open(ModalClassEditComponent);
-
-        modal.result.then(
-            (classObj: Class) => {
-                let i = this.classes.findIndex(c => c._id === classObj._id);
-                this.classes[i] = classObj;
-            }, reason => { });
+        this.classService.currentId = classObj.id;
+        this.modalService.open(ModalClassEditComponent);
     }
 
     remove(classObj: Class) {
@@ -51,11 +49,7 @@ export class ClassesComponent {
         modal.result.then(
             (remove) => {
                 if (remove) {
-                    this.classService.remove(classObj._id)
-                        .subscribe(() => {
-                            let i = this.classes.findIndex(c => c._id == classObj._id);
-                            this.classes.splice(i, 1);
-                        });
+                    this.classService.remove(classObj.id)
                 }
             }, reason => { });
     }
