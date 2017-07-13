@@ -1,5 +1,7 @@
 export class Box {
-    _id: string;
-    name: string;
-    color: string;
+    constructor(
+        public id: string,
+        public name: string,
+        public color: string
+    ) { }
 }

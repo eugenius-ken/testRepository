@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,33 +14,32 @@ import { RemoveConfirmComponent } from '../../remove-confirm/remove-confirm.comp
     templateUrl: './boxes.component.html',
     styleUrls: ['../../lk.component.css']
 })
-export class BoxesComponent {
+export class BoxesComponent implements OnInit, OnDestroy {
+    private subscription: Subscription;
     boxes: Box[];
 
     constructor(
         private boxService: BoxService,
         private modalService: NgbModal
-    ) {
-        this.boxes = this.boxService.boxes;
+    ) { }
+
+    ngOnInit() {
+        this.subscription = this.boxService.boxes.subscribe(boxes => {
+            this.boxes = boxes;
+        });
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     add() {
-        let modal = this.modalService.open(ModalBoxAddComponent);
-        modal.result.then(
-            (box: Box) => {
-                this.boxes.push(box);
-            }, reason => { });
+        this.modalService.open(ModalBoxAddComponent);
     }
 
     edit(box: Box) {
-        this.boxService.boxToEdit = box;
-        let modal = this.modalService.open(ModalBoxEditComponent);
-
-        modal.result.then(
-            (box: Box) => {
-                let i = this.boxes.findIndex(b => b._id === box._id);
-                this.boxes[i] = box;
-            }, reason => { });
+        this.boxService.currentId = box.id;
+        this.modalService.open(ModalBoxEditComponent);
     }
 
     remove(box: Box) {
@@ -49,11 +49,7 @@ export class BoxesComponent {
         modal.result.then(
             (remove) => {
                 if (remove) {
-                    this.boxService.remove(box._id)
-                        .subscribe(() => {
-                            let i = this.boxes.findIndex(b => b._id == box._id);
-                            this.boxes.splice(i, 1);
-                        });
+                    this.boxService.remove(box.id)
                 }
             }, reason => { });
     }

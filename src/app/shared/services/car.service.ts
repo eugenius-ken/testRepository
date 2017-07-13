@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { ApiService } from './api.service';
 import { Car } from '../models/car.model';
@@ -7,7 +8,8 @@ import { Car } from '../models/car.model';
 @Injectable()
 export class CarService {
     private readonly path: string = '/cars';
-    cars: Car[] = [];
+    private _cars = new BehaviorSubject<Car[]>([]);
+    cars = this._cars.asObservable();
     carToEdit: Car;
 
     constructor(
@@ -15,13 +17,11 @@ export class CarService {
     ) {
         this.getAll()
             .subscribe(cars => {
-                cars.forEach(c => {
-                    this.cars.push(c);
-                });
+                this._cars.next(cars);
             });
     }
 
-    getAll(): Observable<[Car]> {
+    getAll(): Observable<Car[]> {
         return this.apiService.get(this.path)
             .map(data => {
                 return data.result;

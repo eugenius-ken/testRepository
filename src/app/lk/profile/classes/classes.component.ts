@@ -20,7 +20,9 @@ export class ClassesComponent {
         private classService: ClassService,
         private modalService: NgbModal
     ) { 
-        this.classes = this.classService.classes;
+        this.classService.classes.subscribe(classes => {
+            this.classes = classes;
+        });
     }
 
     add() {

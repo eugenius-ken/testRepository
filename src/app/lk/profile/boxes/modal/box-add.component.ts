@@ -25,8 +25,6 @@ export class ModalBoxAddComponent {
 
     submit() {
         this.boxService.add(this.form.value)
-        .subscribe(box => {
-            this.activeModal.close(box);
-        });
+        this.activeModal.close();
     }
 }
