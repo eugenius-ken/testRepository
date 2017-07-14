@@ -120,3 +120,9 @@ table a + a {
 select {
     font-size: 13px;
 }
+
+.input-group-addon {
+    height: 33px;
+    font-size: 13px;
+    border: 1px solid #e8e8e8;
+}

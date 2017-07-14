@@ -17,16 +17,20 @@ import { ModalClassEditComponent } from './profile/classes/modal/class-edit.comp
 import { CarsComponent } from './profile/cars/cars.component';
 import { ModalCarAddComponent } from './profile/cars/modal/car-add.component';
 import { ModalCarEditComponent } from './profile/cars/modal/car-edit.component';
+import { ServicesComponent } from './services/services.component';
+import { ModalServiceAddComponent } from './services/modal/service-add.component';
+import { ModalServiceEditComponent } from './services/modal/service-edit.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
         path: 'lk', component: LkComponent,
         children: [
-            { path: 'orders', component: OrdersComponent },
             { path: 'profile/data', component: ProfileDataComponent },
             { path: 'profile/boxes', component: BoxesComponent },
             { path: 'profile/classes', component: ClassesComponent },
-            { path: 'profile/cars', component: CarsComponent }
+            { path: 'profile/cars', component: CarsComponent },
+            { path: 'services', component: ServicesComponent},
+            { path: 'orders', component: OrdersComponent }
         ]
     }
 ]);
@@ -50,7 +54,10 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalClassEditComponent,
         CarsComponent,
         ModalCarAddComponent,
-        ModalCarEditComponent
+        ModalCarEditComponent,
+        ServicesComponent,
+        ModalServiceAddComponent,
+        ModalServiceEditComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -59,7 +66,9 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalClassAddComponent,
         ModalClassEditComponent,
         ModalCarAddComponent,
-        ModalCarEditComponent
+        ModalCarEditComponent,
+        ModalServiceAddComponent,
+        ModalServiceEditComponent
     ]
 })
 export class LkModule { }
