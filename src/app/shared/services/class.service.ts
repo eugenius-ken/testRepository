@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { ApiService } from './api.service';
 import { Class } from '../models/class.model';
@@ -10,7 +10,7 @@ export class ClassService {
     private readonly path: string = '/classes';
 
     private _classesStorage: Class[];
-    private _classes = new BehaviorSubject<Class[]>([]);
+    private _classes = new ReplaySubject<Class[]>(1);
     classes = this._classes.asObservable();
     
     currentId: string;

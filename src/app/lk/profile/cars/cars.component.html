@@ -1,0 +1,29 @@
+<div class="body-container">
+    <h6>Машины</h6>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Марка</th>
+                <th>Модель</th>
+                <th>Класс</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let car of cars">
+                <td>{{car.brand}}</td>
+                <td>{{car.model}}</td>
+                <td>{{car.carClass ? car.carClass.name : ''}}</td>
+                <td>
+                    <a (click)="edit(car)"><img src="./assets/img/icon_edit.svg" /></a>
+                    <a (click)="remove(car)"><img src="./assets/img/icon_remove.svg" /></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-default float-right" (click)="add()">Добавить машину</button>
+        </div>
+    </div>
+</div>

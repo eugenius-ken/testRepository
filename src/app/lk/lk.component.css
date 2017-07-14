@@ -116,3 +116,7 @@ table a + a {
 .modal-body, .modal-header {
     color: #8c8c8c;
 }
+
+select {
+    font-size: 13px;
+}

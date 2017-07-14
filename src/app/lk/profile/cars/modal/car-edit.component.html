@@ -1,9 +1,10 @@
 <div class="modal-header">
-    <h4>Добавить машину</h4>
+    <h4>Редактировать машину</h4>
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
         <fieldset [disabled]="isSubmitting">
+            <input type="hidden" formControlName="id" />
             <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.brand.touched && form.controls.brand.dirty && form.controls.brand.invalid}">
                 <input formControlName="brand" type="text" class="form-control" id="brand" placeholder="Марка машины" [ngClass]="{
                     'has-danger': form.controls.brand.touched && form.controls.brand.dirty && form.controls.brand.invalid

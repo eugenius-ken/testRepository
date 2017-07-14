@@ -15,6 +15,8 @@ import { ClassesComponent } from './profile/classes/classes.component';
 import { ModalClassAddComponent } from './profile/classes/modal/class-add.component';
 import { ModalClassEditComponent } from './profile/classes/modal/class-edit.component';
 import { CarsComponent } from './profile/cars/cars.component';
+import { ModalCarAddComponent } from './profile/cars/modal/car-add.component';
+import { ModalCarEditComponent } from './profile/cars/modal/car-edit.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -32,7 +34,7 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
     imports: [
         lkRouting,
-        SharedModule
+        SharedModule,
     ],
     declarations: [
         LkComponent,
@@ -46,14 +48,18 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ClassesComponent,
         ModalClassAddComponent,
         ModalClassEditComponent,
-        CarsComponent
+        CarsComponent,
+        ModalCarAddComponent,
+        ModalCarEditComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
         ModalBoxAddComponent,
         ModalBoxEditComponent,
         ModalClassAddComponent,
-        ModalClassEditComponent
+        ModalClassEditComponent,
+        ModalCarAddComponent,
+        ModalCarEditComponent
     ]
 })
 export class LkModule { }

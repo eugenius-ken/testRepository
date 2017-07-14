@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { ApiService } from './api.service';
 import { Box } from '../models/box.model';
@@ -10,7 +10,7 @@ export class BoxService {
     private readonly path: string = '/boxes';
 
     private _boxesStorage: Box[];
-    private _boxes = new BehaviorSubject<Box[]>(null);
+    private _boxes = new ReplaySubject<Box[]>(null);
     boxes = this._boxes.asObservable();
 
     currentId: string; //for passing data between components
@@ -56,7 +56,6 @@ export class BoxService {
             .subscribe(data => {
                 let i = this._boxesStorage.findIndex(b => b.id === id);
                 if (i != -1) {
-
                     this._boxesStorage.splice(i, 1);
                     this._boxes.next(this._boxesStorage);
                 }
