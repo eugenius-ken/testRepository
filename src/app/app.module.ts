@@ -11,6 +11,7 @@ import { BoxService } from './shared/services/box.service';
 import { ClassService } from './shared/services/class.service';
 import { CarService } from './shared/services/car.service';
 import { ServiceService } from './shared/services/service.service';
+import { WorkerService } from './shared/services/worker.service';
 
 import { HomeModule } from './home/home.module';
 import { LkModule } from './lk/lk.module';
@@ -39,7 +40,8 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
     BoxService,
     ClassService,
     CarService,
-    ServiceService
+    ServiceService,
+    WorkerService
   ],
   bootstrap: [AppComponent]
 })

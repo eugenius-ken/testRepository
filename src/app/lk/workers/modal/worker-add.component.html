@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h4>Добавить сотрудника</h4>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="modal-body">
+        <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
+                <input formControlName="name" type="text" class="form-control" id="name" placeholder="ФИО сотрудника" [ngClass]="{
+                    'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid
+                }" />
+                <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите ФИО</div>
+            </fieldset>
+            
+             <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.job.touched && form.controls.job.dirty && form.controls.job.invalid}">
+                 <input formControlName="job" type="text" class="form-control" id="job" placeholder="Должность сотрудника" [ngClass]="{
+                    'has-danger': form.controls.job.touched && form.controls.job.dirty && form.controls.job.invalid
+                }" /> 
+                 <div class="form-control-feedback" *ngIf="form.controls.job.touched && form.controls.job.dirty && form.controls.job.invalid">Введите должность</div> 
+            </fieldset> 
+            
+             <fieldset class="form-group">
+                <ss-multiselect-dropdown [options]="boxes" formControlName="boxes"></ss-multiselect-dropdown>
+            </fieldset> 
+
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Добавить</button>
+    </div>
+</form>

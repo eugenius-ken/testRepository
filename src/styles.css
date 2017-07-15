@@ -17,3 +17,14 @@ a {
     cursor: pointer;
 }
 
+.dropdown-inline {
+    height: 33px;
+}
+
+.btn-secondary {
+    height: 33px;
+    background-color: #f2f2f2;
+    font-size: 13px;
+}
+
+

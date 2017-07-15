@@ -1,6 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { SharedModule } from '../shared/shared.module';
 
 import { LkComponent } from './lk.component';
@@ -20,6 +21,8 @@ import { ModalCarEditComponent } from './profile/cars/modal/car-edit.component';
 import { ServicesComponent } from './services/services.component';
 import { ModalServiceAddComponent } from './services/modal/service-add.component';
 import { ModalServiceEditComponent } from './services/modal/service-edit.component';
+import { WorkersComponent } from './workers/workers.component';
+import { ModalWorkerAddComponent } from './workers/modal/worker-add.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -30,6 +33,7 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
             { path: 'profile/classes', component: ClassesComponent },
             { path: 'profile/cars', component: CarsComponent },
             { path: 'services', component: ServicesComponent},
+            { path: 'workers', component: WorkersComponent},
             { path: 'orders', component: OrdersComponent }
         ]
     }
@@ -38,6 +42,7 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
     imports: [
         lkRouting,
+        MultiselectDropdownModule,
         SharedModule,
     ],
     declarations: [
@@ -57,7 +62,9 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalCarEditComponent,
         ServicesComponent,
         ModalServiceAddComponent,
-        ModalServiceEditComponent
+        ModalServiceEditComponent,
+        WorkersComponent,
+        ModalWorkerAddComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -68,7 +75,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalCarAddComponent,
         ModalCarEditComponent,
         ModalServiceAddComponent,
-        ModalServiceEditComponent
+        ModalServiceEditComponent,
+        ModalWorkerAddComponent
     ]
 })
 export class LkModule { }

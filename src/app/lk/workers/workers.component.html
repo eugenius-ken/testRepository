@@ -1,0 +1,31 @@
+<div class="body-container">
+    <h6>Сотрудники</h6>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Должность</th>
+                <th>Работает с</th>
+                <th>Боксы</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let worker of workers">
+                <td>{{worker.name}}</td>
+                <td>{{worker.job}}</td>
+                <td>{{worker.startDate}}</td>
+                <td>{{worker.boxes}}</td>
+                <td>
+                    <a (click)="edit(worker)"><img src="./assets/img/icon_edit.svg" /></a>
+                    <a (click)="remove(worker)"><img src="./assets/img/icon_remove.svg" /></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-default float-right" (click)="add()">Добавить сотрудника</button>
+        </div>
+    </div>
+</div>
