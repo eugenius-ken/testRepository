@@ -6,6 +6,7 @@ import { ApiService } from './api.service';
 import { BoxService } from './box.service';
 import { Worker, WorkerAdd, WorkerEdit } from '../models/worker.model';
 import { Box } from '../models/box.model';
+import { Time } from '../models/time.model';
 
 @Injectable()
 export class WorkerService {
@@ -83,7 +84,7 @@ export class WorkerService {
             _id: worker.id,
             name: worker.name,
             job: worker.job,
-            start_date: worker.startDate.toString(),
+            start_date: worker.startDate ? `${worker.startDate.hour}:${worker.startDate.minute}` : null,
             boxes: worker.boxes
         }
     }
@@ -93,7 +94,7 @@ export class WorkerService {
             worker._id,
             worker.name,
             worker.job,
-            worker.start_date,
+            Time.TryParse(worker.start_date),
             (worker.boxes as string[]).map(id => {
                 return boxes.find(b => b.id === id);
             })

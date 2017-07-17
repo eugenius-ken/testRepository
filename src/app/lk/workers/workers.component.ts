@@ -8,8 +8,9 @@ import { WorkerService } from '../../shared/services/worker.service';
 import { Worker } from '../../shared/models/worker.model';
 import { BoxService } from '../../shared/services/box.service';
 import { Box } from '../../shared/models/box.model';
+import { Time } from '../../shared/models/time.model';
 import { ModalWorkerAddComponent } from './modal/worker-add.component';
-// import { ModalWorkerEditComponent } from './modal/worker-edit.component';
+import { ModalWorkerEditComponent } from './modal/worker-edit.component';
 import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.component';
 
 @Component({
@@ -42,10 +43,10 @@ export class WorkersComponent {
         let modal = this.modalService.open(ModalWorkerAddComponent);
     }
 
-    // edit(worker: Worker) {
-    //     this.workerService.currentId = worker.id;
-    //     let modal = this.modalService.open(ModalWorkerEditComponent);
-    // }
+    edit(worker: Worker) {
+        this.workerService.currentId = worker.id;
+        let modal = this.modalService.open(ModalWorkerEditComponent);
+    }
 
     remove(worker: Worker) {
         let modal = this.modalService.open(RemoveConfirmComponent);
@@ -57,5 +58,24 @@ export class WorkersComponent {
                     this.workerService.remove(worker.id);
                 }
             }, reason => { });
+    }
+
+    getStringForBoxes(boxes: Box[]) {
+        let arr = boxes.map(b => {
+            return b.name;
+        });
+
+        return arr.join(', ');
+    }
+
+    getStringForTime(time: Time) {
+        if (time == null) {
+            return '';
+        }
+        else {
+            let hours = time.hour < 10 ? '0' + String(time.hour) : String(time.hour);
+            let minutes = time.minute < 10 ? '0' + String(time.minute) : String(time.minute);
+            return `${hours}:${minutes}`;
+        }
     }
 }

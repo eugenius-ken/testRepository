@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4>Добавить сотрудника</h4>
+    <h4>Редактировать сотрудника</h4>
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
@@ -18,16 +18,6 @@
                 <div class="form-control-feedback" *ngIf="form.controls.job.touched && form.controls.job.dirty && form.controls.job.invalid">Введите должность</div>
             </fieldset>
 
-            <!-- <fieldset class="form-group">
-                <div class="input-group">
-                    <input type="text" id="startDate" class="form-control" placeholder="Дата рождения" formControlName="startDate" ngbDatepicker #d="ngbDatepicker" 
-                    [minDate]="{year: 1900, month: 1, day: 1}" (blur)="validateDate(); d.close();">
-                    <div class="input-group-addon" (click)="d.toggle()">
-                        <i class="fa fa-calendar" aria-hidden="true"></i>
-                    </div>
-                </div>
-            </fieldset> -->
-
             <fieldset class="form-group">
                 <ss-multiselect-dropdown [options]="boxes" formControlName="boxes" [texts]="{
                     'defaultTitle': 'Выберите боксы'
@@ -44,6 +34,6 @@
         </fieldset>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Добавить</button>
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Сохранить</button>
     </div>
 </form>

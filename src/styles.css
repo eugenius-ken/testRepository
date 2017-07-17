@@ -19,12 +19,27 @@ a {
 
 .dropdown-inline {
     height: 33px;
+    width:100%;
 }
 
 .btn-secondary {
     height: 33px;
     background-color: #f2f2f2;
     font-size: 13px;
+    width:100%;
+    text-align: left;
+}
+
+ss-multiselect-dropdown span {
+    font-size: 13px;
+    color: black;
+}
+
+ngb-timepicker input {
+    height: 33px;
+    font-size: 13px !important;
+    background-color: #f2f2f2 !important;
+    border: 1px solid #e8e8e8 !important;
 }
 
 

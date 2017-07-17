@@ -127,3 +127,9 @@ select {
     border: 1px solid #e8e8e8;
 }
 
+.custom-label {
+    font-size: 0.875rem;
+    margin-top: 5px; 
+    margin-right: 5px;
+}
+

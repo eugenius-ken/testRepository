@@ -1,5 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
 
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { SharedModule } from '../shared/shared.module';
@@ -23,6 +25,7 @@ import { ModalServiceAddComponent } from './services/modal/service-add.component
 import { ModalServiceEditComponent } from './services/modal/service-edit.component';
 import { WorkersComponent } from './workers/workers.component';
 import { ModalWorkerAddComponent } from './workers/modal/worker-add.component';
+import { ModalWorkerEditComponent } from './workers/modal/worker-edit.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -42,6 +45,7 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
     imports: [
         lkRouting,
+        FormsModule,
         MultiselectDropdownModule,
         SharedModule,
     ],
@@ -64,7 +68,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalServiceAddComponent,
         ModalServiceEditComponent,
         WorkersComponent,
-        ModalWorkerAddComponent
+        ModalWorkerAddComponent,
+        ModalWorkerEditComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -76,7 +81,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalCarEditComponent,
         ModalServiceAddComponent,
         ModalServiceEditComponent,
-        ModalWorkerAddComponent
+        ModalWorkerAddComponent,
+        ModalWorkerEditComponent
     ]
 })
 export class LkModule { }
