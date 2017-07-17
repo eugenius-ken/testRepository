@@ -26,6 +26,8 @@ import { ModalServiceEditComponent } from './services/modal/service-edit.compone
 import { WorkersComponent } from './workers/workers.component';
 import { ModalWorkerAddComponent } from './workers/modal/worker-add.component';
 import { ModalWorkerEditComponent } from './workers/modal/worker-edit.component';
+import { ClientsComponent } from './clients/clients.component';
+import { ModalClientAddComponent } from './clients/modal/client-add.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -35,9 +37,10 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
             { path: 'profile/boxes', component: BoxesComponent },
             { path: 'profile/classes', component: ClassesComponent },
             { path: 'profile/cars', component: CarsComponent },
-            { path: 'services', component: ServicesComponent},
-            { path: 'workers', component: WorkersComponent},
-            { path: 'orders', component: OrdersComponent }
+            { path: 'services', component: ServicesComponent },
+            { path: 'workers', component: WorkersComponent },
+            { path: 'orders', component: OrdersComponent },
+            { path: 'clients', component: ClientsComponent }
         ]
     }
 ]);
@@ -69,7 +72,9 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalServiceEditComponent,
         WorkersComponent,
         ModalWorkerAddComponent,
-        ModalWorkerEditComponent
+        ModalWorkerEditComponent,
+        ClientsComponent,
+        ModalClientAddComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -82,7 +87,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalServiceAddComponent,
         ModalServiceEditComponent,
         ModalWorkerAddComponent,
-        ModalWorkerEditComponent
+        ModalWorkerEditComponent,
+        ModalClientAddComponent
     ]
 })
 export class LkModule { }

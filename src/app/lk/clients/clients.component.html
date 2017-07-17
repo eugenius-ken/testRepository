@@ -1,0 +1,35 @@
+<div class="body-container">
+    <h6>Клиенты</h6>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ФИО</th>
+                <th>Госномер</th>
+                <th>Марка</th>
+                <th>Модель</th>
+                <th>Дата рождения</th>
+                <th>Скидка</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let client of clients">
+                <td>{{client.name}}</td>
+                <td><div *ngFor="let car of client.cars">{{car.number}}</div></td>
+                <td><div *ngFor="let car of client.cars">{{car.brand}}</div></td>
+                <td><div *ngFor="let car of client.cars">{{car.model}}</div></td>
+                <td>{{getStringForBirthday(client.bitrhday)}}</td>
+                <td>{{client.discount}}</td>
+                <td>
+                    <a (click)="edit(client)"><img src="./assets/img/icon_edit.svg" /></a>
+                    <a (click)="remove(client)"><img src="./assets/img/icon_remove.svg" /></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-default float-right" (click)="add()">Добавить клиента</button>
+        </div>
+    </div>
+</div>

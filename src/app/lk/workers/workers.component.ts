@@ -25,7 +25,6 @@ export class WorkersComponent {
 
     constructor(
         private workerService: WorkerService,
-        private boxService: BoxService,
         private modalService: NgbModal
     ) { }
 

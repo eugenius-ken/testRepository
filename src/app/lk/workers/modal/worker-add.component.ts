@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
-import { DatePickerI18n } from '../../../shared/I18n/DatepickerI18n';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WorkerService } from '../../../shared/services/worker.service';
 import { BoxService } from '../../../shared/services/box.service';

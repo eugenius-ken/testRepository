@@ -94,7 +94,7 @@ export class WorkerService {
             worker._id,
             worker.name,
             worker.job,
-            Time.TryParse(worker.start_date),
+            worker.start_date ? Time.TryParse(worker.start_date) : null,
             (worker.boxes as string[]).map(id => {
                 return boxes.find(b => b.id === id);
             })

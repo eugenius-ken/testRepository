@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h4>Добавить клиента</h4>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="modal-body">
+        <fieldset [disabled]="isSubmitting">
+            <div class="row" style="padding: 0rem">
+                <div class="col-6">
+                    <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
+                        <input formControlName="name" type="text" class="form-control" id="name" placeholder="ФИО сотрудника" [ngClass]="{
+                        'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid
+                        }" />
+                        <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите ФИО</div>
+                    </fieldset>
+                    <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid}">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="addonPhone">+7</span>
+                            <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="телефон" aria-describedby="addonPhone"
+                                [ngClass]="{
+                            'has-danger': form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid
+                            }" />
+                        </div>
+                        <div class="form-control-feedback" *ngIf="form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid">Введите телефон в формате 9999999999</div>
+                    </fieldset>
+                </div>
+                <div class="col-6">
+                    <fieldset class="form-group">
+                        <div class="input-group">
+                            <input type="text" id="birthday" class="form-control" placeholder="Дата рождения" formControlName="birthday" ngbDatepicker
+                                #d="ngbDatepicker" [minDate]="{year: 1900, month: 1, day: 1}" (blur)="validateDate(); d.close();">
+                            <div class="input-group-addon" (click)="d.toggle()">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input formControlName="discount" type="number" class="form-control" id="discount" placeholder="Скидка" />
+                    </fieldset>
+                </div>
+            </div>
+
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Добавить</button>
+    </div>
+</form>
