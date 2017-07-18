@@ -6,6 +6,7 @@ import { CarService } from '../shared/services/car.service';
 import { ServiceService } from '../shared/services/service.service';
 import { WorkerService } from '../shared/services/worker.service';
 import { ClientService } from '../shared/services/client.service';
+import { OrderService } from '../shared/services/order.service';
 
 @Component({
     selector: 'lk-page',
@@ -19,6 +20,7 @@ export class LkComponent {
         private carService: CarService,
         private serviceService: ServiceService,
         private workerService: WorkerService,
-        private clientService: ClientService
+        private clientService: ClientService,
+        private orderService: OrderService
     ) { }
 }

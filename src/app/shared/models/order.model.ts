@@ -1,0 +1,57 @@
+import { CustomDate } from './custom-date.model';
+import { Time } from './time.model';
+import { Box } from './box.model';
+import { Service } from './service.model';
+import { Class } from './class.model';
+import { Worker } from './worker.model';
+import { Client, ClientCar } from './client.model';
+
+export class Order {
+    constructor(
+        public id: string,
+        public date: CustomDate,
+        public time: Time,
+        public price: number,
+        public status: number,
+        public duration: number,
+        public box: Box,
+        public client: OrderClient,
+        public car: OrderCar,
+        public services: OrderServiceModel[]
+    ) { }
+}
+
+export class OrderServiceModel extends Service {
+    workers: Worker[];
+
+    constructor(
+        service: Service,
+        workers: Worker[]
+    ) {
+        super(
+            service.id,
+            service.name,
+            service.price,
+            service.workerPercent,
+            service.duration,
+            service.carClass
+        );
+        this.workers = workers;
+    }
+}
+
+export class OrderClient {
+    constructor(
+        public name: string,
+        public phone: string
+    ) { }
+}
+
+export class OrderCar {
+    constructor(
+        public brand: string,
+        public model: string,
+        public number: string,
+        public carClass: Class
+    ) { }
+}

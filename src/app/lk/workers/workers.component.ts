@@ -21,7 +21,6 @@ import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.compone
 export class WorkersComponent {
     private subscription: Subscription;
     workers: Worker[];
-    boxes: Box[];
 
     constructor(
         private workerService: WorkerService,

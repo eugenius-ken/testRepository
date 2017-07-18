@@ -1,1 +1,35 @@
-<div>Orders</div>
+<div class="body-container">
+    <h6>Заказы</h6>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Дата/время</th>
+                <th>Бокс</th>
+                <th>Стоимость</th>
+                <th>Продолжительность</th>
+                <th>Услуги</th>
+                <th>Исполнители</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders">
+                <td>{{order.date.year + '-' + order.date.month + '-' + order.date.day + ' ' + order.time.hours + ':' + order.time.minutes}}</td>
+                <td>{{order.box.name}}</td>
+                <td>{{order.price}}</td>
+                <td>{{order.duration}}</td>
+                <td>{{getStringForServices(order.services)}}</td>
+                <td>{{getStringForWorkers(order.services)}}</td>
+                <td>
+                    <a (click)="edit(order)"><img src="./assets/img/icon_edit.svg" /></a>
+                    <a (click)="remove(order)"><img src="./assets/img/icon_remove.svg" /></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-default float-right" (click)="add()">Добавить заказ</button>
+        </div>
+    </div>
+</div>
