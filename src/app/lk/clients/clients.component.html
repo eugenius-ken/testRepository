@@ -18,8 +18,8 @@
                 <td><div *ngFor="let car of client.cars">{{car.number}}</div></td>
                 <td><div *ngFor="let car of client.cars">{{car.brand}}</div></td>
                 <td><div *ngFor="let car of client.cars">{{car.model}}</div></td>
-                <td>{{getStringForBirthday(client.bitrhday)}}</td>
-                <td>{{client.discount}}</td>
+                <td>{{getStringForBirthday(client.birthday)}}</td>
+                <td>{{client.discount + ' %'}}</td>
                 <td>
                     <a (click)="edit(client)"><img src="./assets/img/icon_edit.svg" /></a>
                     <a (click)="remove(client)"><img src="./assets/img/icon_remove.svg" /></a>

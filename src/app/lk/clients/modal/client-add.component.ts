@@ -36,7 +36,7 @@ export class ModalClientAddComponent implements OnInit {
                 'phone': ['', [Validators.pattern(/^\d{10}$/)]],
                 'birthday': [null],
                 'discount': [''],
-                // 'cars': this.fb.array([this.initCar()])
+                'cars': this.fb.array([this.initCar()])
             });
         });
     }
@@ -52,6 +52,10 @@ export class ModalClientAddComponent implements OnInit {
 
     addCar() {
         (this.form.controls['cars'] as FormArray).push(this.initCar());
+    }
+
+    removeCar(i) {
+        (this.form.controls['cars'] as FormArray).removeAt(i);
     }
 
     submit() {

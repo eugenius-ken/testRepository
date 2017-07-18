@@ -84,7 +84,7 @@ export class ClientService {
             _id: client.id,
             name: client.name,
             phone: client.phone ? client.phone : null,
-            birthday: client.birthday,
+            birthday: client.birthday ? `${client.birthday.year}-${client.birthday.month}-${client.birthday.day}` : null,
             discount: client.discount ? client.discount : null,
             cars: client.cars
         }
@@ -101,7 +101,7 @@ export class ClientService {
                 return new ClientCar(
                     car.brand,
                     car.model,
-                    classes.find(c => c.id === car.class_id),
+                    classes.find(c => c.id === car.classId),
                     car.number
                 );
             })

@@ -10,7 +10,7 @@ import { BoxService } from '../../shared/services/box.service';
 import { Box } from '../../shared/models/box.model';
 import { CustomDate } from '../../shared/models/custom-date.model';
 import { ModalClientAddComponent } from './modal/client-add.component';
-// import { ModalClientEditComponent } from './modal/client-edit.component';
+import { ModalClientEditComponent } from './modal/client-edit.component';
 import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.component';
 
 @Component({
@@ -42,10 +42,10 @@ export class ClientsComponent {
         let modal = this.modalService.open(ModalClientAddComponent);
     }
 
-    // edit(client: Client) {
-    //     this.clientService.currentId = client.id;
-    //     let modal = this.modalService.open(ModalClientEditComponent);
-    // }
+    edit(client: Client) {
+        this.clientService.currentId = client.id;
+        let modal = this.modalService.open(ModalClientEditComponent);
+    }
 
     remove(client: Client) {
         let modal = this.modalService.open(RemoveConfirmComponent);
@@ -66,7 +66,7 @@ export class ClientsComponent {
         else {
             let month = birthday.month < 10 ? '0' + String(birthday.month) : String(birthday.month);
             let day = birthday.day < 10 ? '0' + String(birthday.day) : String(birthday.day);
-            return `${birthday.year}${month}:${day}`;
+            return `${birthday.year}-${month}-${day}`;
         }
     } 
 }

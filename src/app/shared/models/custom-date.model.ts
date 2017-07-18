@@ -8,7 +8,6 @@ export class CustomDate {
     public static TryParse(birthdate: string) {
         let arr = birthdate.split('-');
         if(arr.length != 3) return null;
-
-        return new CustomDate(parseInt(arr[0]), parseInt(arr[1]), parseInt(arr[3]));
+        return new CustomDate(parseInt(arr[0]), parseInt(arr[1]), parseInt(arr[2]));
     }
 }

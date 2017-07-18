@@ -28,6 +28,7 @@ import { ModalWorkerAddComponent } from './workers/modal/worker-add.component';
 import { ModalWorkerEditComponent } from './workers/modal/worker-edit.component';
 import { ClientsComponent } from './clients/clients.component';
 import { ModalClientAddComponent } from './clients/modal/client-add.component';
+import { ModalClientEditComponent } from './clients/modal/client-edit.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -74,7 +75,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalWorkerAddComponent,
         ModalWorkerEditComponent,
         ClientsComponent,
-        ModalClientAddComponent
+        ModalClientAddComponent,
+        ModalClientEditComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -88,7 +90,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalServiceEditComponent,
         ModalWorkerAddComponent,
         ModalWorkerEditComponent,
-        ModalClientAddComponent
+        ModalClientAddComponent,
+        ModalClientEditComponent
     ]
 })
 export class LkModule { }

@@ -1,9 +1,10 @@
 <div class="modal-header">
-    <h4>Добавить клиента</h4>
+    <h4>Редактировать клиента</h4>
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
         <fieldset [disabled]="isSubmitting">
+            <input type="hidden" formControlName="id" />
             <div class="row without-padding">
                 <div class="col-6">
                     <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
@@ -128,6 +129,6 @@
         </fieldset>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Добавить</button>
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Сохранить</button>
     </div>
 </form>

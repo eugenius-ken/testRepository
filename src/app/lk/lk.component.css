@@ -30,6 +30,14 @@ button:hover {
     border: 2px solid #dbe4eb;
 }
 
+.btn.btn-info {
+    background-color: #c4c4c4;
+    color: #ffffff;
+    font-weight: bold;
+    border: 2px solid #c4c4c4;
+    text-shadow: 2px 2px 2px #a8a8a8;
+}
+
 .btn.btn-success {
     background-color: #7dc500; 
     border: none;
@@ -119,6 +127,7 @@ table a + a {
 
 select {
     font-size: 13px;
+    height: 33px !important;
 }
 
 .input-group-addon {
@@ -131,5 +140,9 @@ select {
     font-size: 0.875rem;
     margin-top: 5px; 
     margin-right: 5px;
+}
+
+.without-padding {
+    padding: 0rem;
 }
 
