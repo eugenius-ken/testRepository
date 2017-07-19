@@ -10,6 +10,7 @@ import { BoxService } from '../../../shared/services/box.service';
 import { ClassService } from '../../../shared/services/class.service';
 import { ServiceService } from '../../../shared/services/service.service';
 import { WorkerService } from '../../../shared/services/worker.service';
+import { OrderServiceModelAdd } from '../../../shared/models/order.model';
 import { Box } from '../../../shared/models/box.model';
 import { Class } from '../../../shared/models/class.model';
 import { Service } from '../../../shared/models/service.model';
@@ -54,40 +55,56 @@ export class ModalOrderAddComponent implements OnInit {
                 this.classes = classes;
                 this.services = services;
                 this.workers = workers;
-
-                let now = new Date();
-                this.form = this.fb.group({
-                    'boxId': [this.boxes.length > 0 ? this.boxes[0].id : '', Validators.required],
-                    'price': ['', Validators.required],
-                    'duration': ['', Validators.required],
-                    'date': [new CustomDate(now.getFullYear(), now.getMonth(), now.getDate()), Validators.required],
-                    'time': [new Time(now.getHours(), now.getMinutes()), Validators.required],
-                    'client': this.fb.group({
-                        'phone': [''],
-                        'name': ['']
-                    }),
-                    'car': this.fb.group({
-                        'brand': [''],
-                        'model': [''],
-                        'number': [''],
-                        'classId': [this.classes.length > 0 ? this.classes[0].id : '', Validators.required],
-                    }),
-                    // 'services': this.fb.array([this.initService()])
-                });
+                this.initForm();
             });
+    }
 
+    private initForm() {
+        let now = new Date();
+        this.form = this.fb.group({
+            'boxId': [this.boxes.length > 0 ? this.boxes[0].id : '', Validators.required],
+            'price': [0, Validators.required],
+            'duration': [0, Validators.required],
+            'date': [new CustomDate(now.getFullYear(), now.getMonth(), now.getDate()), Validators.required],
+            'time': [new Time(now.getHours(), now.getMinutes()), Validators.required],
+            'client': this.fb.group({
+                'phone': ['', [Validators.pattern(/^\d{10}$/)]],
+                'name': ['']
+            }),
+            'car': this.fb.group({
+                'brand': [''],
+                'model': [''],
+                'number': [''],
+                'classId': [this.classes.length > 0 ? this.classes[0].id : '', Validators.required],
+            }),
+            'services': this.fb.array([this.initService()])
+        });
 
+        this.form.controls['services'].valueChanges.subscribe((services:OrderServiceModelAdd[]) => {
+            let sum = 0;
+            let duration = 0;
+            services.forEach(service => {
+                sum += this.services.find(s => s.id === service.id).price;
+                duration += this.services.find(s => s.id === service.id).duration;
+            });
+            this.form.controls['price'].setValue(sum);
+            this.form.controls['duration'].setValue(duration);
+        });
     }
 
     private initService(): FormGroup {
         return this.fb.group({
-            'id': ['', Validators.required],
+            'id': [this.services.length > 0 ? this.services[0].id : '', Validators.required],
             'workers': [[]],
         });
     }
 
     addService() {
         (this.form.controls['services'] as FormArray).push(this.initService());
+    }
+
+    removeService(i) {
+        (this.form.controls['services'] as FormArray).removeAt(i);
     }
 
     validateDate() {
@@ -97,8 +114,7 @@ export class ModalOrderAddComponent implements OnInit {
     }
 
     submit() {
-        console.log(this.form.value);
-        // this.orderService.add(this.form.value)
-        // this.activeModal.close();
+        this.orderService.add(this.form.value)
+        this.activeModal.close();
     }
 }

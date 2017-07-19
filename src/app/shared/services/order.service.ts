@@ -8,7 +8,7 @@ import { ClassService } from './class.service';
 import { ServiceService } from './service.service';
 import { WorkerService } from './worker.service';
 import { BoxService } from './box.service';
-import { Order, OrderCar, OrderClient, OrderServiceModel } from '../models/order.model';
+import { Order, OrderCar, OrderClient, OrderServiceModel, OrderAdd } from '../models/order.model';
 import { Class } from '../models/class.model';
 // import { Client } from '../models/client.model';
 import { Service } from '../models/service.model';
@@ -34,7 +34,44 @@ export class OrderService {
         private serviceService: ServiceService,
         private workerService: WorkerService,
         private boxService: BoxService
-    ) { }
+    ) {
+        this.getAll()
+            .subscribe(orders => {
+                this._ordersStorage = orders;
+                this._orders.next(this._ordersStorage);
+            });
+    }
+
+    add(order: OrderAdd) {
+        Observable.zip(
+            this.apiService.post(this.path, this.mapToApiModel(order)),
+            this.classService.classes.take(1),
+            this.serviceService.services.take(1),
+            this.workerService.workers.take(1),
+            this.boxService.boxes.take(1),
+            (data, classes, services, workers, boxes) => {
+                this._ordersStorage.push(this.mapFromApiModel(
+                    data.result,
+                    classes,
+                    services,
+                    workers,
+                    boxes)
+                );
+
+
+            }).subscribe();
+    }
+
+    remove(id: string) {
+        return this.apiService.delete(this.path + '/' + id)
+            .subscribe(data => {
+                let i = this._ordersStorage.findIndex(c => c.id === id);
+                if (i != -1) {
+                    this._ordersStorage.splice(i, 1);
+                    this._orders.next(this._ordersStorage);
+                }
+            });
+    }
 
     private getAll(): Observable<Order[]> {
         return Observable.zip(
@@ -60,7 +97,7 @@ export class OrderService {
         boxes: Box[]
     ): Order {
         let orderDate = new Date(order.ts);
-
+        debugger;
         return new Order(
             order._id,
             new CustomDate(
@@ -77,7 +114,7 @@ export class OrderService {
                 order.client.brand,
                 order.client.model,
                 order.client.number,
-                classes.find(c => c.id === order.cliend.class_id)
+                classes.find(c => c.id === order.client.class_id)
             ),
             (order.services as any[]).map(service => {
                 return new OrderServiceModel(
@@ -86,5 +123,36 @@ export class OrderService {
                 );
             })
         );
+    }
+
+    private mapToApiModel(order: OrderAdd) {
+        const date = new Date(
+            order.date.year,
+            order.date.month,
+            order.date.day,
+            order.time.hour,
+            order.time.minute
+        );
+
+        return {
+            ts: date.getTime(),
+            box_id: order.boxId,
+            price: order.price,
+            duration: order.duration,
+            client: {
+                class_id: order.car.classId,
+                name: order.client.name,
+                phone: order.client.phone,
+                number: order.car.number,
+                brand: order.car.brand,
+                model: order.car.model
+            },
+            services: order.services.map(s => {
+                return {
+                    _id: s.id,
+                    workers: s.workers
+                };
+            })
+        };
     }
 }

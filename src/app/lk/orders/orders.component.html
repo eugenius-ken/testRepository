@@ -14,10 +14,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let order of orders">
-                <td>{{order.date.year + '-' + order.date.month + '-' + order.date.day + ' ' + order.time.hours + ':' + order.time.minutes}}</td>
+                <td>{{order.date.year + '-' + order.date.month + '-' + order.date.day + ' ' + order.time.hour + ':' + order.time.minute}}</td>
                 <td>{{order.box.name}}</td>
-                <td>{{order.price}}</td>
-                <td>{{order.duration}}</td>
+                <td>{{order.price + ' руб.'}}</td>
+                <td>{{order.duration + ' мин.'}}</td>
                 <td>{{getStringForServices(order.services)}}</td>
                 <td>{{getStringForWorkers(order.services)}}</td>
                 <td>

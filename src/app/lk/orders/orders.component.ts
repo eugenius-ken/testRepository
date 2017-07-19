@@ -48,10 +48,9 @@ export class OrdersComponent {
         services.forEach(s => {
             workers =  workers.concat(s.workers);
         });
-
         //get uniques
         workers = workers.filter((w, i, arr) => arr.indexOf(w) === i);
-
+        
         return workers.map(w => w.name).join(', ');
     }
 
@@ -64,15 +63,15 @@ export class OrdersComponent {
     //     let modal = this.modalService.open(ModalOrderEditComponent);
     // }
 
-    // remove(order: Order) {
-    //     let modal = this.modalService.open(RemoveConfirmComponent);
-    //     (modal.componentInstance as RemoveConfirmComponent).name = '';
+    remove(order: Order) {
+        let modal = this.modalService.open(RemoveConfirmComponent);
+        (modal.componentInstance as RemoveConfirmComponent).name = 'заказ';
 
-    //     modal.result.then(
-    //         (remove) => {
-    //             if (remove) {
-    //                 this.orderService.remove(order.id);
-    //             }
-    //         }, reason => { });
-    // }
+        modal.result.then(
+            (remove) => {
+                if (remove) {
+                    this.orderService.remove(order.id);
+                }
+            }, reason => { });
+    }
 }

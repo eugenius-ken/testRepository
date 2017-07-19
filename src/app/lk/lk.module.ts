@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { SharedModule } from '../shared/shared.module';
 
+import { FilterByClassPipe } from '../shared/pipes/filter-by-class';
 import { LkComponent } from './lk.component';
 import { HeaderComponent } from '../shared/layout/header.component';
 import { RemoveConfirmComponent } from './remove-confirm/remove-confirm.component';
@@ -57,6 +58,7 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
     ],
     declarations: [
         LkComponent,
+        FilterByClassPipe,
         HeaderComponent,
         RemoveConfirmComponent,
         OrdersComponent,
