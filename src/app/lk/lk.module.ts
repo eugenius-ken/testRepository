@@ -9,7 +9,6 @@ import { SharedModule } from '../shared/shared.module';
 import { LkComponent } from './lk.component';
 import { HeaderComponent } from '../shared/layout/header.component';
 import { RemoveConfirmComponent } from './remove-confirm/remove-confirm.component';
-import { OrdersComponent } from '../lk/orders/orders.component';
 import { ProfileDataComponent } from './profile/data/data.component';
 import { BoxesComponent } from './profile/boxes/boxes.component';
 import { ModalBoxAddComponent } from './profile/boxes/modal/box-add.component';
@@ -29,6 +28,9 @@ import { ModalWorkerEditComponent } from './workers/modal/worker-edit.component'
 import { ClientsComponent } from './clients/clients.component';
 import { ModalClientAddComponent } from './clients/modal/client-add.component';
 import { ModalClientEditComponent } from './clients/modal/client-edit.component';
+import { OrdersComponent } from '../lk/orders/orders.component';
+import { ModalOrderAddComponent } from './orders/modal/order-add.component';
+// import { ModalOrderEditComponent } from './orders/modal/order-edit.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -40,8 +42,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
             { path: 'profile/cars', component: CarsComponent },
             { path: 'services', component: ServicesComponent },
             { path: 'workers', component: WorkersComponent },
-            { path: 'orders', component: OrdersComponent },
-            { path: 'clients', component: ClientsComponent }
+            { path: 'clients', component: ClientsComponent },
+            { path: 'orders', component: OrdersComponent }
         ]
     }
 ]);
@@ -76,7 +78,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalWorkerEditComponent,
         ClientsComponent,
         ModalClientAddComponent,
-        ModalClientEditComponent
+        ModalClientEditComponent,
+        ModalOrderAddComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -91,7 +94,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalWorkerAddComponent,
         ModalWorkerEditComponent,
         ModalClientAddComponent,
-        ModalClientEditComponent
+        ModalClientEditComponent,
+        ModalOrderAddComponent
     ]
 })
 export class LkModule { }

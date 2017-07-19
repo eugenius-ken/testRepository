@@ -11,7 +11,7 @@ import { Box } from '../../shared/models/box.model';
 import { Worker } from '../../shared/models/worker.model';
 import { Time } from '../../shared/models/time.model';
 
-// import { ModalOrderAddComponent } from './modal/order-add.component';
+import { ModalOrderAddComponent } from './modal/order-add.component';
 // import { ModalOrderEditComponent } from './modal/order-edit.component';
 import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.component';
 
@@ -55,9 +55,9 @@ export class OrdersComponent {
         return workers.map(w => w.name).join(', ');
     }
 
-    // add() {
-    //     let modal = this.modalService.open(ModalOrderAddComponent);
-    // }
+    add() {
+        let modal = this.modalService.open(ModalOrderAddComponent);
+    }
 
     // edit(order: Order) {
     //     this.orderService.currentId = order.id;
