@@ -54,7 +54,7 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         lkRouting,
         FormsModule,
         MultiselectDropdownModule,
-        SharedModule,
+        SharedModule
     ],
     declarations: [
         LkComponent,

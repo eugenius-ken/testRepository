@@ -62,6 +62,7 @@ export class OrderService {
                     workers,
                     boxes)
                 );
+                this._orders.next(this._ordersStorage);
             }).subscribe();
     }
 
