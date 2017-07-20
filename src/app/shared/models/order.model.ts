@@ -36,6 +36,21 @@ export class OrderAdd {
     ) { }
 }
 
+export class OrderEdit {
+    constructor(
+        public id: string,
+        public date: CustomDate,
+        public time: Time,
+        public price: number,
+        public status: number,
+        public duration: number,
+        public boxId: string,
+        public client: OrderClientAdd,
+        public car: OrderCarAdd,
+        public services: OrderServiceModelAdd[]
+    ) { }
+}
+
 export class OrderServiceModel extends Service {
     workers: Worker[];
 
@@ -62,6 +77,13 @@ export class OrderServiceModelAdd {
     ) { }
 }
 
+export class OrderServiceModelEdit {
+    constructor(
+        public id: string,
+        public workers: string[]
+    ) { }
+}
+
 export class OrderClient {
     constructor(
         public name: string,
@@ -70,6 +92,13 @@ export class OrderClient {
 }
 
 export class OrderClientAdd {
+    constructor(
+        public name: string,
+        public phone: string
+    ) { }
+}
+
+export class OrderClientEdit {
     constructor(
         public name: string,
         public phone: string
@@ -86,6 +115,15 @@ export class OrderCar {
 }
 
 export class OrderCarAdd {
+    constructor(
+        public brand: string,
+        public model: string,
+        public number: string,
+        public classId: string
+    ) { }
+}
+
+export class OrderCarEdit {
     constructor(
         public brand: string,
         public model: string,

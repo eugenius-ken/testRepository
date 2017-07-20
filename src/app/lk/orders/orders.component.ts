@@ -12,7 +12,7 @@ import { Worker } from '../../shared/models/worker.model';
 import { Time } from '../../shared/models/time.model';
 
 import { ModalOrderAddComponent } from './modal/order-add.component';
-// import { ModalOrderEditComponent } from './modal/order-edit.component';
+import { ModalOrderEditComponent } from './modal/order-edit.component';
 import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.component';
 
 @Component({
@@ -58,10 +58,10 @@ export class OrdersComponent {
         let modal = this.modalService.open(ModalOrderAddComponent);
     }
 
-    // edit(order: Order) {
-    //     this.orderService.currentId = order.id;
-    //     let modal = this.modalService.open(ModalOrderEditComponent);
-    // }
+    edit(order: Order) {
+        this.orderService.currentId = order.id;
+        let modal = this.modalService.open(ModalOrderEditComponent);
+    }
 
     remove(order: Order) {
         let modal = this.modalService.open(RemoveConfirmComponent);

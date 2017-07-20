@@ -1,0 +1,127 @@
+<div class="modal-header">
+    <h4>Редактировать заказ</h4>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="modal-body">
+        <fieldset [disabled]="isSubmitting">
+            <input type="hidden" formControlName="id" />
+            <input type="hidden" formControlName="price" />
+            <input type="hidden" formControlName="duration" />
+            <div class="row without-padding">
+                <div class="col-6">
+                    <fieldset class="form-group">
+                        <div class="input-group">
+                            <input type="text" id="date" class="form-control" placeholder="Дата заказа" formControlName="date" ngbDatepicker #d="ngbDatepicker"
+                                (blur)="validateDate(); d.close();">
+                            <div class="input-group-addon" (click)="d.toggle()">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.boxId.touched && form.controls.boxId.dirty && form.controls.boxId.invalid}">
+                        <select class="form-control" formControlName="boxId">
+                            <option *ngFor="let box of boxes" [ngValue]="box.id">
+                                {{box.name}}
+                            </option>
+                        </select>
+                        <div class="form-control-feedback" *ngIf="form.controls.boxId.touched && form.controls.boxId.dirty && form.controls.boxId.invalid">Выберите бокс</div>
+                    </fieldset>
+
+                    <div [formGroup]="form.controls.car">
+                        <fieldset class="form-group">
+                            <input formControlName="brand" type="text" class="form-control" id="brand" placeholder="Марка машины" />
+                        </fieldset>
+                    </div>
+
+                    <div [formGroup]="form.controls.client">
+                        <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.client.controls.phone.touched && form.controls.client.controls.phone.dirty && form.controls.client.controls.phone.invalid}">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="addonPhone">+7</span>
+                                <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="телефон клиента" aria-describedby="addonPhone"
+                                />
+                            </div>
+                            <div class="form-control-feedback" *ngIf="form.controls.client.controls.phone.touched && form.controls.client.controls.phone.dirty && form.controls.client.controls.phone.invalid">Введите телефон в формате: 9999999999</div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <fieldset class="form-group">
+                        <ngb-timepicker [spinners]="false" formControlName="time"></ngb-timepicker>
+                    </fieldset>
+
+                    <div [formGroup]="form.controls.car">
+                        <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.car.controls.classId.touched && form.controls.car.controls.classId.dirty && form.controls.car.controls.classId.invalid}">
+                            <select class="form-control" formControlName="classId">
+                            <option *ngFor="let classObj of classes" [ngValue]="classObj.id">
+                                {{classObj.name}}
+                            </option>
+                        </select>
+                            <div class="form-control-feedback" *ngIf="form.controls.car.controls.touched && form.controls.car.controls.dirty && form.controls.car.controls.invalid">Выберите класс</div>
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <input formControlName="model" type="text" class="form-control" id="model" placeholder="Модель машины" />
+                        </fieldset>
+                    </div>
+
+                    <div [formGroup]="form.controls.client">
+                        <fieldset class="form-group">
+                            <input formControlName="name" type="text" class="form-control" id="name" placeholder="ФИО клиента" />
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row without-padding">
+                <div class="col-12">Услуги</div>
+            </div>
+            <div formArrayName="services">
+                <div *ngFor="let service of form.controls.services.controls; let i = index; let last = last;">
+                    <div [formGroupName]="i">
+                        <div class="row without-padding">
+                            <div class="col-6">
+
+                                <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.services.controls[i].controls.id.touched && form.controls.services.controls[i].controls.id.dirty && form.controls.services.controls[i].controls.id.invalid}">
+                                    <select class="form-control" formControlName="id">
+                                        <option *ngFor="let service of services | filterByClass:form.controls.car.controls.classId.value:form.controls.services.controls[i].controls.id" [ngValue]="service.id">
+                                            {{service.name}}
+                                        </option>
+                                    </select>
+                                    <div class="form-control-feedback" *ngIf="form.controls.services.controls[i].controls.id.touched && form.controls.services.controls[i].controls.id.dirty && form.controls.services.controls[i].controls.id.invalid">Выберите услугу</div>
+                                </fieldset>
+
+                                <fieldset class="form-group" *ngIf="form.controls.services.controls.length > 1">
+                                    <button type="button" class="btn btn-info btn-block" (click)="removeService(i)">Удалить услугу</button>
+                                </fieldset>
+                            </div>
+                            <div class="col-6">
+
+                                <fieldset class="form-group">
+                                    <ss-multiselect-dropdown [options]="workers" formControlName="workers" [texts]="{
+                                            'defaultTitle': 'Выберите исполнителей',
+                                            'searchEmptyResult': 'Нет сотрудников',
+                                            'checkedPlural': 'исполнителя'
+                                        }" [settings]="{'dynamicTitleMaxItems': 1}">
+                                    </ss-multiselect-dropdown>
+                                </fieldset>
+
+                                <fieldset class="form-group" *ngIf="last">
+                                    <button type="button" class="btn btn-info btn-block" (click)="addService()">Добавить услугу</button>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row without-padding">
+                <div class="col-12">
+                    {{'Общая сумма: ' + form.controls.price.value + ' руб.'}}
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+         <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Сохранить</button> 
+    </div>
+</form>

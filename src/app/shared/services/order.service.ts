@@ -8,7 +8,7 @@ import { ClassService } from './class.service';
 import { ServiceService } from './service.service';
 import { WorkerService } from './worker.service';
 import { BoxService } from './box.service';
-import { Order, OrderCar, OrderClient, OrderServiceModel, OrderAdd } from '../models/order.model';
+import { Order, OrderCar, OrderClient, OrderServiceModel, OrderAdd, OrderEdit } from '../models/order.model';
 import { Class } from '../models/class.model';
 // import { Client } from '../models/client.model';
 import { Service } from '../models/service.model';
@@ -42,6 +42,11 @@ export class OrderService {
             });
     }
 
+    getCurrent() {
+        return this.orders
+            .map(orders => orders.find(o => o.id === this.currentId));
+    }
+
     add(order: OrderAdd) {
         Observable.zip(
             this.apiService.post(this.path, this.mapToApiModel(order)),
@@ -57,8 +62,22 @@ export class OrderService {
                     workers,
                     boxes)
                 );
+            }).subscribe();
+    }
 
-
+    update(order: OrderEdit) {
+        Observable.zip(
+            this.apiService.put(this.path + '/' + order.id, this.mapToApiModel(order)),
+            this.classService.classes.take(1),
+            this.serviceService.services.take(1),
+            this.workerService.workers.take(1),
+            this.boxService.boxes.take(1),
+            (data, classes, services, workers, boxes) => {
+                let i = this._ordersStorage.findIndex(o => o.id === order.id);
+                if (i != -1) {
+                    this._ordersStorage.splice(i, 1, this.mapFromApiModel(data.result, classes, services, workers, boxes));
+                    this._orders.next(this._ordersStorage);
+                }
             }).subscribe();
     }
 
@@ -97,7 +116,6 @@ export class OrderService {
         boxes: Box[]
     ): Order {
         let orderDate = new Date(order.ts);
-        debugger;
         return new Order(
             order._id,
             new CustomDate(
@@ -119,7 +137,7 @@ export class OrderService {
             (order.services as any[]).map(service => {
                 return new OrderServiceModel(
                     services.find(s => s.id === service._id),
-                    workers.filter(w => (service.workers as any[]).includes(id => id === w.id))
+                    workers.filter(w => (service.workers as any[]).includes(w.id))
                 );
             })
         );
