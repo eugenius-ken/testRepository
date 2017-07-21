@@ -83,7 +83,7 @@
 
                                 <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.services.controls[i].controls.id.touched && form.controls.services.controls[i].controls.id.dirty && form.controls.services.controls[i].controls.id.invalid}">
                                     <select class="form-control" formControlName="id">
-                                        <option *ngFor="let service of services | filterByClass:form.controls.services.controls[i].controls.id.value:form.controls.car.controls.classId.value:form.controls.services.controls[i].controls.id" [ngValue]="service.id">
+                                        <option *ngFor="let service of services | filterByClass:form.controls.car.controls.classId.value:form.controls.services.controls[i].controls.id.value:form.controls.services.controls[i].controls.id" [ngValue]="service.id">
                                             {{service.name}}
                                         </option>
                                     </select>
@@ -99,7 +99,7 @@
                                 <fieldset class="form-group">
                                     <ss-multiselect-dropdown [options]="workers" formControlName="workers" [texts]="{
                                             'defaultTitle': 'Выберите исполнителей',
-                                            'searchEmptyResult': 'Нет сотрудников',
+                                            'saerchEmptyResult': 'Нет сотрудников',
                                             'checkedPlural': 'исполнителя'
                                         }" [settings]="{'dynamicTitleMaxItems': 1}">
                                     </ss-multiselect-dropdown>

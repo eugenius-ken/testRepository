@@ -1,5 +1,18 @@
-<div class="body-container">
-    <h6>Услуги</h6>
+<div class="body-container" *ngIf="filterForm">
+    <div class="row without-padding">
+        <div class="col-9">
+            <h6 style="margin-top:7px;">Услуги</h6>
+        </div>
+        <div class="col-3">
+            <form class="filter-form" [formGroup]="filterForm">
+                 <select class="form-control" formControlName="id">
+                    <option *ngFor="let classObj of classes" [ngValue]="classObj.id">
+                        {{classObj.name}}
+                    </option>
+                </select> 
+            </form>
+        </div>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -12,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let service of services">
+            <tr *ngFor="let service of services | filterByClass:filterForm.controls.id.value">
                 <td>{{service.name}}</td>
                 <td>{{service.price + ' руб.'}}</td>
                 <td>{{service.duration + ' мин.'}}</td>

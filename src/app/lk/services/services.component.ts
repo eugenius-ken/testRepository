@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -19,19 +20,25 @@ import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.compone
 })
 export class ServicesComponent {
     private subscription: Subscription;
+    filterForm: FormGroup;
     services: Service[];
     classes: Class[];
 
     constructor(
         private serviceService: ServiceService,
         private classService: ClassService,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private fb: FormBuilder
     ) { }
 
     ngOnInit() {
-        this.subscription = this.serviceService.services.subscribe(services => {
-            this.services = services;
-        });
+        this.classService.classes.take(1).subscribe(classes => {
+            this.classes = classes;
+            this.initFilterForm();
+            this.subscription = this.serviceService.services.subscribe(services => {
+                this.services = services;
+            });
+        })
     }
 
     ngOnDestroy() {
@@ -57,5 +64,11 @@ export class ServicesComponent {
                     this.serviceService.remove(service.id);
                 }
             }, reason => { });
+    }
+
+    private initFilterForm() {
+        this.filterForm = this.fb.group({
+            'id': [this.classes.length > 0 ? this.classes[0].id : '']
+        });
     }
 }

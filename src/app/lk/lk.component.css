@@ -109,8 +109,12 @@ h6 {
     padding: 0rem 0.75rem;
 }
 
-form {
+.modal-content form {
     padding: 0rem;
+}
+
+form.filter-form {
+    padding: 0px 10px;
 }
 
 table a + a {
