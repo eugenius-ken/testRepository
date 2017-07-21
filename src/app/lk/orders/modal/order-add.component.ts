@@ -84,8 +84,9 @@ export class ModalOrderAddComponent implements OnInit {
             let sum = 0;
             let duration = 0;
             services.forEach(service => {
-                sum += this.services.find(s => s.id === service.id).price;
-                duration += this.services.find(s => s.id === service.id).duration;
+                const currentService = this.services.find(s => s.id === service.id);
+                sum += currentService ? currentService.price : 0;
+                duration += currentService ? currentService.duration : 0;
             });
             this.form.controls['price'].setValue(sum);
             this.form.controls['duration'].setValue(duration);

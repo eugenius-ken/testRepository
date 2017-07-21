@@ -85,7 +85,7 @@
 
                                 <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.services.controls[i].controls.id.touched && form.controls.services.controls[i].controls.id.dirty && form.controls.services.controls[i].controls.id.invalid}">
                                     <select class="form-control" formControlName="id">
-                                        <option *ngFor="let service of services | filterByClass:form.controls.car.controls.classId.value:form.controls.services.controls[i].controls.id" [ngValue]="service.id">
+                                        <option *ngFor="let service of services | filterByClass:form.controls.services.controls[i].controls.id.value:form.controls.car.controls.classId.value:form.controls.services.controls[i].controls.id" [ngValue]="service.id">
                                             {{service.name}}
                                         </option>
                                     </select>

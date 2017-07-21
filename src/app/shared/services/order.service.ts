@@ -109,6 +109,7 @@ export class OrderService {
         let params = new URLSearchParams();
         params.append('status', OrderStatus.Accepted.toString());
         params.append('status', OrderStatus.FromApp.toString());
+        params.append('t0', '1');
 
         return Observable.zip(
             this.classService.classes.take(1),

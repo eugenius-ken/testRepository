@@ -6,10 +6,12 @@ import { Service } from '../models/service.model';
     name: 'filterByClass'
 })
 export class FilterByClassPipe implements PipeTransform {
-    transform(services: Service[], classId: string, control: FormControl) {
+    transform(services: Service[], currentId: string, classId: string, control: FormControl) {
         const result = services.filter(s => s.carClass.id === classId);
-        if (result.length > 0) control.setValue(result[0].id);
-        
+        result.some(s => s.id === currentId) ?
+            control.setValue(currentId) :
+            (result.length > 0 ? control.setValue(result[0].id)  : control.setValue(''));
+
         return result;
     }
 }

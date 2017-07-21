@@ -57,10 +57,9 @@ export class OrdersComponent {
             this.subscription2 = this.orderService.orders.subscribe(orders => {
 
                 const items = orders.map(o => {
-                    const startDate = new Date(o.date.year, o.date.month, o.date.day, o.time.hour, o.time.minute);
+                    const startDate = new Date(o.date.year, o.date.month -1, o.date.day, o.time.hour, o.time.minute);
                     const endDate = new Date(startDate);
                     endDate.setMinutes(endDate.getMinutes() + o.duration);
-
                     return {
                         type: 'range',
                         start: startDate,
@@ -163,6 +162,5 @@ export class OrdersComponent {
     complete(order: Order) {
         this.orderService.currentId = order.id;
         const modal = this.modalService.open(ModalOrderCompleteComponent);
-        // this.orderService.complete(order.id, OrderStatus.Completed);
     }
 }
