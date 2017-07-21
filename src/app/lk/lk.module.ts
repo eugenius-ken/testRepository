@@ -32,6 +32,7 @@ import { ModalClientEditComponent } from './clients/modal/client-edit.component'
 import { OrdersComponent } from '../lk/orders/orders.component';
 import { ModalOrderAddComponent } from './orders/modal/order-add.component';
 import { ModalOrderEditComponent } from './orders/modal/order-edit.component';
+import { ModalOrderCompleteComponent } from './orders/modal/order-complete.component';
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
@@ -82,7 +83,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalClientAddComponent,
         ModalClientEditComponent,
         ModalOrderAddComponent,
-        ModalOrderEditComponent
+        ModalOrderEditComponent,
+        ModalOrderCompleteComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -99,7 +101,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalClientAddComponent,
         ModalClientEditComponent,
         ModalOrderAddComponent,
-        ModalOrderEditComponent
+        ModalOrderEditComponent,
+        ModalOrderCompleteComponent
     ]
 })
 export class LkModule { }

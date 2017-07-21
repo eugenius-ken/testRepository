@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h4>Подтвердите завершение заказа</h4>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="modal-body">
+        <fieldset [disabled]="isSubmitting">
+            <input type="hidden" formControlName="id" />
+            <input type="hidden" formControlName="status" />
+
+            <div [hidden]="hideForm">
+                <div class="row without-padding">
+                    <div class="col-12">Услуги</div>
+                </div>
+                <div formArrayName="services">
+                    <div *ngFor="let service of form.controls.services.controls; let i = index;">
+                        <div [formGroupName]="i">
+                            <div class="row without-padding">
+                                <div class="col-6">
+                                    <input type="hidden" formControlName="id" />
+                                    <fieldset class="form-group">
+                                        <input type="text" class="form-control" formControlName="name" readonly />
+                                    </fieldset>
+                                </div>
+                                <div class="col-6">
+                                    <fieldset class="form-group">
+                                        <ss-multiselect-dropdown [options]="workers" formControlName="workers" [texts]="{
+                                            'defaultTitle': 'Выберите исполнителей',
+                                            'searchEmptyResult': 'Нет сотрудников',
+                                            'checkedPlural': 'исполнителя'
+                                        }" [settings]="{'dynamicTitleMaxItems': 1}">
+                                        </ss-multiselect-dropdown>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row without-padding">
+                    <div class="col-12" style="color: red; font-size:12px;">
+                        Необходимо назначить исполнителей
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="hideForm">
+                Вы действительно желаете завершить заказ?
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="cancel()">Отмена</button>
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Подтвердить</button>
+    </div>
+</form>

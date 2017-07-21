@@ -65,6 +65,7 @@ export class ModalOrderEditComponent implements OnInit {
             'boxId': [order.box.id, Validators.required],
             'price': [order.price, Validators.required],
             'duration': [order.duration, Validators.required],
+            'status': [order.status, Validators.required],
             'date': [order.date, Validators.required],
             'time': [order.time, Validators.required],
             'client': this.fb.group({

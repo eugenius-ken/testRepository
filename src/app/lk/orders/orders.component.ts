@@ -6,14 +6,16 @@ import { VisTimelineOptions } from 'ng2-vis';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { OrderService } from '../../shared/services/order.service';
-import { Order, OrderServiceModel } from '../../shared/models/order.model';
+import { Order, OrderServiceModel, OrderStatus } from '../../shared/models/order.model';
 import { BoxService } from '../../shared/services/box.service';
 import { Box } from '../../shared/models/box.model';
 import { Worker } from '../../shared/models/worker.model';
 import { Time } from '../../shared/models/time.model';
+import { CustomDate } from '../../shared/models/custom-date.model';
 
 import { ModalOrderAddComponent } from './modal/order-add.component';
 import { ModalOrderEditComponent } from './modal/order-edit.component';
+import { ModalOrderCompleteComponent } from './modal/order-complete.component';
 import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.component';
 
 @Component({
@@ -59,24 +61,37 @@ export class OrdersComponent {
                     const endDate = new Date(startDate);
                     endDate.setMinutes(endDate.getMinutes() + o.duration);
 
-
                     return {
                         type: 'range',
                         start: startDate,
                         end: endDate,
                         content: `<div style="font-size:12px; text-align:center;">
-                                    ${startDate.getHours().toString()}:${startDate.getMinutes().toString()} - ${endDate.getHours().toString()}:${endDate.getMinutes().toString()}
+                                    ${this.getStringForTime(startDate, endDate)}
                                   </div>`,
                         group: o.box.id
                     };
                 });
                 this.timeline.setItems(items);
             });
-        })
+        });
+    }
 
+    private getStringForTime(startDate: Date, endDate: Date) {
+        const startHours = startDate.getHours() < 10 ? '0' + String(startDate.getHours()) : String(startDate.getHours());
+        const startMinutes = startDate.getMinutes() < 10 ? '0' + String(startDate.getMinutes()) : String(startDate.getMinutes());
 
+        const endHours = endDate.getHours() < 10 ? '0' + String(endDate.getHours()) : String(endDate.getHours());
+        const endMinutes = endDate.getMinutes() < 10 ? '0' + String(endDate.getMinutes()) : String(endDate.getMinutes());
 
+        return `${startHours}:${startMinutes}-${endHours}:${endMinutes}`;
+    }
 
+    private getStringForDate(date: CustomDate, time: Time) {
+        const month = date.month < 10 ? '0' + String(date.month) : String(date.month);
+        const day = date.day < 10 ? '0' + String(date.day) : String(date.day);
+        const hours = time.hour < 10 ? '0' + String(time.hour) : String(time.hour);
+        const minutes = time.minute < 10 ? '0' + String(time.minute) : String(time.minute);
+        return `${date.year}-${month}-${day} ${hours}:${minutes}`;
     }
 
     private timelineInit() {
@@ -114,6 +129,16 @@ export class OrdersComponent {
         return workers.map(w => w.name).join(', ');
     }
 
+    getStringForStatus(status: OrderStatus) {
+        switch (status) {
+            case OrderStatus.Accepted: return 'Принят';
+            case OrderStatus.Completed: return 'Завершен';
+            case OrderStatus.Declined: return 'Отменен';
+            case OrderStatus.FromApp: return 'Из приложения';
+            default: return '';
+        }
+    }
+
     add() {
         let modal = this.modalService.open(ModalOrderAddComponent);
     }
@@ -133,5 +158,11 @@ export class OrdersComponent {
                     this.orderService.remove(order.id);
                 }
             }, reason => { });
+    }
+
+    complete(order: Order) {
+        this.orderService.currentId = order.id;
+        const modal = this.modalService.open(ModalOrderCompleteComponent);
+        // this.orderService.complete(order.id, OrderStatus.Completed);
     }
 }

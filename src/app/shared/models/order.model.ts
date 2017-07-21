@@ -12,7 +12,7 @@ export class Order {
         public date: CustomDate,
         public time: Time,
         public price: number,
-        public status: number,
+        public status: OrderStatus,
         public duration: number,
         public box: Box,
         public client: OrderClient,
@@ -27,7 +27,7 @@ export class OrderAdd {
         public date: CustomDate,
         public time: Time,
         public price: number,
-        public status: number,
+        public status: OrderStatus,
         public duration: number,
         public boxId: string,
         public client: OrderClientAdd,
@@ -42,7 +42,7 @@ export class OrderEdit {
         public date: CustomDate,
         public time: Time,
         public price: number,
-        public status: number,
+        public status: OrderStatus,
         public duration: number,
         public boxId: string,
         public client: OrderClientAdd,
@@ -130,4 +130,11 @@ export class OrderCarEdit {
         public number: string,
         public classId: string
     ) { }
+}
+
+export enum OrderStatus {
+    Accepted,
+    Completed,
+    Declined,
+    FromApp
 }
