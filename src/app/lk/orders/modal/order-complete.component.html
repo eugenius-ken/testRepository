@@ -12,7 +12,7 @@
                     <div class="col-12">Услуги</div>
                 </div>
                 <div formArrayName="services">
-                    <div *ngFor="let service of form.controls.services.controls; let i = index;">
+                    <div *ngFor="let service of form.get('services')['controls']; let i = index;">
                         <div [formGroupName]="i">
                             <div class="row without-padding">
                                 <div class="col-6">

@@ -10,8 +10,8 @@ import { User } from '../../../shared/models/user.model';
     styleUrls: ['../../lk.component.css']
 })
 export class ProfileDataComponent implements OnInit {
-    private form: FormGroup;
-    private isSubmitting: boolean = false;
+    form: FormGroup;
+    isSubmitting: boolean = false;
 
     constructor(
         private fb: FormBuilder,

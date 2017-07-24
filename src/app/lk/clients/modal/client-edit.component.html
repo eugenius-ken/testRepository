@@ -7,21 +7,21 @@
             <input type="hidden" formControlName="id" />
             <div class="row without-padding">
                 <div class="col-6">
-                    <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
+                    <fieldset class="form-group" [ngClass]="{'has-danger': form.get('name').touched && form.get('name').dirty && form.get('name').invalid}">
                         <input formControlName="name" type="text" class="form-control" id="name" placeholder="ФИО сотрудника" [ngClass]="{
-                        'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid
+                        'has-danger': form.get('name').touched && form.get('name').dirty && form.get('name').invalid
                         }" />
-                        <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите ФИО</div>
+                        <div class="form-control-feedback" *ngIf="form.get('name').touched && form.get('name').dirty && form.get('name').invalid">Введите ФИО</div>
                     </fieldset>
-                    <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid}">
+                    <fieldset class="form-group" [ngClass]="{'has-danger': form.get('phone').touched && form.get('phone').dirty && form.get('phone').invalid}">
                         <div class="input-group">
                             <span class="input-group-addon" id="addonPhone">+7</span>
                             <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="телефон" aria-describedby="addonPhone"
                                 [ngClass]="{
-                            'has-danger': form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid
+                            'has-danger': form.get('phone').touched && form.get('phone').dirty && form.get('phone').invalid
                             }" />
                         </div>
-                        <div class="form-control-feedback" *ngIf="form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid">Введите телефон в формате 9999999999</div>
+                        <div class="form-control-feedback" *ngIf="form.get('phone').touched && form.get('phone').dirty && form.get('phone').invalid">Введите телефон в формате 9999999999</div>
                     </fieldset>
                 </div>
                 <div class="col-6">
@@ -41,7 +41,7 @@
             </div>
 
             <div formArrayName="cars">
-                <div *ngFor="let car of form.controls.cars.controls; let i = index; let last = last;">
+                <div *ngFor="let car of form.get('cars')['controls']; let i = index; let last = last;">
                     <div [formGroupName]="i">
                         <div class="row without-padding">
                             <div class="col-12">Данные автомобиля</div>
@@ -49,26 +49,26 @@
                         <div class="row without-padding">
                             <div class="col-6">
                                 <fieldset class="form-group" [ngClass]="{
-                                    'has-danger':   form.controls.cars.controls[i].controls.brand.touched &&
-                                                    form.controls.cars.controls[i].controls.brand.dirty &&
-                                                    form.controls.cars.controls[i].controls.brand.invalid 
+                                    'has-danger':   form.get('cars').controls[i].controls.brand.touched &&
+                                                    form.get('cars').controls[i].controls.brand.dirty &&
+                                                    form.get('cars').controls[i].controls.brand.invalid 
                                 }">
 
                                     <input formControlName="brand" type="text" class="form-control" id="brand" placeholder="Марка" [ngClass]="{
-                                    'has-danger':   form.controls.cars.controls[i].controls.brand.touched && 
-                                                    form.controls.cars.controls[i].controls.brand.dirty && 
-                                                    form.controls.cars.controls[i].controls.brand.invalid
+                                    'has-danger':   form.get('cars').controls[i].controls.brand.touched && 
+                                                    form.get('cars').controls[i].controls.brand.dirty && 
+                                                    form.get('cars').controls[i].controls.brand.invalid
                                     }" />
                                     <div class="form-control-feedback" *ngIf="
-                                        form.controls.cars.controls[i].controls.brand.touched && 
-                                        form.controls.cars.controls[i].controls.brand.dirty && 
-                                        form.controls.cars.controls[i].controls.brand.invalid">Введите марку машины</div>
+                                        form.get('cars').controls[i].controls.brand.touched && 
+                                        form.get('cars').controls[i].controls.brand.dirty && 
+                                        form.get('cars').controls[i].controls.brand.invalid">Введите марку машины</div>
                                 </fieldset>
 
                                 <fieldset class="form-group" [ngClass]="{
-                                    'has-danger':   form.controls.cars.controls[i].controls.classId.touched && 
-                                                    form.controls.cars.controls[i].controls.classId.dirty && 
-                                                    form.controls.cars.controls[i].controls.classId.invalid
+                                    'has-danger':   form.get('cars').controls[i].controls.classId.touched && 
+                                                    form.get('cars').controls[i].controls.classId.dirty && 
+                                                    form.get('cars').controls[i].controls.classId.invalid
                                 }">
                                     <select class="form-control" formControlName="classId">
                                         <option *ngFor="let classObj of classes" [ngValue]="classObj.id">
@@ -76,46 +76,46 @@
                                         </option>
                                     </select>
                                     <div class="form-control-feedback" *ngIf="
-                                        form.controls.cars.controls[i].controls.classId.touched && 
-                                        form.controls.cars.controls[i].controls.classId.dirty && 
-                                        form.controls.cars.controls[i].controls.classId.invalid">Выберите класс машины</div>
+                                        form.get('cars').controls[i].controls.classId.touched && 
+                                        form.get('cars').controls[i].controls.classId.dirty && 
+                                        form.get('cars').controls[i].controls.classId.invalid">Выберите класс машины</div>
                                 </fieldset>
                                 <fieldset class="form-group">
-                                    <button type="button" class="btn btn-info btn-block" (click)="removeCar(i)" *ngIf="form.controls.cars.controls.length > 1">Удалить машину</button>
+                                    <button type="button" class="btn btn-info btn-block" (click)="removeCar(i)" *ngIf="form.get('cars').controls.length > 1">Удалить машину</button>
                                 </fieldset>
                             </div>
                             <div class="col-6">
                                 <fieldset class="form-group" [ngClass]="{
-                                    'has-danger':   form.controls.cars.controls[i].controls.model.touched &&
-                                                    form.controls.cars.controls[i].controls.model.dirty &&
-                                                    form.controls.cars.controls[i].controls.model.invalid 
+                                    'has-danger':   form.get('cars').controls[i].controls.model.touched &&
+                                                    form.get('cars').controls[i].controls.model.dirty &&
+                                                    form.get('cars').controls[i].controls.model.invalid 
                                 }">
 
                                     <input formControlName="model" type="text" class="form-control" id="model" placeholder="Модель" [ngClass]="{
-                                    'has-danger':   form.controls.cars.controls[i].controls.model.touched && 
-                                                    form.controls.cars.controls[i].controls.model.dirty && 
-                                                    form.controls.cars.controls[i].controls.model.invalid
+                                    'has-danger':   form.get('cars').controls[i].controls.model.touched && 
+                                                    form.get('cars').controls[i].controls.model.dirty && 
+                                                    form.get('cars').controls[i].controls.model.invalid
                                     }" />
                                     <div class="form-control-feedback" *ngIf="
-                                        form.controls.cars.controls[i].controls.model.touched && 
-                                        form.controls.cars.controls[i].controls.model.dirty && 
-                                        form.controls.cars.controls[i].controls.model.invalid">Введите модель машины</div>
+                                        form.get('cars').controls[i].controls.model.touched && 
+                                        form.get('cars').controls[i].controls.model.dirty && 
+                                        form.get('cars').controls[i].controls.model.invalid">Введите модель машины</div>
                                 </fieldset>
                                 <fieldset class="form-group" [ngClass]="{
-                                    'has-danger':   form.controls.cars.controls[i].controls.number.touched &&
-                                                    form.controls.cars.controls[i].controls.number.dirty &&
-                                                    form.controls.cars.controls[i].controls.number.invalid 
+                                    'has-danger':   form.get('cars').controls[i].controls.number.touched &&
+                                                    form.get('cars').controls[i].controls.number.dirty &&
+                                                    form.get('cars').controls[i].controls.number.invalid 
                                 }">
 
                                     <input formControlName="number" type="text" class="form-control" id="number" placeholder="Госномер" [ngClass]="{
-                                    'has-danger':   form.controls.cars.controls[i].controls.number.touched && 
-                                                    form.controls.cars.controls[i].controls.number.dirty && 
-                                                    form.controls.cars.controls[i].controls.number.invalid
+                                    'has-danger':   form.get('cars').controls[i].controls.number.touched && 
+                                                    form.get('cars').controls[i].controls.number.dirty && 
+                                                    form.get('cars').controls[i].controls.number.invalid
                                     }" />
                                     <div class="form-control-feedback" *ngIf="
-                                        form.controls.cars.controls[i].controls.number.touched && 
-                                        form.controls.cars.controls[i].controls.number.dirty && 
-                                        form.controls.cars.controls[i].controls.number.invalid">Введите госномер машины</div>
+                                        form.get('cars').controls[i].controls.number.touched && 
+                                        form.get('cars').controls[i].controls.number.dirty && 
+                                        form.get('cars').controls[i].controls.number.invalid">Введите госномер машины</div>
                                 </fieldset>
                                 <fieldset class="form-group">
                                     <button type="button" class="btn btn-info btn-block" (click)="addCar()" *ngIf="last">Добавить машину</button>

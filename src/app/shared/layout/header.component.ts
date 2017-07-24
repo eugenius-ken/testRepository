@@ -9,8 +9,8 @@ import { UserService } from '../services/user.service';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    private activeRoute: string = '';
-    private isProfile: boolean = false;
+    activeRoute: string = '';
+    isProfile: boolean = false;
 
     constructor(
         private router: Router,

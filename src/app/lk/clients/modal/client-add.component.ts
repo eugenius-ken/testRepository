@@ -51,6 +51,7 @@ export class ModalClientAddComponent implements OnInit {
     }
 
     addCar() {
+        debugger;
         (this.form.controls['cars'] as FormArray).push(this.initCar());
     }
 
