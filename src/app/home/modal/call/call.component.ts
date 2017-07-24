@@ -22,6 +22,7 @@ export class ModalCallComponent {
     }
 
     submit() {
+        debugger;
         console.log(this.form);
     }
 }

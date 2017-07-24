@@ -4,11 +4,11 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
         <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.brand.touched && form.controls.brand.dirty && form.controls.brand.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': form.get('brand').touched && form.get('brand').dirty && form.get('brand').invalid}">
                 <input formControlName="brand" type="text" class="form-control" id="brand" placeholder="Марка машины" [ngClass]="{
-                    'has-danger': form.controls.brand.touched && form.controls.brand.dirty && form.controls.brand.invalid
+                    'has-danger': form.get('brand').touched && form.get('brand').dirty && form.get('brand').invalid
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.brand.touched && form.controls.brand.dirty && form.controls.brand.invalid">Введите марку машины</div>
+                <div class="form-control-feedback" *ngIf="form.get('brand').touched && form.get('brand').dirty && form.get('brand').invalid">Введите марку машины</div>
             </fieldset>
             <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.model.touched && form.controls.model.dirty && form.controls.model.invalid}">
                 <input formControlName="model" type="text" class="form-control" id="model" placeholder="Модель машины" [ngClass]="{

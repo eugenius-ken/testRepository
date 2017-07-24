@@ -4,20 +4,36 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
         <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('name').touched && 
+                form.get('name').dirty && 
+                form.get('name').invalid}">
                 <label for="name">Ваше имя</label>
-                <input formControlName="name" type="text" class="form-control" id="name" [ngClass]="{
-                    'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid
+                <input formControlName="name" type="text" class="form-control" id="name" [ngClass]="{'has-danger': 
+                    form.get('name').touched && 
+                    form.get('name').dirty && 
+                    form.get('name').invalid
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите имя</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('name').touched && 
+                    form.get('name').dirty && 
+                    form.get('name').invalid">Введите имя</div>
             </fieldset>
             
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('email').touched && 
+                form.get('email').dirty && 
+                form.get('email').invalid}">
                 <label for="email">Email</label>
-                <input formControlName="email" type="email" class="form-control" id="email" [ngClass]="{
-                    'has-danger': form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid
+                <input formControlName="email" type="email" class="form-control" id="email" [ngClass]="{'has-danger': 
+                    form.get('email').touched && 
+                    form.get('email').dirty && 
+                    form.get('email').invalid
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid">Некорректный email</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('email').touched && 
+                    form.get('email').dirty && 
+                    form.get('email').invalid">Некорректный email</div>
             </fieldset>
             <fieldset class="form-group" [ngClass]="{'has-danger': errorMessage, 'has-success': isSuccess}">
                 <input type="hidden" class="form-control" id="error" [ngClass]="{

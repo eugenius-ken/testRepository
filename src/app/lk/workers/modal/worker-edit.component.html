@@ -4,18 +4,34 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
         <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
-                <input formControlName="name" type="text" class="form-control" id="name" placeholder="ФИО сотрудника" [ngClass]="{
-                    'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('name').touched && 
+                form.get('name').dirty && 
+                form.get('name').invalid}">
+                <input formControlName="name" type="text" class="form-control" id="name" placeholder="ФИО сотрудника" [ngClass]="{'has-danger': 
+                    form.get('name').touched && 
+                    form.get('name').dirty && 
+                    form.get('name').invalid
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите ФИО</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('name').touched && 
+                    form.get('name').dirty && 
+                    form.get('name').invalid">Введите ФИО</div>
             </fieldset>
 
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.job.touched && form.controls.job.dirty && form.controls.job.invalid}">
-                <input formControlName="job" type="text" class="form-control" id="job" placeholder="Должность сотрудника" [ngClass]="{
-                    'has-danger': form.controls.job.touched && form.controls.job.dirty && form.controls.job.invalid
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('job').touched && 
+                form.get('job').dirty && 
+                form.get('job').invalid}">
+                <input formControlName="job" type="text" class="form-control" id="job" placeholder="Должность сотрудника" [ngClass]="{'has-danger': 
+                    form.get('job').touched && 
+                    form.get('job').dirty && 
+                    form.get('job').invalid
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.job.touched && form.controls.job.dirty && form.controls.job.invalid">Введите должность</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('job').touched && 
+                    form.get('job').dirty && 
+                    form.get('job').invalid">Введите должность</div>
             </fieldset>
 
             <fieldset class="form-group">

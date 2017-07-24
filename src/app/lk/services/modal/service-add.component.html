@@ -4,53 +4,91 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
         <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
-                <input formControlName="name" type="text" class="form-control" id="name" placeholder="Наименование услуги" [ngClass]="{
-                    'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('name').touched && 
+                form.get('name').dirty && 
+                form.get('name').invalid}">
+                <input formControlName="name" type="text" class="form-control" id="name" placeholder="Наименование услуги" [ngClass]="{'has-danger': 
+                    form.get('name').touched && 
+                    form.get('name').dirty && 
+                    form.get('name').invalid
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите наименование услуги</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('name').touched && 
+                    form.get('name').dirty && 
+                    form.get('name').invalid">Введите наименование услуги</div>
             </fieldset>
 
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.price.touched && form.controls.price.dirty && form.controls.price.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('price').touched && 
+                form.get('price').dirty && 
+                form.get('price').invalid}">
                 <div class="input-group">
                     <input formControlName="price" type="number" class="form-control" id="price" placeholder="Стоимость услуги" aria-describedby="rub"
-                        [ngClass]="{
-                            'has-danger': form.controls.price.touched && form.controls.price.dirty && form.controls.price.invalid
+                        [ngClass]="{'has-danger': 
+                            form.get('price').touched && 
+                            form.get('price').dirty && 
+                            form.get('price').invalid
                         }" />
                     <span class="input-group-addon" id="rub">руб.</span>
                 </div>
-                <div class="form-control-feedback" *ngIf="form.controls.price.touched && form.controls.price.dirty && form.controls.price.invalid">Введите стоимость услуги</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('price').touched && 
+                    form.get('price').dirty && 
+                    form.get('price').invalid">Введите стоимость услуги</div>
             </fieldset>
 
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.duration.touched && form.controls.duration.dirty && form.controls.duration.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('duration').touched && 
+                form.get('duration').dirty && 
+                form.get('duration').invalid}">
                 <div class="input-group">
                     <input formControlName="duration" type="number" class="form-control" id="duration" placeholder="Продолжительность услуги"
-                        aria-describedby="min" [ngClass]="{
-                            'has-danger': form.controls.duration.touched && form.controls.duration.dirty && form.controls.duration.invalid
+                        aria-describedby="min" [ngClass]="{'has-danger': 
+                            form.get('duration').touched && 
+                            form.get('duration').dirty && 
+                            form.get('duration').invalid
                         }" />
                     <span class="input-group-addon" id="min">мин.</span>
                 </div>
-                <div class="form-control-feedback" *ngIf="form.controls.duration.touched && form.controls.duration.dirty && form.controls.duration.invalid">Введите продолжительность услуги (целое число)</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('duration').touched && 
+                    form.get('duration').dirty && 
+                    form.get('duration').invalid">Введите продолжительность услуги (целое число)</div>
             </fieldset>
 
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.workerPercent.touched && form.controls.workerPercent.dirty && form.controls.workerPercent.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('workerPercent').touched && 
+                form.get('workerPercent').dirty && 
+                form.get('workerPercent').invalid}">
                 <div class="input-group">
                     <input formControlName="workerPercent" type="number" class="form-control" id="workerPercent" placeholder="Процент работнику"
-                        aria-describedby="percent" [ngClass]="{
-                        'has-danger': form.controls.workerPercent.touched && form.controls.workerPercent.dirty && form.controls.workerPercent.invalid
+                        aria-describedby="percent" [ngClass]="{'has-danger': 
+                            form.get('workerPercent').touched && 
+                            form.get('workerPercent').dirty && 
+                            form.get('workerPercent').invalid
                     }" />
                     <span class="input-group-addon" id="percent">%</span>
                 </div>
-                <div class="form-control-feedback" *ngIf="form.controls.workerPercent.touched && form.controls.workerPercent.dirty && form.controls.workerPercent.invalid">Введите процент (от 0 до 100)</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('workerPercent').touched && 
+                    form.get('workerPercent').dirty && 
+                    form.get('workerPercent').invalid">Введите процент (от 0 до 100)</div>
             </fieldset>
 
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.classId.touched && form.controls.classId.dirty && form.controls.classId.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('classId').touched && 
+                form.get('classId').dirty && 
+                form.get('classId').invalid}">
                 <select class="form-control" formControlName="classId">
                     <option *ngFor="let classObj of classes" [ngValue]="classObj.id">
                         {{classObj.name}}
                     </option>
                 </select>
-                <div class="form-control-feedback" *ngIf="form.controls.classId.touched && form.controls.classId.dirty && form.controls.classId.invalid">Выберите класс</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('classId').touched && 
+                    form.get('classId').dirty && 
+                    form.get('classId').invalid">Выберите класс</div>
             </fieldset>
         </fieldset>
     </div>

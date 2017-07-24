@@ -18,13 +18,19 @@
                         </div>
                     </fieldset>
 
-                    <fieldset class="form-group" [ngClass]="{'has-danger': form.get('boxId').touched && form.get('boxId').dirty && form.get('boxId').invalid}">
+                    <fieldset class="form-group" [ngClass]="{'has-danger': 
+                        form.get('boxId').touched && 
+                        form.get('boxId').dirty && 
+                        form.get('boxId').invalid}">
                         <select class="form-control" formControlName="boxId">
                             <option *ngFor="let box of boxes" [ngValue]="box.id">
                                 {{box.name}}
                             </option>
                         </select>
-                        <div class="form-control-feedback" *ngIf="form.get('boxId').touched && form.get('boxId').dirty && form.get('boxId').invalid">Выберите бокс</div>
+                        <div class="form-control-feedback" *ngIf="
+                            form.get('boxId').touched && 
+                            form.get('boxId').dirty && 
+                            form.get('boxId').invalid">Выберите бокс</div>
                     </fieldset>
 
                     <div [formGroup]="form.get('car')">
@@ -34,13 +40,19 @@
                     </div>
 
                     <div [formGroup]="form.get('client')">
-                        <fieldset class="form-group" [ngClass]="{'has-danger': form.get('client')['controls'].phone.touched && form.get('client')['controls'].phone.dirty && form.get('client')['controls'].phone.invalid}">
+                        <fieldset class="form-group" [ngClass]="{'has-danger': 
+                            form.get('client')['controls'].phone.touched && 
+                            form.get('client')['controls'].phone.dirty && 
+                            form.get('client')['controls'].phone.invalid}">
                             <div class="input-group">
                                 <span class="input-group-addon" id="addonPhone">+7</span>
                                 <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="телефон клиента" aria-describedby="addonPhone"
                                 />
                             </div>
-                            <div class="form-control-feedback" *ngIf="form.get('client')['controls'].phone.touched && form.get('client')['controls'].phone.dirty && form.get('client')['controls'].phone.invalid">Введите телефон в формате: 9999999999</div>
+                            <div class="form-control-feedback" *ngIf="
+                                form.get('client')['controls'].phone.touched && 
+                                form.get('client')['controls'].phone.dirty && 
+                                form.get('client')['controls'].phone.invalid">Введите телефон в формате: 9999999999</div>
                         </fieldset>
                     </div>
                 </div>
@@ -50,13 +62,19 @@
                     </fieldset>
 
                     <div [formGroup]="form.get('car')">
-                        <fieldset class="form-group" [ngClass]="{'has-danger': form.get('car')['controls'].classId.touched && form.get('car')['controls'].classId.dirty && form.get('car')['controls'].classId.invalid}">
+                        <fieldset class="form-group" [ngClass]="{'has-danger': 
+                            form.get('car')['controls'].classId.touched && 
+                            form.get('car')['controls'].classId.dirty && 
+                            form.get('car')['controls'].classId.invalid}">
                             <select class="form-control" formControlName="classId">
                             <option *ngFor="let classObj of classes" [ngValue]="classObj.id">
                                 {{classObj.name}}
                             </option>
                         </select>
-                            <div class="form-control-feedback" *ngIf="form.get('car')['controls'].touched && form.get('car')['controls'].dirty && form.get('car')['controls'].invalid">Выберите класс</div>
+                            <div class="form-control-feedback" *ngIf="
+                                form.get('car')['controls'].touched && 
+                                form.get('car')['controls'].dirty && 
+                                form.get('car')['controls'].invalid">Выберите класс</div>
                         </fieldset>
 
                         <fieldset class="form-group">
@@ -81,13 +99,21 @@
                         <div class="row without-padding">
                             <div class="col-6">
 
-                                <fieldset class="form-group" [ngClass]="{'has-danger': form.get('services').controls[i].controls.id.touched && form.get('services').controls[i].controls.id.dirty && form.get('services').controls[i].controls.id.invalid}">
+                                <fieldset class="form-group" [ngClass]="{'has-danger': 
+                                    form.get('services').controls[i].controls.id.touched && 
+                                    form.get('services').controls[i].controls.id.dirty && 
+                                    form.get('services').controls[i].controls.id.invalid}">
                                     <select class="form-control" formControlName="id">
-                                        <option *ngFor="let service of services | filterByClass:form.get('car').controls.classId.value:form.get('services').controls[i].controls.id.value:form.get('services').controls[i].controls.id" [ngValue]="service.id">
+                                        <option *ngFor="let service of services | filterByClass:
+                                                form.get('car').controls.classId.value:form.get('services').controls[i].controls.id.value:
+                                                form.get('services').controls[i].controls.id" [ngValue]="service.id">
                                             {{service.name}}
                                         </option>
                                     </select>
-                                    <div class="form-control-feedback" *ngIf="form.get('services').controls[i].controls.id.touched && form.get('services').controls[i].controls.id.dirty && form.get('services').controls[i].controls.id.invalid">Выберите услугу</div>
+                                    <div class="form-control-feedback" *ngIf="
+                                        form.get('services').controls[i].controls.id.touched && 
+                                        form.get('services').controls[i].controls.id.dirty && 
+                                        form.get('services').controls[i].controls.id.invalid">Выберите услугу</div>
                                 </fieldset>
 
                                 <fieldset class="form-group" *ngIf="form.get('services').controls.length > 1">
@@ -121,6 +147,6 @@
         </fieldset>
     </div>
     <div class="modal-footer">
-         <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Добавить</button> 
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Добавить</button>
     </div>
 </form>

@@ -3,29 +3,61 @@
     <hr />
     <form [formGroup]="form" (ngSubmit)="submit()" style="padding: 0rem 0.75rem;">
         <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid}">
-                <input formControlName="email" type="text" class="form-control" id="email" placeholder="E-mail" [ngClass]="{
-                    'form-control-danger': form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid 
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('email').touched && 
+                form.get('email').dirty && 
+                form.get('email').invalid}">
+                <input formControlName="email" type="text" class="form-control" id="email" placeholder="E-mail" [ngClass]="{'form-control-danger': 
+                    form.get('email').touched && 
+                    form.get('email').dirty && 
+                    form.get('email').invalid 
                 }" readonly />
-                <div class="form-control-feedback" *ngIf="form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid">Некорректный email</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('email').touched && 
+                    form.get('email').dirty && 
+                    form.get('email').invalid">Некорректный email</div>
             </fieldset>
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid}">
-                <input formControlName="name" type="text" class="form-control" id="name" placeholder="Наименование автомойки" [ngClass]="{
-                    'form-control-danger': form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid 
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('name').touched && 
+                form.get('name').dirty && 
+                form.get('name').invalid}">
+                <input formControlName="name" type="text" class="form-control" id="name" placeholder="Наименование автомойки" [ngClass]="{'form-control-danger': 
+                    form.get('name').touched && 
+                    form.get('name').dirty && 
+                    form.get('name').invalid 
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.name.touched && form.controls.name.dirty && form.controls.name.invalid">Введите наименование автомойки</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('name').touched && 
+                    form.get('name').dirty && 
+                    form.get('name').invalid">Введите наименование автомойки</div>
             </fieldset>
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.full_name.touched && form.controls.full_name.dirty && form.controls.full_name.invalid}">
-                <input formControlName="full_name" type="text" class="form-control" id="full_name" placeholder="Контактное лицо" [ngClass]="{
-                    'form-control-danger': form.controls.full_name.touched && form.controls.full_name.dirty && form.controls.full_name.invalid 
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('full_name').touched && 
+                form.get('full_name').dirty && 
+                form.get('full_name').invalid}">
+                <input formControlName="full_name" type="text" class="form-control" id="full_name" placeholder="Контактное лицо" [ngClass]="{'form-control-danger': 
+                    form.get('full_name').touched && 
+                    form.get('full_name').dirty && 
+                    form.get('full_name').invalid 
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.full_name.touched && form.controls.full_name.dirty && form.controls.full_name.invalid">Введите контактное лицо</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('full_name').touched && 
+                    form.get('full_name').dirty && 
+                    form.get('full_name').invalid">Введите контактное лицо</div>
             </fieldset>
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid}">
-                <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="Контактный телефон" [ngClass]="{
-                    'form-control-danger': form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid 
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('phone').touched && 
+                form.get('phone').dirty && 
+                form.get('phone').invalid}">
+                <input formControlName="phone" type="text" class="form-control" id="phone" placeholder="Контактный телефон" [ngClass]="{'form-control-danger': 
+                    form.get('phone').touched && 
+                    form.get('phone').dirty && 
+                    form.get('phone').invalid 
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.phone.touched && form.controls.phone.dirty && form.controls.phone.invalid">Введите телефон в формате: +79999999999</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('phone').touched && 
+                    form.get('phone').dirty && 
+                    form.get('phone').invalid">Введите телефон в формате: +79999999999</div>
             </fieldset>
         </fieldset>
         <fieldset class="form-group" style="margin-bottom: 0rem;">

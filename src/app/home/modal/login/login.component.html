@@ -4,19 +4,35 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
         <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('email').touched && 
+                form.get('email').dirty && 
+                form.get('email').invalid}">
                 <label for="email">Email</label>
-                <input formControlName="email" type="email" class="form-control" id="email" [ngClass]="{
-                    'form-control-danger': form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid 
+                <input formControlName="email" type="email" class="form-control" id="email" [ngClass]="{'form-control-danger': 
+                    form.get('email').touched && 
+                    form.get('email').dirty && 
+                    form.get('email').invalid 
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.email.touched && form.controls.email.dirty && form.controls.email.invalid">Некорректный email</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('email').touched && 
+                    form.get('email').dirty && 
+                    form.get('email').invalid">Некорректный email</div>
             </fieldset>
-            <fieldset class="form-group" [ngClass]="{'has-danger': form.controls.password.touched && form.controls.password.dirty && form.controls.password.invalid}">
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('password').touched && 
+                form.get('password').dirty && 
+                form.get('password').invalid}">
                 <label for="password">Пароль</label>
-                <input formControlName="password" type="password" class="form-control" id="password" [ngClass]="{
-                    'has-danger': form.controls.password.touched && form.controls.password.dirty && form.controls.password.invalid
+                <input formControlName="password" type="password" class="form-control" id="password" [ngClass]="{'has-danger': 
+                    form.get('password').touched && 
+                    form.get('password').dirty && 
+                    form.get('password').invalid
                 }" />
-                <div class="form-control-feedback" *ngIf="form.controls.password.touched && form.controls.password.dirty && form.controls.password.invalid">Введите пароль</div>
+                <div class="form-control-feedback" *ngIf="
+                    form.get('password').touched && 
+                    form.get('password').dirty && 
+                    form.get('password').invalid">Введите пароль</div>
             </fieldset>
             <fieldset class="form-group" [ngClass]="{'has-danger': errorMessage}">
                 <input type="hidden" class="form-control" id="error" [ngClass]="{'form-control-danger': errorMessage}" />
