@@ -30,7 +30,6 @@ export class ClientsComponent {
 
     ngOnInit() {
         this.subscription = this.clientService.clients.subscribe(clients => {
-            console.log('test');
             this.clients = clients;
         });
     }
