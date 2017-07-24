@@ -1,4 +1,4 @@
-import { Time } from './time.model';
+import { CustomDate } from './custom-date.model';
 import { Box } from './box.model';
 
 export class Worker {
@@ -6,7 +6,7 @@ export class Worker {
         public id: string,
         public name: string,
         public job: string,
-        public startDate: Time,
+        public startDate: CustomDate,
         public boxes: Box[]
     ) { }
 }
@@ -16,7 +16,7 @@ export class WorkerAdd {
         public id: string,
         public name: string,
         public job: string,
-        public startDate: Time,
+        public startDate: CustomDate,
         public boxes: string[]
     ) { }
 }
@@ -26,7 +26,7 @@ export class WorkerEdit {
         public id: string,
         public name: string,
         public job: string,
-        public startDate: Time,
+        public startDate: CustomDate,
         public boxes: string[]
     ) { }
 }

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
+import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { DatePickerI18n } from '../../../shared/I18n/DatepickerI18n';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { WorkerService } from '../../../shared/services/worker.service';
 import { BoxService } from '../../../shared/services/box.service';
@@ -12,7 +14,8 @@ import { Box } from '../../../shared/models/box.model';
 @Component({
     selector: 'modal-worker-edit',
     templateUrl: './worker-edit.component.html',
-    styleUrls: ['../../lk.component.css']
+    styleUrls: ['../../lk.component.css'],
+    providers: [{ provide: NgbDatepickerI18n, useClass: DatePickerI18n }]
 })
 export class ModalWorkerEditComponent implements OnInit, OnDestroy {
     private subscription: Subscription;

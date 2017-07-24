@@ -5,8 +5,8 @@ export class CustomDate {
         public day: number
     ) { }
 
-    public static TryParse(birthdate: string) {
-        let arr = birthdate.split('-');
+    public static TryParse(date: string) {
+        let arr = date.split('-');
         if(arr.length != 3) return null;
         return new CustomDate(parseInt(arr[0]), parseInt(arr[1]), parseInt(arr[2]));
     }

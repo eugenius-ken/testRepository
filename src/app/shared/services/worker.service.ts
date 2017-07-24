@@ -6,7 +6,7 @@ import { ApiService } from './api.service';
 import { BoxService } from './box.service';
 import { Worker, WorkerAdd, WorkerEdit } from '../models/worker.model';
 import { Box } from '../models/box.model';
-import { Time } from '../models/time.model';
+import { CustomDate } from '../models/custom-date.model';
 
 @Injectable()
 export class WorkerService {
@@ -84,7 +84,7 @@ export class WorkerService {
             _id: worker.id,
             name: worker.name,
             job: worker.job,
-            start_date: worker.startDate ? `${worker.startDate.hour}:${worker.startDate.minute}` : null,
+            start_date: worker.startDate ? `${worker.startDate.year}-${worker.startDate.month}-${worker.startDate.day}` : null,
             boxes: worker.boxes
         }
     }
@@ -94,7 +94,7 @@ export class WorkerService {
             worker._id,
             worker.name,
             worker.job,
-            worker.start_date ? Time.TryParse(worker.start_date) : null,
+            worker.start_date ? CustomDate.TryParse(worker.start_date) : null,
             (worker.boxes as string[]).map(id => {
                 return boxes.find(b => b.id === id);
             })

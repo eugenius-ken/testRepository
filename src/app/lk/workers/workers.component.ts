@@ -8,7 +8,7 @@ import { WorkerService } from '../../shared/services/worker.service';
 import { Worker } from '../../shared/models/worker.model';
 import { BoxService } from '../../shared/services/box.service';
 import { Box } from '../../shared/models/box.model';
-import { Time } from '../../shared/models/time.model';
+import { CustomDate } from '../../shared/models/custom-date.model';
 import { ModalWorkerAddComponent } from './modal/worker-add.component';
 import { ModalWorkerEditComponent } from './modal/worker-edit.component';
 import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.component';
@@ -66,14 +66,9 @@ export class WorkersComponent {
         return arr.join(', ');
     }
 
-    getStringForTime(time: Time) {
-        if (time == null) {
-            return '';
-        }
-        else {
-            let hours = time.hour < 10 ? '0' + String(time.hour) : String(time.hour);
-            let minutes = time.minute < 10 ? '0' + String(time.minute) : String(time.minute);
-            return `${hours}:${minutes}`;
-        }
+    private getStringForDate(date: CustomDate) {
+        const month = date.month < 10 ? '0' + String(date.month) : String(date.month);
+        const day = date.day < 10 ? '0' + String(date.day) : String(date.day);
+        return `${date.year}-${month}-${day}`;
     }
 }

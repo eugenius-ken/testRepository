@@ -26,10 +26,15 @@
                 }"></ss-multiselect-dropdown>
             </fieldset>
 
-            <div class="form-group">
-                Работает с
-                <ngb-timepicker [spinners]="false" formControlName="startDate"></ngb-timepicker>
-            </div>
+            <fieldset class="form-group">
+                <div class="input-group">
+                    <input type="text" id="startDate" class="form-control" placeholder="Дата трудоустройства" formControlName="startDate" ngbDatepicker
+                        #d="ngbDatepicker" [minDate]="{year: 1900, month: 1, day: 1}" (blur)="validateDate(); d.close();">
+                    <div class="input-group-addon" (click)="d.toggle()">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </fieldset>
 
         </fieldset>
     </div>

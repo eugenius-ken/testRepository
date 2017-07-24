@@ -14,7 +14,7 @@
             <tr *ngFor="let worker of workers">
                  <td>{{worker.name}}</td> 
                 <td>{{worker.job}}</td>
-                <td>{{getStringForTime(worker.startDate)}}</td>
+                <td>{{getStringForDate(worker.startDate)}}</td>
                 <td>{{getStringForBoxes(worker.boxes)}}</td>
                 <td>
                     <a (click)="edit(worker)"><img src="./assets/img/icon_edit.svg" /></a>
