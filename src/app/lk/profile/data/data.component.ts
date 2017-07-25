@@ -31,7 +31,7 @@ export class ProfileDataComponent implements OnInit {
         .subscribe(
             user => {
                 this.updateForm(user);
-                this.form.controls['phone'].setValue('+7' + user.phone);
+                this.form.controls['phone'].setValue('+7' + (user.phone == undefined ? '' : user.phone));
             },
             error => {
                 console.log(error.errors);

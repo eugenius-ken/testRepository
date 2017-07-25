@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -19,18 +20,35 @@ import { RemoveConfirmComponent } from '../../remove-confirm/remove-confirm.comp
 })
 export class CarsComponent {
     private subscription: Subscription;
+    private filterFormIsInitied: boolean = false;
     cars: Car[];
     classes: Class[];
+    brands: Car[];
+    filterForm: FormGroup;
 
     constructor(
         private carService: CarService,
         private classService: ClassService,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private fb: FormBuilder
     ) { }
 
     ngOnInit() {
         this.subscription = this.carService.cars.subscribe(cars => {
-            this.cars = cars;
+            this.cars = cars.slice();
+            this.brands = cars.filter((c, i, arr) => {
+                return arr.indexOf(c) === i;
+            });
+            if (!this.filterFormIsInitied) {
+                this.initFilterForm();
+                this.filterFormIsInitied = true;
+            }
+        });
+
+        this.carService.cars.take(1).subscribe(cars => {
+
+
+
         });
     }
 
@@ -57,5 +75,11 @@ export class CarsComponent {
                     this.carService.remove(car.id);
                 }
             }, reason => { });
+    }
+
+    private initFilterForm() {
+        this.filterForm = this.fb.group({
+            'brand': ['']
+        });
     }
 }

@@ -105,7 +105,8 @@
                                     form.get('services').controls[i].controls.id.invalid}">
                                     <select class="form-control" formControlName="id">
                                         <option *ngFor="let service of services | filterByClass:
-                                                form.get('car').controls.classId.value:form.get('services').controls[i].controls.id.value:
+                                                form.get('car').controls.classId.value:
+                                                form.get('services').controls[i].controls.id.value:
                                                 form.get('services').controls[i].controls.id" [ngValue]="service.id">
                                             {{service.name}}
                                         </option>

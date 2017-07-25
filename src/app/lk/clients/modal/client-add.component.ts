@@ -5,8 +5,9 @@ import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { DatePickerI18n } from '../../../shared/I18n/DatepickerI18n';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientService } from '../../../shared/services/client.service';
-import { ClassService } from '../../../shared/services/class.service';
-import { Class } from '../../../shared/models/class.model';
+import { CarService } from '../../../shared/services/car.service';
+// import { ClientCarAdd } from '../../../shared/models/client.model';
+import { CarBase } from '../../../shared/models/car.model';
 
 @Component({
     selector: 'modal-client-add',
@@ -16,20 +17,31 @@ import { Class } from '../../../shared/models/class.model';
 })
 export class ModalClientAddComponent implements OnInit {
     form: FormGroup;
-    classes: Class[];
     isSubmitting: boolean = false;
-    startDate;
+    brands: CarBase[];
+    models: CarBase[];
 
     constructor(
         private activeModal: NgbActiveModal,
         private clientService: ClientService,
-        private classService: ClassService,
+        private carService: CarService,
         private fb: FormBuilder
     ) { }
 
     ngOnInit() {
-        this.classService.classes.take(1).subscribe(classes => {
-            this.classes = classes;
+        this.carService.cars.take(1).subscribe(cars => {
+
+            //get unique brand' names
+            const brandNames = cars.map(c => c.brand).filter((b, i, arr) => {
+                return arr.indexOf(b) === i;
+            });
+
+            //get unique cars by brand' names
+            this.brands = [];
+            brandNames.forEach(name => {
+                this.brands.push(cars.find(c => c.brand === name) );
+            });
+            this.models = cars.slice();
 
             this.form = this.fb.group({
                 'name': ['', Validators.required],
@@ -45,8 +57,7 @@ export class ModalClientAddComponent implements OnInit {
         return this.fb.group({
             'brand': ['', Validators.required],
             'model': ['', Validators.required],
-            'number': ['', Validators.required],
-            'classId': [this.classes.length > 0 ? this.classes[0].id : '', Validators.required],
+            'number': ['', Validators.required]
         });
     }
 

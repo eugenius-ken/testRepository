@@ -1,5 +1,19 @@
-<div class="body-container">
-    <h6>Машины</h6>
+<div class="body-container" *ngIf="filterForm">
+    <div class="row without-padding">
+        <div class="col-9">
+            <h6 style="margin-top:7px;">Машины</h6>
+        </div>
+        <div class="col-3">
+            <form class="filter-form" [formGroup]="filterForm">
+                 <select class="form-control" formControlName="brand">
+                    <option value="" [selected]="true">Выберите марку</option>
+                    <option *ngFor="let car of brands" [ngValue]="car.brand">
+                        {{car.brand}}
+                    </option>
+                </select> 
+            </form>
+        </div>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -10,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let car of cars">
+            <tr *ngFor="let car of cars | filterByBrand:filterForm.controls.brand.value">
                 <td>{{car.brand}}</td>
                 <td>{{car.model}}</td>
                 <td>{{car.carClass ? car.carClass.name : ''}}</td>

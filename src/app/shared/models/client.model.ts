@@ -1,5 +1,6 @@
 import { CustomDate } from './custom-date.model';
 import { Class } from './class.model';
+import { CarBase } from './car.model';
 
 export class Client {
     constructor(
@@ -34,29 +35,32 @@ export class ClientEdit {
     ) { }
 }
 
-export class ClientCar {
+export class ClientCar extends CarBase {
     constructor(
-        public brand: string,
-        public model: string,
-        public carClass: Class,
+        brand: string,
+        model: string,
         public number: string
-    ) { }
+    ) { 
+        super(brand, model);
+    }
 }
 
-export class ClientCarAdd {
+export class ClientCarAdd extends CarBase {
     constructor(
-        public brand: string,
-        public model: string,
-        public classId: string,
+        brand: string,
+        model: string,
         public number: string
-    ) { }
+    ) {
+        super(brand, model);
+     }
 }
 
-export class ClientCarEdit {
+export class ClientCarEdit extends CarBase {
     constructor(
-        public brand: string,
-        public model: string,
-        public classId: string,
+        brand: string,
+        model: string,
         public number: string
-    ) { }
+    ) { 
+        super(brand, model);
+    }
 }

@@ -33,8 +33,7 @@ export class ModalRegisterComponent {
         this.userService.register(this.form.value)
         .subscribe(data => {
             this.isSubmitting = false;
-            // this.isSuccess = true;
-            this.errorMessage = 'Ошибка при выполнении запроса. Попробуйте позже';
+            this.isSuccess = true;
         },
         error => {
             console.error(error.message);

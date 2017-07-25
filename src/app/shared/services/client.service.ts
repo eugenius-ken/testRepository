@@ -101,7 +101,6 @@ export class ClientService {
                 return new ClientCar(
                     car.brand,
                     car.model,
-                    classes.find(c => c.id === car.classId),
                     car.number
                 );
             })

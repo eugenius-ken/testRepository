@@ -7,8 +7,8 @@ import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { DatePickerI18n } from '../../../shared/I18n/DatepickerI18n';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientService } from '../../../shared/services/client.service';
-import { ClassService } from '../../../shared/services/class.service';
-import { Class } from '../../../shared/models/class.model';
+import { CarService } from '../../../shared/services/car.service';
+import { CarBase } from '../../../shared/models/car.model';
 import { ClientCar } from '../../../shared/models/client.model';
 
 @Component({
@@ -20,23 +20,34 @@ import { ClientCar } from '../../../shared/models/client.model';
 export class ModalClientEditComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     form: FormGroup;
-    classes: Class[];
+    brands: CarBase[];
+    models: CarBase[];
     isSubmitting: boolean = false;
     startDate;
 
     constructor(
         private activeModal: NgbActiveModal,
         private clientService: ClientService,
-        private classService: ClassService,
+        private carService: CarService,
         private fb: FormBuilder
     ) { }
 
     ngOnInit() {
         this.subscription = Observable.zip(
             this.clientService.getCurrent(),
-            this.classService.classes.take(1),
-            (client, classes) => {
-                this.classes = classes;
+            this.carService.cars.take(1),
+            (client, cars) => {
+                //get unique brand' names
+                const brandNames = cars.map(c => c.brand).filter((b, i, arr) => {
+                    return arr.indexOf(b) === i;
+                });
+
+                //get unique cars by brand' names
+                this.brands = [];
+                brandNames.forEach(name => {
+                    this.brands.push(cars.find(c => c.brand === name));
+                });
+                this.models = cars.slice();
 
                 this.form = this.fb.group({
                     'id': [client.id, Validators.required],
@@ -63,14 +74,12 @@ export class ModalClientEditComponent implements OnInit, OnDestroy {
             this.fb.group({
                 'brand': ['', Validators.required],
                 'model': ['', Validators.required],
-                'number': ['', Validators.required],
-                'classId': [this.classes.length > 0 ? this.classes[0].id : '', Validators.required],
+                'number': ['', Validators.required]
             }) :
             this.fb.group({
                 'brand': [car.brand, Validators.required],
                 'model': [car.model, Validators.required],
-                'number': [car.number, Validators.required],
-                'classId': [car.carClass.id, Validators.required],
+                'number': [car.number, Validators.required]
             });
     }
 
