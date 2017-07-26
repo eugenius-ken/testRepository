@@ -163,7 +163,7 @@ export class OrderService {
         const date = order.date && order.time ?
             new Date(
                 order.date.year,
-                order.date.month,
+                order.date.month - 1,
                 order.date.day,
                 order.time.hour,
                 order.time.minute

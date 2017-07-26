@@ -10,6 +10,7 @@ import { BoxService } from '../../../shared/services/box.service';
 import { ClassService } from '../../../shared/services/class.service';
 import { ServiceService } from '../../../shared/services/service.service';
 import { WorkerService } from '../../../shared/services/worker.service';
+import { CarService } from '../../../shared/services/car.service';
 import { OrderServiceModelAdd } from '../../../shared/models/order.model';
 import { Box } from '../../../shared/models/box.model';
 import { Class } from '../../../shared/models/class.model';
@@ -17,7 +18,7 @@ import { Service } from '../../../shared/models/service.model';
 import { Worker } from '../../../shared/models/worker.model';
 import { CustomDate } from '../../../shared/models/custom-date.model';
 import { Time } from '../../../shared/models/time.model';
-
+import { CarBase } from '../../../shared/models/car.model';
 
 @Component({
     selector: 'modal-order-add',
@@ -32,6 +33,8 @@ export class ModalOrderAddComponent implements OnInit {
     services: Service[];
     workers: Worker[];
     isSubmitting: boolean = false;
+    brands: CarBase[];
+    models: CarBase[];
 
     constructor(
         private activeModal: NgbActiveModal,
@@ -40,6 +43,7 @@ export class ModalOrderAddComponent implements OnInit {
         private classService: ClassService,
         private serviceService: ServiceService,
         private workerService: WorkerService,
+        private carService: CarService,
         private fb: FormBuilder
     ) { }
 
@@ -49,12 +53,26 @@ export class ModalOrderAddComponent implements OnInit {
             this.boxService.boxes.take(1),
             this.classService.classes.take(1),
             this.serviceService.services.take(1),
-            this.workerService.workers.take(1))
-            .subscribe(([boxes, classes, services, workers]) => {
+            this.workerService.workers.take(1),
+            this.carService.cars.take(1), )
+            .subscribe(([boxes, classes, services, workers, cars]) => {
                 this.boxes = boxes;
                 this.classes = classes;
                 this.services = services;
                 this.workers = workers;
+
+                //get unique brand' names
+                const brandNames = cars.map(c => c.brand).filter((b, i, arr) => {
+                    return arr.indexOf(b) === i;
+                });
+
+                //get unique cars by brand' names
+                this.brands = [];
+                brandNames.forEach(name => {
+                    this.brands.push(cars.find(c => c.brand === name));
+                });
+                this.models = cars.slice();
+
                 this.initForm();
             });
     }
@@ -65,7 +83,7 @@ export class ModalOrderAddComponent implements OnInit {
             'boxId': [this.boxes.length > 0 ? this.boxes[0].id : '', Validators.required],
             'price': [0, Validators.required],
             'duration': [0, Validators.required],
-            'date': [new CustomDate(now.getFullYear(), now.getMonth(), now.getDate()), Validators.required],
+            'date': [new CustomDate(now.getFullYear(), now.getMonth() + 1, now.getDate()), Validators.required],
             'time': [new Time(now.getHours(), now.getMinutes()), Validators.required],
             'client': this.fb.group({
                 'phone': ['', [Validators.pattern(/^\d{10}$/)]],
@@ -80,7 +98,7 @@ export class ModalOrderAddComponent implements OnInit {
             'services': this.fb.array([this.initService()])
         });
 
-        this.form.controls['services'].valueChanges.subscribe((services:OrderServiceModelAdd[]) => {
+        this.form.controls['services'].valueChanges.subscribe((services: OrderServiceModelAdd[]) => {
             let sum = 0;
             let duration = 0;
             services.forEach(service => {
@@ -112,6 +130,10 @@ export class ModalOrderAddComponent implements OnInit {
         if (typeof (this.form.controls['date'].value) !== 'object') {
             this.form.controls['date'].setValue(null);
         }
+    }
+
+    numberChanged() {
+        
     }
 
     submit() {

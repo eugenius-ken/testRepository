@@ -6,7 +6,6 @@ import { DatePickerI18n } from '../../../shared/I18n/DatepickerI18n';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientService } from '../../../shared/services/client.service';
 import { CarService } from '../../../shared/services/car.service';
-// import { ClientCarAdd } from '../../../shared/models/client.model';
 import { CarBase } from '../../../shared/models/car.model';
 
 @Component({

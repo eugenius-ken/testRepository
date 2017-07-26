@@ -70,7 +70,7 @@
                                     form.get('cars').controls[i].controls.brand.invalid 
                                 }">
                                     <select class="form-control" formControlName="brand">
-                                         <option value="">Выберите марку</option> 
+                                        <option value="">Выберите марку</option> 
                                         <option *ngFor="let car of brands" [ngValue]="car.brand">
                                             {{car.brand}}
                                         </option>

@@ -12,7 +12,6 @@ export class FilterByClassPipe implements PipeTransform {
         const result = services.filter(s => s.carClass.id === classId);
         //for filtering services in dropdown (when create/update order)
         if (currentId && control) {
-            console.log('test');
             result.some(s => s.id === currentId) ?
                 control.setValue(currentId) :
                 (result.length > 0 ? control.setValue(result[0].id) : control.setValue(''));

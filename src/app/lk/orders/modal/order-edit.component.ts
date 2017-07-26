@@ -10,6 +10,7 @@ import { BoxService } from '../../../shared/services/box.service';
 import { ClassService } from '../../../shared/services/class.service';
 import { ServiceService } from '../../../shared/services/service.service';
 import { WorkerService } from '../../../shared/services/worker.service';
+import { CarService } from '../../../shared/services/car.service';
 import { Order, OrderServiceModel, OrderServiceModelAdd } from '../../../shared/models/order.model';
 import { Box } from '../../../shared/models/box.model';
 import { Class } from '../../../shared/models/class.model';
@@ -17,6 +18,7 @@ import { Service } from '../../../shared/models/service.model';
 import { Worker } from '../../../shared/models/worker.model';
 import { CustomDate } from '../../../shared/models/custom-date.model';
 import { Time } from '../../../shared/models/time.model';
+import { CarBase } from '../../../shared/models/car.model';
 
 @Component({
     selector: 'modal-order-edit',
@@ -31,6 +33,8 @@ export class ModalOrderEditComponent implements OnInit {
     services: Service[];
     workers: Worker[];
     isSubmitting: boolean = false;
+    brands: CarBase[];
+    models: CarBase[];
 
     constructor(
         private activeModal: NgbActiveModal,
@@ -39,6 +43,7 @@ export class ModalOrderEditComponent implements OnInit {
         private classService: ClassService,
         private serviceService: ServiceService,
         private workerService: WorkerService,
+        private carService: CarService,
         private fb: FormBuilder
     ) { }
 
@@ -49,12 +54,26 @@ export class ModalOrderEditComponent implements OnInit {
             this.classService.classes.take(1),
             this.serviceService.services.take(1),
             this.workerService.workers.take(1),
+            this.carService.cars.take(1),
             this.orderService.getCurrent())
-            .subscribe(([boxes, classes, services, workers, order]) => {
+            .subscribe(([boxes, classes, services, workers, cars, order]) => {
                 this.boxes = boxes;
                 this.classes = classes;
                 this.services = services;
                 this.workers = workers;
+
+                //get unique brand' names
+                const brandNames = cars.map(c => c.brand).filter((b, i, arr) => {
+                    return arr.indexOf(b) === i;
+                });
+
+                //get unique cars by brand' names
+                this.brands = [];
+                brandNames.forEach(name => {
+                    this.brands.push(cars.find(c => c.brand === name));
+                });
+                this.models = cars.slice();
+
                 this.initForm(order);
             });
     }

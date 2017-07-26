@@ -35,12 +35,6 @@
                             form.get('boxId').invalid">Выберите бокс</div>
                     </fieldset>
 
-                    <div [formGroup]="form.controls.car">
-                        <fieldset class="form-group">
-                            <input formControlName="brand" type="text" class="form-control" id="brand" placeholder="Марка машины" />
-                        </fieldset>
-                    </div>
-
                     <div [formGroup]="form.controls.client">
                         <fieldset class="form-group" [ngClass]="{'has-danger': 
                             form.get('client')['controls'].phone.touched && 
@@ -55,6 +49,17 @@
                                 form.get('client')['controls'].phone.touched && 
                                 form.get('client')['controls'].phone.dirty && 
                                 form.get('client')['controls'].phone.invalid">Введите телефон в формате: 9999999999</div>
+                        </fieldset>
+                    </div>
+
+                    <div [formGroup]="form.controls.car">
+                        <fieldset class="form-group">
+                            <select class="form-control" formControlName="brand">
+                                <option value="">Выберите марку</option>
+                                <option *ngFor="let car of brands" [ngValue]="car.brand">
+                                    {{car.brand}}
+                                </option>
+                            </select>
                         </fieldset>
                     </div>
                 </div>
@@ -78,15 +83,28 @@
                                 form.get('car')['controls'].dirty && 
                                 form.get('car')['controls'].invalid">Выберите класс</div>
                         </fieldset>
-
-                        <fieldset class="form-group">
-                            <input formControlName="model" type="text" class="form-control" id="model" placeholder="Модель машины" />
-                        </fieldset>
                     </div>
 
                     <div [formGroup]="form.controls.client">
                         <fieldset class="form-group">
                             <input formControlName="name" type="text" class="form-control" id="name" placeholder="ФИО клиента" />
+                        </fieldset>
+                    </div>
+
+                    <div [formGroup]="form.controls.car">
+                        <fieldset class="form-group">
+                            <select class="form-control" formControlName="model">
+                                <option value="">Выберите модель</option>
+                                <option *ngFor="let car of models | filterByBrand:
+                                    form.get('car')['controls'].brand.value:
+                                    form.get('car')['controls'].model.value:
+                                    form.get('car')['controls'].model" [ngValue]="car.model">
+                                        {{car.model}}
+                                </option>
+                            </select>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <input formControlName="number" type="text" class="form-control" id="number" placeholder="Номер машины" />
                         </fieldset>
                     </div>
                 </div>
@@ -149,6 +167,6 @@
         </fieldset>
     </div>
     <div class="modal-footer">
-         <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Сохранить</button> 
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Сохранить</button>
     </div>
 </form>
