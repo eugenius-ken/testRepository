@@ -56,4 +56,10 @@ export class ModalWorkerEditComponent implements OnInit, OnDestroy {
         this.workerService.update(this.form.value);
         this.activeModal.close();
     }
+
+    validateDate() {
+        if (typeof (this.form.controls['startDate'].value) !== 'object') {
+            this.form.controls['startDate'].setValue(null);
+        }
+    }
 }
