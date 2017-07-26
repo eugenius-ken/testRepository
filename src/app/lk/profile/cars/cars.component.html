@@ -1,43 +1,26 @@
-<div class="body-container" *ngIf="filterForm">
-    <div class="row without-padding">
-        <div class="col-9">
-            <h6 style="margin-top:7px;">Машины</h6>
-        </div>
-        <div class="col-3">
-            <form class="filter-form" [formGroup]="filterForm">
-                 <select class="form-control" formControlName="brand">
-                    <option value="" [selected]="true">Выберите марку</option>
-                    <option *ngFor="let car of brands" [ngValue]="car.brand">
-                        {{car.brand}}
-                    </option>
-                </select> 
-            </form>
+<div class="body-container">
+    <h6>Машины</h6>
+    <hr />
+    <div class="row">
+        <div class="col-4" *ngFor="let classObj of classes" style="margin-bottom:20px;">
+            <div class="card">
+                <div class="card-header">
+                    {{classObj.name}}
+                </div>
+                <div class="card-block padding-10" id="{{classObj.id}}" [dragula]='"bag-one"'>
+                    <div class="car-item" *ngFor="let car of cars | filterByClass:classObj.id" id="{{car.id}}">
+                        <div class="pull-left">{{car.brand + ' ' + car.model}}</div>
+                        <div class="pull-right">
+                            <a (click)="edit(car)"><img src="./assets/img/icon_edit.svg" /></a>
+                            <a (click)="remove(car)"><img src="./assets/img/icon_remove.svg" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Марка</th>
-                <th>Модель</th>
-                <th>Класс</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let car of cars | filterByBrand:filterForm.controls.brand.value">
-                <td>{{car.brand}}</td>
-                <td>{{car.model}}</td>
-                <td>{{car.carClass ? car.carClass.name : ''}}</td>
-                <td>
-                    <a (click)="edit(car)"><img src="./assets/img/icon_edit.svg" /></a>
-                    <a (click)="remove(car)"><img src="./assets/img/icon_remove.svg" /></a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <div class="row">
         <div class="col-12">
             <button type="button" class="btn btn-default float-right" (click)="add()">Добавить машину</button>
         </div>
     </div>
-</div>

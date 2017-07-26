@@ -146,3 +146,22 @@ select {
     padding: 0rem;
 }
 
+.car-item {
+    border: 1px solid #d8d8d8;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 45px;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.car-item + .car-item {
+    margin-top: 10px;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+

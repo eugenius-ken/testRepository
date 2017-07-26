@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-
+import { DragulaModule } from 'ng2-dragula';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { SharedModule } from '../shared/shared.module';
 
@@ -56,7 +56,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         lkRouting,
         FormsModule,
         MultiselectDropdownModule,
-        SharedModule
+        SharedModule,
+        DragulaModule
     ],
     declarations: [
         LkComponent,
