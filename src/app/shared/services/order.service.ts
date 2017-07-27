@@ -105,6 +105,45 @@ export class OrderService {
             });
     }
 
+    isBoxBusy(startDate: CustomDate, startTime: Time, duration: number, boxId: string, orderId?: string) {
+        //get date range for verified order
+        let startVerifiedDate = new Date(startDate.year, startDate.month - 1, startDate.day, startTime.hour, startTime.minute);
+        let endVerifiedDate = new Date(startVerifiedDate);
+        endVerifiedDate.setMinutes(startVerifiedDate.getMinutes() + duration);
+
+        return this._ordersStorage.some(o => {
+            //verified order is in another box
+            if(o.box.id !== boxId) return false;
+
+            //get date range for order
+            let startCurrentDate = new Date(o.date.year, o.date.month - 1, o.date.day, o.time.hour, o.time.minute);
+            let endCurrentDate = new Date(startCurrentDate);
+            endCurrentDate.setMinutes(startCurrentDate.getMinutes() + duration);
+
+            //verified order starts later than current order finishs
+            if (startVerifiedDate >= endCurrentDate) {
+                return false;
+            }
+            //verified order finishs before current starts
+            else if (endVerifiedDate <= startCurrentDate) {
+                return false;
+            }
+            //verified order starts before current order and finishs after current order
+            else if (startVerifiedDate <= startCurrentDate && endVerifiedDate >= endCurrentDate) {
+                return true;
+            }
+            //verified order start during the current order
+            else if(startVerifiedDate >= startCurrentDate && startVerifiedDate <= endCurrentDate) {
+                return true;
+            }
+            //verified order finishs during the current order
+            else if(endVerifiedDate >= startCurrentDate && endVerifiedDate <= endCurrentDate) {
+                return true;
+            }
+            else return false;
+        });
+    }
+
     private getAll(): Observable<Order[]> {
         let params = new URLSearchParams();
         params.append('status', OrderStatus.Accepted.toString());

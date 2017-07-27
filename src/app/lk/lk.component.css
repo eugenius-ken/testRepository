@@ -177,3 +177,7 @@ select {
     padding:0px 12px; 
     margin-top:20px;
 }
+
+.error-container {
+    color: red;
+}

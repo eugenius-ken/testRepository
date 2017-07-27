@@ -105,7 +105,7 @@
                                     form.get('cars').controls[i].controls.model.invalid 
                                 }">
 
-                                    <select class="form-control" formControlName="model">
+                                    <select class="form-control" formControlName="model" (change)="modelChanged()">
                                         <option [selected]="true" value="">Выберите модель</option>
                                         <option *ngFor="let car of models | filterByBrand:
                                                         form.get('cars').controls[i].controls.brand.value:

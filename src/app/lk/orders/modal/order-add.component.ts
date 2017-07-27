@@ -11,6 +11,7 @@ import { ClassService } from '../../../shared/services/class.service';
 import { ServiceService } from '../../../shared/services/service.service';
 import { WorkerService } from '../../../shared/services/worker.service';
 import { CarService } from '../../../shared/services/car.service';
+import { ClientService } from '../../../shared/services/client.service';
 import { OrderServiceModelAdd } from '../../../shared/models/order.model';
 import { Box } from '../../../shared/models/box.model';
 import { Class } from '../../../shared/models/class.model';
@@ -32,7 +33,7 @@ export class ModalOrderAddComponent implements OnInit {
     classes: Class[];
     services: Service[];
     workers: Worker[];
-    isSubmitting: boolean = false;
+    boxIsBusy: boolean = false;
     brands: CarBase[];
     models: CarBase[];
 
@@ -44,6 +45,7 @@ export class ModalOrderAddComponent implements OnInit {
         private serviceService: ServiceService,
         private workerService: WorkerService,
         private carService: CarService,
+        private clientService: ClientService,
         private fb: FormBuilder
     ) { }
 
@@ -74,6 +76,7 @@ export class ModalOrderAddComponent implements OnInit {
                 this.models = cars.slice();
 
                 this.initForm();
+                this.checkBoxBusy();
             });
     }
 
@@ -98,17 +101,13 @@ export class ModalOrderAddComponent implements OnInit {
             'services': this.fb.array([this.initService()])
         });
 
+        //obsolete
         this.form.controls['services'].valueChanges.subscribe((services: OrderServiceModelAdd[]) => {
-            let sum = 0;
-            let duration = 0;
-            services.forEach(service => {
-                const currentService = this.services.find(s => s.id === service.id);
-                sum += currentService ? currentService.price : 0;
-                duration += currentService ? currentService.duration : 0;
-            });
-            this.form.controls['price'].setValue(sum);
-            this.form.controls['duration'].setValue(duration);
+            this.setPriceAndDuration(services);
         });
+
+        this.setPriceAndDuration(this.form.controls.services.value);
+        this.checkBoxBusy();
     }
 
     private initService(): FormGroup {
@@ -133,11 +132,47 @@ export class ModalOrderAddComponent implements OnInit {
     }
 
     numberChanged() {
-        
+        this.delay(() => {
+            const carNumber = this.form.get('car').get('number').value;
+            const client = this.clientService.getClientByCarNumber(carNumber);
+            if(client !== undefined) {
+                const car = client.cars.find(c => c.number === carNumber);
+            }
+        }, 1000);
     }
 
     submit() {
         this.orderService.add(this.form.value)
         this.activeModal.close();
+    }
+
+    private timer = 0;
+    delay(callback: Function, ms) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(callback, ms);
+    }
+
+    boxChanged() {
+        this.checkBoxBusy();
+    }
+
+    private checkBoxBusy() {
+        const startDate = this.form.controls['date'].value;
+        const startTime = this.form.controls['time'].value;
+        const duration = this.form.controls['duration'].value;
+        const boxId = this.form.controls['boxId'].value;
+        this.boxIsBusy = this.orderService.isBoxBusy(startDate, startTime, duration, boxId);
+    }
+
+    private setPriceAndDuration(services: OrderServiceModelAdd[]) {
+        let sum = 0;
+            let duration = 0;
+            services.forEach(service => {
+                const currentService = this.services.find(s => s.id === service.id);
+                sum += currentService ? currentService.price : 0;
+                duration += currentService ? currentService.duration : 0;
+            });
+            this.form.controls['price'].setValue(sum);
+            this.form.controls['duration'].setValue(duration);
     }
 }

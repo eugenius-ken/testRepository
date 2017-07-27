@@ -39,7 +39,8 @@ export class ClientCar extends CarBase {
     constructor(
         brand: string,
         model: string,
-        public number: string
+        public number: string,
+        carClass: Class
     ) { 
         super(brand, model);
     }
@@ -49,6 +50,7 @@ export class ClientCarAdd extends CarBase {
     constructor(
         brand: string,
         model: string,
+        classId: string,
         public number: string
     ) {
         super(brand, model);
@@ -59,6 +61,7 @@ export class ClientCarEdit extends CarBase {
     constructor(
         brand: string,
         model: string,
+        classId: string,
         public number: string
     ) { 
         super(brand, model);

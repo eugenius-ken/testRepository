@@ -56,7 +56,8 @@ export class ModalClientAddComponent implements OnInit {
         return this.fb.group({
             'brand': ['', Validators.required],
             'model': ['', Validators.required],
-            'number': ['', Validators.required]
+            'number': ['', Validators.required],
+            'classId': ['']
         });
     }
 
@@ -77,5 +78,9 @@ export class ModalClientAddComponent implements OnInit {
         if (typeof (this.form.controls['birthday'].value) !== 'object') {
             this.form.controls['birthday'].setValue(null);
         }
+    }
+
+    modelChanged() {
+        console.log('changed');
     }
 }

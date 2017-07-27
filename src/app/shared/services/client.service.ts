@@ -4,8 +4,10 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { ApiService } from './api.service';
 import { ClassService } from './class.service';
+import { CarService } from './car.service';
 import { Client, ClientAdd, ClientEdit, ClientCar, ClientCarAdd, ClientCarEdit } from '../models/client.model';
 import { Class } from '../models/class.model';
+import { Car } from '../models/car.model';
 import { CustomDate } from '../models/custom-date.model';
 
 @Injectable()
@@ -20,7 +22,8 @@ export class ClientService {
 
     constructor(
         private apiService: ApiService,
-        private classService: ClassService
+        private classService: ClassService,
+        private carService: CarService
     ) {
         this.getAll()
             .subscribe(clients => {
@@ -38,8 +41,9 @@ export class ClientService {
         Observable.zip(
             this.apiService.post(this.path, this.mapToApiModel(client)),
             this.classService.classes.take(1),
-            (data, classes) => {
-                this._clientsStorage.push(this.mapFromApiModel(data.result, classes));
+            this.carService.cars.take(1),
+            (data, classes, cars) => {
+                this._clientsStorage.push(this.mapFromApiModel(data.result, classes, cars));
                 this._clients.next(this._clientsStorage);
             }).subscribe();
     }
@@ -48,10 +52,11 @@ export class ClientService {
         Observable.zip(
             this.apiService.put(this.path + '/' + client.id, this.mapToApiModel(client)),
             this.classService.classes.take(1),
-            (data, classes) => {
+            this.carService.cars.take(1),
+            (data, classes, cars) => {
                 let i = this._clientsStorage.findIndex(c => c.id === client.id);
                 if (i != -1) {
-                    this._clientsStorage.splice(i, 1, this.mapFromApiModel(data.result, classes));
+                    this._clientsStorage.splice(i, 1, this.mapFromApiModel(data.result, classes, cars));
                     this._clients.next(this._clientsStorage);
                 }
             }).subscribe();
@@ -68,13 +73,18 @@ export class ClientService {
             });
     }
 
+    getClientByCarNumber(number: string) {
+        return this._clientsStorage.find(c => c.cars.some(car => car.number === number));
+    }
+
     private getAll(): Observable<Client[]> {
         return Observable.zip(
             this.classService.classes.take(1),
+            this.carService.cars.take(1),
             this.apiService.get(this.path),
-            (classes, data) => {
+            (classes, cars, data) => {
                 return (data.result as any[]).map(client => {
-                    return this.mapFromApiModel(client, classes);
+                    return this.mapFromApiModel(client, classes, cars);
                 });
             });
     }
@@ -90,7 +100,7 @@ export class ClientService {
         }
     }
 
-    private mapFromApiModel(client: any, classes: Class[]): Client {
+    private mapFromApiModel(client: any, classes: Class[], cars: Car[]): Client {
         return new Client(
             client._id,
             client.name,
@@ -98,10 +108,15 @@ export class ClientService {
             client.birthday ? CustomDate.TryParse(client.birthday) : null,
             client.discount,
             (client.cars as any[]).map(car => {
+                //find car's class
+                const currentCar = cars.find(c => c.brand === car.brand && c.model === c.model);
+                const classObj = currentCar !== undefined ? currentCar.carClass : undefined;
+
                 return new ClientCar(
                     car.brand,
                     car.model,
-                    car.number
+                    car.number,
+                    classObj
                 );
             })
         );
