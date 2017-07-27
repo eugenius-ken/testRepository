@@ -18,6 +18,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-4" *ngIf="carsExistWithoutClass">
+            <div class="card">
+                <div class="card-header">
+                    Без класса
+                </div>
+                <div class="card-block padding-10" id="withoutClass" [dragula]='"bag-one"'>
+                    <div class="car-item" *ngFor="let car of cars | withoutClass" id="{{car.id}}">
+                        <div class="pull-left">{{car.brand + ' ' + car.model}}</div>
+                        <div class="pull-right">
+                            <a (click)="edit(car)"><img src="./assets/img/icon_edit.svg" /></a>
+                            <a (click)="remove(car)"><img src="./assets/img/icon_remove.svg" /></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-12">

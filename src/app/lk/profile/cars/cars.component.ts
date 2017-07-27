@@ -22,6 +22,7 @@ export class CarsComponent {
     private subscriptions: Subscription[] = [];
     cars: Car[];
     classes: Class[];
+    carsExistWithoutClass: boolean = false;
 
     constructor(
         private carService: CarService,
@@ -34,6 +35,8 @@ export class CarsComponent {
         this.subscriptions.push(
             this.carService.cars.subscribe(cars => {
                 this.cars = cars.slice();
+                if(this.cars.some(c => c.carClass === undefined))
+                    this.carsExistWithoutClass = true;
             })
         );
 
@@ -43,7 +46,7 @@ export class CarsComponent {
 
         this.subscriptions.push(
             this.dragulaService.drop.subscribe(e => {
-                console.log('dragula');
+                if(e[1].getAttribute('id') === 'withoutClass') return;
                 const currentCar = this.cars.find(c => c.id === e[1].getAttribute('id'));
                 this.carService.update(
                     new CarEdit(
