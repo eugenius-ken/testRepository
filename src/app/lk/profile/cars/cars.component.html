@@ -7,7 +7,7 @@
                 <div class="card-header">
                     {{classObj.name}}
                 </div>
-                <div class="card-block padding-10" id="{{classObj.id}}" [dragula]='"bag-one"'>
+                <div class="card-block car-container padding-10" id="{{classObj.id}}" [dragula]='"bag-one"'>
                     <div class="car-item" *ngFor="let car of cars | filterByClass:classObj.id" id="{{car.id}}">
                         <div class="pull-left">{{car.brand + ' ' + car.model}}</div>
                         <div class="pull-right">
@@ -23,7 +23,7 @@
                 <div class="card-header">
                     Без класса
                 </div>
-                <div class="card-block padding-10" id="withoutClass" [dragula]='"bag-one"'>
+                <div class="card-block car-container padding-10" id="withoutClass" [dragula]='"bag-one"'>
                     <div class="car-item" *ngFor="let car of cars | withoutClass" id="{{car.id}}">
                         <div class="pull-left">{{car.brand + ' ' + car.model}}</div>
                         <div class="pull-right">
