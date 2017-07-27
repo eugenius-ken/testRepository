@@ -31,18 +31,38 @@ export class UserService {
     }
 
     getCurrentUser() {
-        return this.apiService.get('/user')
+        return this.apiService.get('/company')
             .map(data => {
-                return data.result;
+                return this.mapFromApiModel(data.result);
             });
     }
 
     updateUser(user: User): Observable<User> {
-        user.phone = user.phone.substr(2, 10);
-        
-        return this.apiService.put('/user', user)
+        return this.apiService.put('/company', this.mapToApiModel(user))
             .map(data => {
-                return data.result;
+                return this.mapFromApiModel(data.result);
             });
+    }
+
+    mapToApiModel(user: User) {
+        return {
+            name: user.name,
+            email: user.email,
+            phone: user.phone.substr(2, 10),
+            address: user.address,
+            lat: user.lat,
+            lng: user.lng
+        }
+    }
+
+    mapFromApiModel(user: any) {
+        return new User(
+            user.name,
+            user.email,
+            '+7' + (user.phone == undefined ? '' : user.phone),
+            user.address,
+            user.lat,
+            user.lng
+        );
     }
 }

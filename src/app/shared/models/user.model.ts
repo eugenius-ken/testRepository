@@ -1,6 +1,10 @@
 export class User {
-    name: string;
-    full_name: string;
-    email: string;
-    phone: string;
+    constructor(
+        public name: string,
+        public email: string,
+        public phone: string,
+        public address: string,
+        public lat: number,
+        public lng: number
+    ) { }
 }

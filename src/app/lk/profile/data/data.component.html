@@ -1,8 +1,11 @@
 <div class="body-container">
     <h6>Данные профиля</h6>
     <hr />
-    <form [formGroup]="form" (ngSubmit)="submit()" style="padding: 0rem 0.75rem;">
+    <form [formGroup]="form" (ngSubmit)="submit()" style="padding: 0rem 0.75rem;" *ngIf="isFormInitied">
         <fieldset [disabled]="isSubmitting">
+            <input type="hidden" formControlName="lat" />
+            <input type="hidden" formControlName="lng" />
+
             <fieldset class="form-group" [ngClass]="{'has-danger': 
                 form.get('email').touched && 
                 form.get('email').dirty && 
@@ -32,20 +35,6 @@
                     form.get('name').invalid">Введите наименование автомойки</div>
             </fieldset>
             <fieldset class="form-group" [ngClass]="{'has-danger': 
-                form.get('full_name').touched && 
-                form.get('full_name').dirty && 
-                form.get('full_name').invalid}">
-                <input formControlName="full_name" type="text" class="form-control" id="full_name" placeholder="Контактное лицо" [ngClass]="{'form-control-danger': 
-                    form.get('full_name').touched && 
-                    form.get('full_name').dirty && 
-                    form.get('full_name').invalid 
-                }" />
-                <div class="form-control-feedback" *ngIf="
-                    form.get('full_name').touched && 
-                    form.get('full_name').dirty && 
-                    form.get('full_name').invalid">Введите контактное лицо</div>
-            </fieldset>
-            <fieldset class="form-group" [ngClass]="{'has-danger': 
                 form.get('phone').touched && 
                 form.get('phone').dirty && 
                 form.get('phone').invalid}">
@@ -59,9 +48,24 @@
                     form.get('phone').dirty && 
                     form.get('phone').invalid">Введите телефон в формате: +79999999999</div>
             </fieldset>
+            <fieldset class="form-group" [ngClass]="{'has-danger': 
+                form.get('address').touched && 
+                form.get('address').dirty && 
+                form.get('address').invalid}">
+                <input formControlName="address" type="text" class="form-control" id="address" placeholder="Адрес автомойки" [ngClass]="{'form-control-danger': 
+                    form.get('address').touched && 
+                    form.get('address').dirty && 
+                    form.get('address').invalid 
+                }" (keyup)="addressChanged()" />
+                <div class="form-control-feedback" *ngIf="
+                    form.get('address').touched && 
+                    form.get('address').dirty && 
+                    form.get('address').invalid">Введите адрес автомойки</div>
+            </fieldset>
         </fieldset>
         <fieldset class="form-group" style="margin-bottom: 0rem;">
-            <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Сохранить</button>
+            <button type="submit" class="btn btn-success float-right">Сохранить</button>
         </fieldset>
     </form>
+    <div id="map"></div>
 </div>

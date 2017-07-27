@@ -10,28 +10,42 @@ import { User } from '../../../shared/models/user.model';
     styleUrls: ['../../lk.component.css']
 })
 export class ProfileDataComponent implements OnInit {
+    private map: any;
     form: FormGroup;
     isSubmitting: boolean = false;
+    isFormInitied: boolean = false;
 
     constructor(
         private fb: FormBuilder,
         private userService: UserService
     ) {
-        this.form = this.fb.group({
-            'name': ['', Validators.required],
-            'full_name': ['', Validators.required],
-            'email': ['', [Validators.required, Validators.email]],
-            'phone': ['', [Validators.required, Validators.pattern(/^((\+7)+([0-9]){10})$/gm)]]
-        });
+
     }
 
     ngOnInit() {
         this.isSubmitting = true;
         this.userService.getCurrentUser()
-        .subscribe(
+            .subscribe(
             user => {
-                this.updateForm(user);
-                this.form.controls['phone'].setValue('+7' + (user.phone == undefined ? '' : user.phone));
+                this.updateData(user);
+                this.isFormInitied = true;
+
+                ymaps.ready(() => {
+                    this.map = new ymaps.Map("map", {
+                        center: [56.838560, 60.603712],
+                        zoom: 12,
+                        controls: ['zoomControl']
+                    });
+
+                    this.map.geoObjects.add(
+                        new ymaps.GeoObject({
+                            geometry: {
+                                type: 'Point',
+                                coordinates: [user.lat, user.lng]
+                            }
+                        })
+                    );
+                });
             },
             error => {
                 console.log(error.errors);
@@ -43,13 +57,10 @@ export class ProfileDataComponent implements OnInit {
 
     submit() {
         this.isSubmitting = true;
-        let userModel = new User();
-        Object.assign(userModel, this.form.value);
-
         this.userService.updateUser(this.form.value)
             .subscribe(
             user => {
-                this.updateForm(user);
+                this.updateData(user);
             },
             error => {
                 console.log(error.errors);
@@ -59,10 +70,39 @@ export class ProfileDataComponent implements OnInit {
             });
     }
 
-    private updateForm(user: User) {
-        this.form.controls['email'].setValue(user.email);
-        this.form.controls['name'].setValue(user.name);
-        this.form.controls['full_name'].setValue(user.full_name);
-        // this.form.controls['phone'].setValue('+7' + user.phone); this row set form as invalid. Why???
+    updateData(user: User) {
+        this.form = this.fb.group({
+            'name': [user.name, Validators.required],
+            'email': [user.email, [Validators.required, Validators.email]],
+            'phone': [user.phone, [Validators.required, Validators.pattern(/^((\+7)+([0-9]){10})$/gm)]],
+            'address': [user.address, Validators.required],
+            'lat': [user.lat],
+            'lng': [user.lng]
+        });
     }
+
+    addressChanged() {
+        this.delay(() => {
+            const address = this.form.controls['address'].value;
+            ymaps.geocode(address).then(result => {
+                const point = result.geoObjects.get(0);
+                const coordinates = point.geometry.getCoordinates();
+                const bounds = point.properties.get('boundedBy');
+
+                this.map.geoObjects.removeAll();
+                this.map.geoObjects.add(point);
+                this.map.setBounds(bounds);
+
+                this.form.controls['lat'].setValue(coordinates[0]);
+                this.form.controls['lng'].setValue(coordinates[1]);
+            });
+        }, 1000);
+    }
+
+    private timer = 0;
+    delay(callback: Function, ms) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(callback, ms);
+    }
+
 }
