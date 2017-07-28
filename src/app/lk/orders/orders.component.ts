@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import * as Vis from 'vis';
-import { VisTimelineOptions } from 'ng2-vis';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { OrderService } from '../../shared/services/order.service';
@@ -24,9 +22,8 @@ import { RemoveConfirmComponent } from '../remove-confirm/remove-confirm.compone
     styleUrls: ['../lk.component.css']
 })
 export class OrdersComponent {
-    private subscription1: Subscription;
-    private subscription2: Subscription;
-    private timeline: Vis.Timeline;
+    private subscriptions: Subscription[] = [];
+    private timeline: any;
     @ViewChild('timeline') timelineDiv: ElementRef;
     orders: Order[] = [];
 
@@ -37,9 +34,10 @@ export class OrdersComponent {
     ) { }
 
     ngOnInit() {
-        this.subscription1 = this.orderService.orders.subscribe(orders => {
+        const subscription = this.orderService.orders.subscribe(orders => {
             this.orders = orders.slice();
         });
+        this.subscriptions.push(subscription);
     }
 
     ngAfterViewInit() {
@@ -52,12 +50,12 @@ export class OrdersComponent {
                     content: b.name
                 };
             });
-            this.timeline.setGroups(groups);
+            // this.timeline.setGroups(groups);
 
-            this.subscription2 = this.orderService.orders.subscribe(orders => {
+            const subscription = this.orderService.orders.subscribe(orders => {
 
                 const items = orders.map(o => {
-                    const startDate = new Date(o.date.year, o.date.month -1, o.date.day, o.time.hour, o.time.minute);
+                    const startDate = new Date(o.date.year, o.date.month - 1, o.date.day, o.time.hour, o.time.minute);
                     const endDate = new Date(startDate);
                     endDate.setMinutes(endDate.getMinutes() + o.duration);
                     return {
@@ -70,8 +68,9 @@ export class OrdersComponent {
                         group: o.box.id
                     };
                 });
-                this.timeline.setItems(items);
+                // this.timeline.setItems(items);
             });
+            this.subscriptions.push(subscription);
         });
     }
 
@@ -95,22 +94,24 @@ export class OrdersComponent {
 
     private timelineInit() {
         const now = new Date();
-        const options = {} as VisTimelineOptions;
-        options.locale = 'ru';
-        options.start = new Date().setHours(now.getHours() - 1);
-        options.end = new Date().setHours(now.getHours() + 1);
-        options.zoomMin = 3600 * 1000;
-        options.zoomMax = 24 * 3600 * 1000;
-        options.timeAxis = {
-            scale: 'hour',
-            step: 1
+        const options = {
+            locale: 'ru',
+            start: new Date().setHours(now.getHours() - 1),
+            end: new Date().setHours(now.getHours() + 1),
+            zoomMin: 3600 * 1000,
+            zoomMax: 24 * 3600 * 1000,
+            clickToUse: false,
+            timeAxis: {
+                scale: 'hour',
+                step: 1
+            }
         };
-        this.timeline = new Vis.Timeline(this.timelineDiv.nativeElement, [], options);
+        
+        this.timeline = new links.Timeline(this.timelineDiv.nativeElement, options);
     }
 
     ngOnDestroy() {
-        this.subscription1.unsubscribe();
-        this.subscription2.unsubscribe();
+        this.subscriptions.forEach(s => s.unsubscribe());
     }
 
     getStringForServices(services: OrderServiceModel[]) {

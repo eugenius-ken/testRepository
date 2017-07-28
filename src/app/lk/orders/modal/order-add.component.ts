@@ -103,6 +103,7 @@ export class ModalOrderAddComponent implements OnInit {
 
         //obsolete
         this.form.controls['services'].valueChanges.subscribe((services: OrderServiceModelAdd[]) => {
+            console.count();
             this.setPriceAndDuration(services);
         });
 
