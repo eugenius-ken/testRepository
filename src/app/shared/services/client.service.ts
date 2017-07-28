@@ -73,8 +73,10 @@ export class ClientService {
             });
     }
 
-    getClientByCarNumber(number: string) {
-        return this._clientsStorage.find(c => c.cars.some(car => car.number === number));
+    getClientByCarNumber(number: string, carId?: string) {
+        return carId ? 
+            this._clientsStorage.find(c => c.cars.some(car => car.number === number && car.id !== carId)) : 
+            this._clientsStorage.find(c => c.cars.some(car => car.number === number));
     }
 
     private getAll(): Observable<Client[]> {

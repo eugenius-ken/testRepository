@@ -7,6 +7,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientService } from '../../../shared/services/client.service';
 import { CarService } from '../../../shared/services/car.service';
 import { CarBase } from '../../../shared/models/car.model';
+import { ClientCarAdd } from '../../../shared/models/client.model';
 
 @Component({
     selector: 'modal-client-add',
@@ -17,6 +18,7 @@ import { CarBase } from '../../../shared/models/car.model';
 export class ModalClientAddComponent implements OnInit {
     form: FormGroup;
     isSubmitting: boolean = false;
+    numberIsExist: boolean = false;
     brands: CarBase[];
     models: CarBase[];
 
@@ -83,12 +85,52 @@ export class ModalClientAddComponent implements OnInit {
     carChanged(i) {
         const brand = (this.form.controls['cars'] as FormArray).at(i).get('brand').value;
         const model = (this.form.controls['cars'] as FormArray).at(i).get('model').value;
-        if(brand && model) {
+        if (brand && model) {
             const car = this.carService.getCarByBrandAndModel(brand, model);
             (this.form.controls['cars'] as FormArray).at(i).get('id').setValue(car ? car.id : '');
         }
         else {
             (this.form.controls['cars'] as FormArray).at(i).get('id').setValue('');
         }
+    }
+
+    numberChanged() {
+        this.numberIsExist = false;
+        this.delay(() => {
+            //get cars array
+            let cars: ClientCarAdd[] = [];
+            let formCars = (this.form.controls['cars'] as FormArray);
+            for (let i = 0; i < formCars.length; i++) {
+                const number = formCars.at(i).get('number').value;
+                const id = formCars.at(i).get('id').value;
+                cars.push(new ClientCarAdd(id, number));
+            }
+
+            //find same numbers
+            const sameNumbersExist = cars.some((car, i) => {
+                const index = cars.findIndex(c => c.number === car.number);
+                return index !== i;
+            });
+
+            if (sameNumbersExist) {
+                this.numberIsExist = true;
+            }
+            else {
+                //find between another clients' cars
+                cars.forEach(c => {
+                    const client = this.clientService.getClientByCarNumber(c.number, c.id);
+                    if(client) {
+                        this.numberIsExist = true;
+                        return;
+                    }
+                });
+            }
+        }, 500);
+    }
+
+    private timer = 0;
+    delay(callback: Function, ms) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(callback, ms);
     }
 }

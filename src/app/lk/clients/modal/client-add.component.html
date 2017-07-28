@@ -88,7 +88,7 @@
                                     form.get('cars').controls[i].controls.number.invalid 
                                 }">
 
-                                    <input formControlName="number" type="text" class="form-control" id="number" placeholder="Госномер" [ngClass]="{'has-danger':    
+                                    <input formControlName="number" type="text" class="form-control" id="number" placeholder="Госномер" (keyup)="numberChanged()" [ngClass]="{'has-danger':    
                                         form.get('cars').controls[i].controls.number.touched && 
                                         form.get('cars').controls[i].controls.number.dirty && 
                                         form.get('cars').controls[i].controls.number.invalid
@@ -105,7 +105,6 @@
                                     form.get('cars').controls[i].controls.model.dirty &&
                                     form.get('cars').controls[i].controls.model.invalid 
                                 }">
-
                                     <select class="form-control" formControlName="model" (change)="carChanged(i)">
                                         <option [selected]="true" value="">Выберите модель</option>
                                         <option *ngFor="let car of models | filterByBrand:
@@ -129,10 +128,14 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row without-padding" *ngIf="numberIsExist">
+                <div class="col-12 error-container">
+                    Машина с таким номером уже существует
+                </div>
+            </div>
         </fieldset>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Добавить</button>
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid || numberIsExist">Добавить</button>
     </div>
 </form>

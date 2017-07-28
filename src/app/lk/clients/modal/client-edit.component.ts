@@ -9,7 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientService } from '../../../shared/services/client.service';
 import { CarService } from '../../../shared/services/car.service';
 import { CarBase } from '../../../shared/models/car.model';
-import { ClientCar } from '../../../shared/models/client.model';
+import { ClientCar, ClientCarEdit } from '../../../shared/models/client.model';
 
 @Component({
     selector: 'modal-client-edit',
@@ -23,6 +23,7 @@ export class ModalClientEditComponent implements OnInit, OnDestroy {
     brands: CarBase[];
     models: CarBase[];
     isSubmitting: boolean = false;
+    numberIsExist: boolean = false;
     startDate;
 
     constructor(
@@ -114,5 +115,45 @@ export class ModalClientEditComponent implements OnInit, OnDestroy {
         else {
             (this.form.controls['cars'] as FormArray).at(i).get('id').setValue('');
         }
+    }
+
+    numberChanged(i) {
+        this.numberIsExist = false;
+        this.delay(() => {
+            //get cars array
+            let cars: ClientCarEdit[] = [];
+            let formCars = (this.form.controls['cars'] as FormArray);
+            for (let i = 0; i < formCars.length; i++) {
+                const number = formCars.at(i).get('number').value;
+                const id = formCars.at(i).get('id').value;
+                cars.push(new ClientCarEdit(id, number));
+            }
+
+            //find same numbers
+            const sameNumbersExist = cars.some((car, i) => {
+                const index = cars.findIndex(c => c.number === car.number);
+                return index !== i;
+            });
+
+            if (sameNumbersExist) {
+                this.numberIsExist = true;
+            }
+            else {
+                //find between another clients' cars
+                cars.forEach(c => {
+                    const client = this.clientService.getClientByCarNumber(c.number, c.id);
+                    if(client) {
+                        this.numberIsExist = true;
+                        return;
+                    }
+                });
+            }
+        }, 500);
+    }
+
+    private timer = 0;
+    delay(callback: Function, ms) {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(callback, ms);
     }
 }
