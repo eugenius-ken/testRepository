@@ -38,7 +38,7 @@ export class ModalClientAddComponent implements OnInit {
             //get unique cars by brand' names
             this.brands = [];
             brandNames.forEach(name => {
-                this.brands.push(cars.find(c => c.brand === name) );
+                this.brands.push(cars.find(c => c.brand === name));
             });
             this.models = cars.slice();
 
@@ -54,10 +54,10 @@ export class ModalClientAddComponent implements OnInit {
 
     private initCar() {
         return this.fb.group({
+            'id': ['', Validators.required],
             'brand': ['', Validators.required],
             'model': ['', Validators.required],
-            'number': ['', Validators.required],
-            'classId': ['']
+            'number': ['', Validators.required]
         });
     }
 
@@ -80,7 +80,15 @@ export class ModalClientAddComponent implements OnInit {
         }
     }
 
-    modelChanged() {
-        console.log('changed');
+    carChanged(i) {
+        const brand = (this.form.controls['cars'] as FormArray).at(i).get('brand').value;
+        const model = (this.form.controls['cars'] as FormArray).at(i).get('model').value;
+        if(brand && model) {
+            const car = this.carService.getCarByBrandAndModel(brand, model);
+            (this.form.controls['cars'] as FormArray).at(i).get('id').setValue(car ? car.id : '');
+        }
+        else {
+            (this.form.controls['cars'] as FormArray).at(i).get('id').setValue('');
+        }
     }
 }

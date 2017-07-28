@@ -67,6 +67,10 @@ export class CarService {
             });
     }
 
+    getCarByBrandAndModel(brand: string, model: string) {
+        return this._carsStorage.find(c => c.brand === brand && c.model === model);
+    }
+
     private getAll(): Observable<Car[]> {
         return Observable.zip(
             this.classService.classes.take(1),

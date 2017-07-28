@@ -72,11 +72,13 @@ export class ModalClientEditComponent implements OnInit, OnDestroy {
     private initCar(car: ClientCar = null) {
         return car == null ?
             this.fb.group({
+                'id': ['', Validators.required],
                 'brand': ['', Validators.required],
                 'model': ['', Validators.required],
                 'number': ['', Validators.required]
             }) :
             this.fb.group({
+                'id': [car.id, Validators.required],
                 'brand': [car.brand, Validators.required],
                 'model': [car.model, Validators.required],
                 'number': [car.number, Validators.required]
@@ -99,6 +101,18 @@ export class ModalClientEditComponent implements OnInit, OnDestroy {
     validateDate() {
         if (typeof (this.form.controls['birthday'].value) !== 'object') {
             this.form.controls['birthday'].setValue(null);
+        }
+    }
+
+    carChanged(i) {
+        const brand = (this.form.controls['cars'] as FormArray).at(i).get('brand').value;
+        const model = (this.form.controls['cars'] as FormArray).at(i).get('model').value;
+        if(brand && model) {
+            const car = this.carService.getCarByBrandAndModel(brand, model);
+            (this.form.controls['cars'] as FormArray).at(i).get('id').setValue(car ? car.id : '');
+        }
+        else {
+            (this.form.controls['cars'] as FormArray).at(i).get('id').setValue('');
         }
     }
 }

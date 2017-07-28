@@ -37,6 +37,7 @@ export class ClientEdit {
 
 export class ClientCar extends CarBase {
     constructor(
+        public id: string,
         brand: string,
         model: string,
         public number: string,
@@ -46,24 +47,16 @@ export class ClientCar extends CarBase {
     }
 }
 
-export class ClientCarAdd extends CarBase {
+export class ClientCarAdd {
     constructor(
-        brand: string,
-        model: string,
-        classId: string,
+        public id: string,
         public number: string
-    ) {
-        super(brand, model);
-     }
+    ) { }
 }
 
-export class ClientCarEdit extends CarBase {
+export class ClientCarEdit {
     constructor(
-        brand: string,
-        model: string,
-        classId: string,
+        public id: string,
         public number: string
-    ) { 
-        super(brand, model);
-    }
+    ) { }
 }

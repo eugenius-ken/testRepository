@@ -59,6 +59,7 @@
             <div formArrayName="cars">
                 <div *ngFor="let car of form.get('cars')['controls']; let i = index; let last = last;">
                     <div [formGroupName]="i">
+                        <input type="hidden" formControlName="id" />
                         <div class="row without-padding">
                             <div class="col-12">Данные автомобиля</div>
                         </div>
@@ -69,7 +70,7 @@
                                     form.get('cars').controls[i].controls.brand.dirty &&
                                     form.get('cars').controls[i].controls.brand.invalid 
                                 }">
-                                    <select class="form-control" formControlName="brand">
+                                    <select class="form-control" formControlName="brand" (change)="carChanged(i)">
                                         <option value="">Выберите марку</option> 
                                         <option *ngFor="let car of brands" [ngValue]="car.brand">
                                             {{car.brand}}
@@ -102,7 +103,7 @@
                                     form.get('cars').controls[i].controls.model.dirty &&
                                     form.get('cars').controls[i].controls.model.invalid 
                                 }">
-                                    <select class="form-control" formControlName="model">
+                                    <select class="form-control" formControlName="model" (change)="carChanged(i)">
                                         <option value="">Выберите модель</option>
                                         <option *ngFor="let car of models | filterByBrand:
                                                         form.get('cars').controls[i].controls.brand.value:

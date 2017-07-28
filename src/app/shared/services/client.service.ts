@@ -96,7 +96,12 @@ export class ClientService {
             phone: client.phone ? client.phone : null,
             birthday: client.birthday ? `${client.birthday.year}-${client.birthday.month}-${client.birthday.day}` : null,
             discount: client.discount ? client.discount : null,
-            cars: client.cars
+            cars: client.cars.map(c => {
+                return {
+                    car_id: c.id,
+                    number: c.number
+                }
+            })
         }
     }
 
@@ -109,15 +114,16 @@ export class ClientService {
             client.discount,
             (client.cars as any[]).map(car => {
                 //find car's class
-                const currentCar = cars.find(c => c.brand === car.brand && c.model === c.model);
-                const classObj = currentCar !== undefined ? currentCar.carClass : undefined;
-
-                return new ClientCar(
-                    car.brand,
-                    car.model,
-                    car.number,
-                    classObj
-                );
+                const currentCar = cars.find(c => c.id === car.car_id);
+                return currentCar ?
+                    new ClientCar(
+                        currentCar.id,
+                        currentCar.brand,
+                        currentCar.model,
+                        car.number,
+                        currentCar.carClass
+                    ) :
+                    undefined;
             })
         );
     }
