@@ -5,4 +5,5 @@ interface NodeModule {
 }
 //yandex-maps
 declare var ymaps: any;
+
 declare var links: any;

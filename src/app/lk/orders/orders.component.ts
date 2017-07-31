@@ -44,12 +44,12 @@ export class OrdersComponent {
         this.timelineInit();
         this.boxService.boxes.take(1).subscribe(boxes => {
 
-            const groups = boxes.map((b, i) => {
-                return {
-                    id: b.id,
-                    content: b.name
-                };
-            });
+            // const groups = boxes.map((b, i) => {
+            //     return {
+            //         id: b.id,
+            //         content: b.name
+            //     };
+            // });
             // this.timeline.setGroups(groups);
 
             const subscription = this.orderService.orders.subscribe(orders => {
@@ -65,10 +65,10 @@ export class OrdersComponent {
                         content: `<div style="font-size:12px; text-align:center;">
                                     ${this.getStringForTime(startDate, endDate)}
                                   </div>`,
-                        group: o.box.id
+                        group: boxes.find(b => b.id === o.box.id).name
                     };
                 });
-                // this.timeline.setItems(items);
+                this.timeline.setData(items);
             });
             this.subscriptions.push(subscription);
         });
@@ -93,21 +93,19 @@ export class OrdersComponent {
     }
 
     private timelineInit() {
-        const now = new Date();
         const options = {
             locale: 'ru',
-            start: new Date().setHours(now.getHours() - 1),
-            end: new Date().setHours(now.getHours() + 1),
             zoomMin: 3600 * 1000,
-            zoomMax: 24 * 3600 * 1000,
-            clickToUse: false,
-            timeAxis: {
-                scale: 'hour',
-                step: 1
-            }
+            zoomMax: 5 * 3600 * 1000,
         };
-        
+
         this.timeline = new links.Timeline(this.timelineDiv.nativeElement, options);
+        
+        const start = new Date();
+        const end = new Date();
+        start.setHours(new Date().getHours() - 1);
+        end.setHours(new Date().getHours() + 3);
+        this.timeline.setVisibleChartRange(start, end);
     }
 
     ngOnDestroy() {
