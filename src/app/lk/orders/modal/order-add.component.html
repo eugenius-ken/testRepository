@@ -22,7 +22,7 @@
                         form.get('boxId').touched && 
                         form.get('boxId').dirty && 
                         form.get('boxId').invalid}">
-                        <select class="form-control" formControlName="boxId" (change)="boxChanged()">
+                        <select class="form-control" formControlName="boxId">
                             <option *ngFor="let box of boxes" [ngValue]="box.id">
                                 {{box.name}}
                             </option>
@@ -102,7 +102,7 @@
                             </select>
                         </fieldset>
                         <fieldset class="form-group">
-                            <input formControlName="number" type="text" class="form-control" id="number" placeholder="Номер машины" (keyup)="numberChanged()" />
+                            <input formControlName="number" type="text" class="form-control" id="number" placeholder="Номер машины" />
                         </fieldset>
                     </div>
                 </div>

@@ -71,6 +71,11 @@ export class CarService {
         return this._carsStorage.find(c => c.brand === brand && c.model === model);
     }
 
+    getClassByModel(model: string) {
+        const car = this._carsStorage.find(c => c.model === model);
+        return car !== undefined ? car.carClass : undefined;
+    }
+
     private getAll(): Observable<Car[]> {
         return Observable.zip(
             this.classService.classes.take(1),

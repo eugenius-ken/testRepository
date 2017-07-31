@@ -76,6 +76,9 @@ export class ModalOrderAddComponent implements OnInit {
                 this.models = cars.slice();
 
                 this.initForm();
+                this.initListeners();
+
+                this.setPriceAndDuration(this.form.controls.services.value);
                 this.checkBoxBusy();
             });
     }
@@ -100,21 +103,49 @@ export class ModalOrderAddComponent implements OnInit {
             }),
             'services': this.fb.array([this.initService()])
         });
+    }
 
-        //obsolete
+    //why listeners are called so often
+    initListeners() {
         this.form.controls['services'].valueChanges.subscribe((services: OrderServiceModelAdd[]) => {
-            console.count();
             this.setPriceAndDuration(services);
         });
 
-        this.setPriceAndDuration(this.form.controls.services.value);
-        this.checkBoxBusy();
+        this.form.controls['boxId'].valueChanges.subscribe(b => {
+            this.checkBoxBusy();
+        });
+
+        this.form.get('car').get('number').valueChanges.subscribe(number => {
+            const client = this.clientService.getClientByCarNumber(number);
+            if (client !== undefined) {
+                const car = client.cars.find(c => c.number === number);
+                this.form.get('client').get('phone').setValue(client.phone);
+                this.form.get('client').get('name').setValue(client.name);
+                this.form.get('car').get('brand').setValue(car.brand);
+                this.form.get('car').get('model').setValue(car.model);
+            }
+        });
+
+        this.form.get('car').get('model').valueChanges.subscribe(model => {
+            const classObj = this.carService.getClassByModel(model);
+            if(classObj !== undefined) {
+                this.form.get('car').get('classId').setValue(classObj.id);
+            }
+        });
+
+        this.form.get('date').valueChanges.subscribe(date => {
+            this.checkBoxBusy();
+        });
+
+        this.form.get('time').valueChanges.subscribe(date => {
+            this.checkBoxBusy();
+        });
     }
 
     private initService(): FormGroup {
         return this.fb.group({
             'id': [this.services.length > 0 ? this.services[0].id : '', Validators.required],
-            'workers': [[]],
+            'workers': [[]]
         });
     }
 
@@ -132,29 +163,9 @@ export class ModalOrderAddComponent implements OnInit {
         }
     }
 
-    numberChanged() {
-        this.delay(() => {
-            const carNumber = this.form.get('car').get('number').value;
-            const client = this.clientService.getClientByCarNumber(carNumber);
-            if(client !== undefined) {
-                const car = client.cars.find(c => c.number === carNumber);
-            }
-        }, 1000);
-    }
-
     submit() {
         this.orderService.add(this.form.value)
         this.activeModal.close();
-    }
-
-    private timer = 0;
-    delay(callback: Function, ms) {
-        clearTimeout(this.timer);
-        this.timer = setTimeout(callback, ms);
-    }
-
-    boxChanged() {
-        this.checkBoxBusy();
     }
 
     private checkBoxBusy() {
@@ -163,17 +174,18 @@ export class ModalOrderAddComponent implements OnInit {
         const duration = this.form.controls['duration'].value;
         const boxId = this.form.controls['boxId'].value;
         this.boxIsBusy = this.orderService.isBoxBusy(startDate, startTime, duration, boxId);
+        console.log(this.boxIsBusy);
     }
 
     private setPriceAndDuration(services: OrderServiceModelAdd[]) {
         let sum = 0;
-            let duration = 0;
-            services.forEach(service => {
-                const currentService = this.services.find(s => s.id === service.id);
-                sum += currentService ? currentService.price : 0;
-                duration += currentService ? currentService.duration : 0;
-            });
-            this.form.controls['price'].setValue(sum);
-            this.form.controls['duration'].setValue(duration);
+        let duration = 0;
+        services.forEach(service => {
+            const currentService = this.services.find(s => s.id === service.id);
+            sum += currentService ? currentService.price : 0;
+            duration += currentService ? currentService.duration : 0;
+        });
+        this.form.controls['price'].setValue(sum);
+        this.form.controls['duration'].setValue(duration);
     }
 }

@@ -160,13 +160,16 @@
                 </div>
             </div>
             <div class="row without-padding">
-                <div class="col-12">
+                <div class="col-6">
                     {{'Общая сумма: ' + form.controls.price.value + ' руб.'}}
+                </div>
+                 <div class="col-6 error-container">
+                    <div *ngIf="boxIsBusy">Бокс занят</div>
                 </div>
             </div>
         </fieldset>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Сохранить</button>
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid || boxIsBusy">Сохранить</button>
     </div>
 </form>

@@ -41,7 +41,7 @@ export class ClientCar extends CarBase {
         brand: string,
         model: string,
         public number: string,
-        carClass: Class
+        public carClass: Class
     ) { 
         super(brand, model);
     }

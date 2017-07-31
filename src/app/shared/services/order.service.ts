@@ -112,13 +112,16 @@ export class OrderService {
         endVerifiedDate.setMinutes(startVerifiedDate.getMinutes() + duration);
 
         return this._ordersStorage.some(o => {
+            // debugger;
             //verified order is in another box
             if(o.box.id !== boxId) return false;
+            //o is currentOrder (it may be happened when edit order)
+            if(o.id === orderId) return false;
 
             //get date range for order
             let startCurrentDate = new Date(o.date.year, o.date.month - 1, o.date.day, o.time.hour, o.time.minute);
             let endCurrentDate = new Date(startCurrentDate);
-            endCurrentDate.setMinutes(startCurrentDate.getMinutes() + duration);
+            endCurrentDate.setMinutes(startCurrentDate.getMinutes() + o.duration);
 
             //verified order starts later than current order finishs
             if (startVerifiedDate >= endCurrentDate) {
