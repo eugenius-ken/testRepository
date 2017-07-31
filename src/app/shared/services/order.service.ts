@@ -40,6 +40,14 @@ export class OrderService {
                 this._ordersStorage = orders;
                 this._orders.next(this._ordersStorage);
             });
+
+        setInterval(() => {
+            this.getAll()
+                .subscribe(orders => {
+                    this._ordersStorage = orders;
+                    this._orders.next(this._ordersStorage);
+                });
+        }, 60000);
     }
 
     getCurrent() {
@@ -84,7 +92,7 @@ export class OrderService {
                 }
 
                 //if new client was created when complete order
-                if(data.result.client) {
+                if (data.result.client) {
                     this.clientService.addAfterOrderComplete(data.result.client);
                 }
             }).subscribe();
@@ -100,7 +108,7 @@ export class OrderService {
                 }
 
                 //if new client was created when complete order
-                if(data.result.client) {
+                if (data.result.client) {
                     this.clientService.addAfterOrderComplete(data.result.client);
                 }
             });
@@ -127,9 +135,9 @@ export class OrderService {
         return this._ordersStorage.some(o => {
             // debugger;
             //verified order is in another box
-            if(o.box.id !== boxId) return false;
+            if (o.box.id !== boxId) return false;
             //o is currentOrder (it may be happened when edit order)
-            if(o.id === orderId) return false;
+            if (o.id === orderId) return false;
 
             //get date range for order
             let startCurrentDate = new Date(o.date.year, o.date.month - 1, o.date.day, o.time.hour, o.time.minute);
@@ -149,11 +157,11 @@ export class OrderService {
                 return true;
             }
             //verified order start during the current order
-            else if(startVerifiedDate >= startCurrentDate && startVerifiedDate <= endCurrentDate) {
+            else if (startVerifiedDate >= startCurrentDate && startVerifiedDate <= endCurrentDate) {
                 return true;
             }
             //verified order finishs during the current order
-            else if(endVerifiedDate >= startCurrentDate && endVerifiedDate <= endCurrentDate) {
+            else if (endVerifiedDate >= startCurrentDate && endVerifiedDate <= endCurrentDate) {
                 return true;
             }
             else return false;
