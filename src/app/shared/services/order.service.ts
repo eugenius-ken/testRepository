@@ -106,11 +106,6 @@ export class OrderService {
                     this._ordersStorage.splice(i, 1);
                     this._orders.next(this._ordersStorage);
                 }
-
-                //if new client was created when complete order
-                if (data.result.client) {
-                    this.clientService.addAfterOrderComplete(data.result.client);
-                }
             });
     }
 
@@ -122,6 +117,11 @@ export class OrderService {
                 if (i != -1) {
                     this._ordersStorage.splice(i, 1);
                     this._orders.next(this._ordersStorage);
+                }
+
+                 //if new client was created when complete order
+                if (data.result.client) {
+                    this.clientService.addAfterOrderComplete(data.result.client);
                 }
             });
     }
