@@ -48,6 +48,16 @@ export class ClientService {
             }).subscribe();
     }
 
+    addAfterOrderComplete(client: any) {
+        Observable.zip(
+            this.classService.classes.take(1),
+            this.carService.cars.take(1),
+            (classes, cars) => {
+                this._clientsStorage.push(this.mapFromApiModel(client, classes, cars));
+                this._clients.next(this._clientsStorage);
+            }).subscribe();
+    }
+
     update(client: ClientEdit) {
         Observable.zip(
             this.apiService.put(this.path + '/' + client.id, this.mapToApiModel(client)),
@@ -74,8 +84,8 @@ export class ClientService {
     }
 
     getClientByCarNumber(number: string, carId?: string) {
-        return carId ? 
-            this._clientsStorage.find(c => c.cars.some(car => car.number === number && car.id !== carId)) : 
+        return carId ?
+            this._clientsStorage.find(c => c.cars.some(car => car.number === number && car.id !== carId)) :
             this._clientsStorage.find(c => c.cars.some(car => car.number === number));
     }
 
@@ -125,7 +135,13 @@ export class ClientService {
                         car.number,
                         currentCar.carClass
                     ) :
-                    undefined;
+                    new ClientCar(
+                        '',
+                        '',
+                        '',
+                        car.number,
+                        undefined
+                    );
             })
         );
     }

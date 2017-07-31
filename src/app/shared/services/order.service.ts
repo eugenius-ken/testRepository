@@ -8,6 +8,7 @@ import { ClassService } from './class.service';
 import { ServiceService } from './service.service';
 import { WorkerService } from './worker.service';
 import { BoxService } from './box.service';
+import { ClientService } from './client.service';
 import { Order, OrderCar, OrderClient, OrderServiceModel, OrderAdd, OrderEdit, OrderStatus } from '../models/order.model';
 import { Class } from '../models/class.model';
 import { Service } from '../models/service.model';
@@ -31,7 +32,8 @@ export class OrderService {
         private classService: ClassService,
         private serviceService: ServiceService,
         private workerService: WorkerService,
-        private boxService: BoxService
+        private boxService: BoxService,
+        private clientService: ClientService
     ) {
         this.getAll()
             .subscribe(orders => {
@@ -72,13 +74,18 @@ export class OrderService {
             this.workerService.workers.take(1),
             this.boxService.boxes.take(1),
             (data, classes, services, workers, boxes) => {
-                let i = this._ordersStorage.findIndex(o => o.id === order.id);
+                const i = this._ordersStorage.findIndex(o => o.id === order.id);
                 if (i != -1) {
                     order.status == OrderStatus.Accepted ?
                         this._ordersStorage.splice(i, 1, this.mapFromApiModel(data.result, classes, services, workers, boxes)) :
                         this._ordersStorage.splice(i, 1);
 
                     this._orders.next(this._ordersStorage);
+                }
+
+                //if new client was created when complete order
+                if(data.result.client) {
+                    this.clientService.addAfterOrderComplete(data.result.client);
                 }
             }).subscribe();
     }
@@ -91,12 +98,18 @@ export class OrderService {
                     this._ordersStorage.splice(i, 1);
                     this._orders.next(this._ordersStorage);
                 }
+
+                //if new client was created when complete order
+                if(data.result.client) {
+                    this.clientService.addAfterOrderComplete(data.result.client);
+                }
             });
     }
 
     complete(orderId: string, status: OrderStatus) {
         return this.apiService.put(this.path + '/' + orderId, { status: status })
             .subscribe(data => {
+                debugger;
                 let i = this._ordersStorage.findIndex(c => c.id === orderId);
                 if (i != -1) {
                     this._ordersStorage.splice(i, 1);
