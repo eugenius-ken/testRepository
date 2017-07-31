@@ -67,8 +67,14 @@ export class WorkersComponent {
     }
 
     private getStringForDate(date: CustomDate) {
-        const month = date.month < 10 ? '0' + String(date.month) : String(date.month);
-        const day = date.day < 10 ? '0' + String(date.day) : String(date.day);
-        return `${date.year}-${month}-${day}`;
+        if (date) {
+            const month = date.month < 10 ? '0' + String(date.month) : String(date.month);
+            const day = date.day < 10 ? '0' + String(date.day) : String(date.day);
+            return `${date.year}-${month}-${day}`;
+        }
+        else {
+            return '';
+        }
+
     }
 }

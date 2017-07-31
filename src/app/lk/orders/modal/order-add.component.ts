@@ -34,6 +34,7 @@ export class ModalOrderAddComponent implements OnInit {
     services: Service[];
     workers: Worker[];
     boxIsBusy: boolean = false;
+    private discount: number = 0;
     brands: CarBase[];
     models: CarBase[];
 
@@ -116,19 +117,12 @@ export class ModalOrderAddComponent implements OnInit {
         });
 
         this.form.get('car').get('number').valueChanges.subscribe(number => {
-            const client = this.clientService.getClientByCarNumber(number);
-            if (client !== undefined) {
-                const car = client.cars.find(c => c.number === number);
-                this.form.get('client').get('phone').setValue(client.phone);
-                this.form.get('client').get('name').setValue(client.name);
-                this.form.get('car').get('brand').setValue(car.brand);
-                this.form.get('car').get('model').setValue(car.model);
-            }
+            this.getClientByCarNumber(number);
         });
 
         this.form.get('car').get('model').valueChanges.subscribe(model => {
             const classObj = this.carService.getClassByModel(model);
-            if(classObj !== undefined) {
+            if (classObj !== undefined) {
                 this.form.get('car').get('classId').setValue(classObj.id);
             }
         });
@@ -174,7 +168,6 @@ export class ModalOrderAddComponent implements OnInit {
         const duration = this.form.controls['duration'].value;
         const boxId = this.form.controls['boxId'].value;
         this.boxIsBusy = this.orderService.isBoxBusy(startDate, startTime, duration, boxId);
-        console.log(this.boxIsBusy);
     }
 
     private setPriceAndDuration(services: OrderServiceModelAdd[]) {
@@ -185,7 +178,24 @@ export class ModalOrderAddComponent implements OnInit {
             sum += currentService ? currentService.price : 0;
             duration += currentService ? currentService.duration : 0;
         });
-        this.form.controls['price'].setValue(sum);
+        this.form.controls['price'].setValue(sum - sum * this.discount / 100);
         this.form.controls['duration'].setValue(duration);
+    }
+
+    private getClientByCarNumber(number: string) {
+        const client = this.clientService.getClientByCarNumber(number);
+        if (client !== undefined) {
+            const car = client.cars.find(c => c.number === number);
+            this.form.get('client').get('phone').setValue(client.phone);
+            this.form.get('client').get('name').setValue(client.name);
+            this.form.get('car').get('brand').setValue(car.brand);
+            this.form.get('car').get('model').setValue(car.model);
+            this.discount = client.discount;
+            this.setPriceAndDuration(this.form.get('services').value)
+        }
+        else {
+            this.discount = 0;
+            this.setPriceAndDuration(this.form.get('services').value)
+        }
     }
 }
