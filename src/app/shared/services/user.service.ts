@@ -5,13 +5,18 @@ import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { User } from '../models/user.model';
 
+
 @Injectable()
 export class UserService {
+
+    private refreshTimeout;
 
     constructor(
         private apiService: ApiService,
         private jwtService: JwtService
-    ) { }
+    ) {
+        this.setTimerToRefreshToken();
+    }
 
     register(data: Object): Observable<any> {
         return this.apiService.post('/company/register', data);
@@ -21,13 +26,38 @@ export class UserService {
         return this.apiService.post('/oauth/login', credentials)
             .map(
             data => {
-                this.jwtService.saveToken(data.access_token);
+                this.jwtService.saveAuthData(data);
+                this.setTimerToRefreshToken();
                 return data;
             });
     }
 
+    private refreshAuthData() {
+        const refreshToken = this.jwtService.getRefreshToken();
+        if (!refreshToken) return;
+
+        return this.apiService.post('/oauth/refreshToken', { refresh_token: refreshToken })
+            .subscribe(data => {
+                this.jwtService.saveAuthData(data);
+                this.setTimerToRefreshToken();
+            });
+    }
+
+    private setTimerToRefreshToken() {
+        clearTimeout(this.refreshTimeout);
+
+        const timeToRefresh = this.jwtService.getTimeToRefresh();
+        if (timeToRefresh) {
+            const ms = timeToRefresh.getTime() - new Date().getTime();
+            console.log(timeToRefresh);
+            this.refreshTimeout = setTimeout(() => {
+                this.refreshAuthData();
+            }, ms);
+        }
+    }
+
     logout() {
-        this.jwtService.destroyToken();
+        this.jwtService.destroyAuthData();
     }
 
     getCurrentUser() {
