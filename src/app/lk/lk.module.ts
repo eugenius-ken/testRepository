@@ -7,7 +7,8 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { SharedModule } from '../shared/shared.module';
 
 import { FilterByClassPipe } from '../shared/pipes/filter-by-class';
-import { FilterByClassBrand } from '../shared/pipes/filter-by-brand'
+import { FilterByClassBrand } from '../shared/pipes/filter-by-brand';
+import { FilterWorkersByBox } from '../shared/pipes/filter-workers-by-box';
 import { WithoutClass } from '../shared/pipes/without-class';
 import { LkComponent } from './lk.component';
 import { HeaderComponent } from '../shared/layout/header.component';
@@ -67,6 +68,7 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         LkComponent,
         FilterByClassPipe,
         FilterByClassBrand,
+        FilterWorkersByBox,
         WithoutClass,
         HeaderComponent,
         RemoveConfirmComponent,

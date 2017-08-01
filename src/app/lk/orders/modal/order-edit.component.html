@@ -143,9 +143,9 @@
                             <div class="col-6">
 
                                 <fieldset class="form-group">
-                                    <ss-multiselect-dropdown [options]="workers" formControlName="workers" [texts]="{
+                                    <ss-multiselect-dropdown [options]="workers | filterWorkersByBox: form.get('boxId').value" formControlName="workers" [texts]="{
                                             'defaultTitle': 'Выберите исполнителей',
-                                            'searchEmptyResult': 'Нет сотрудников',
+                                            'saerchEmptyResult': 'Нет сотрудников',
                                             'checkedPlural': 'исполнителя'
                                         }" [settings]="{'dynamicTitleMaxItems': 1}">
                                     </ss-multiselect-dropdown>
