@@ -6,6 +6,7 @@
         <fieldset [disabled]="isSubmitting">
             <input type="hidden" formControlName="id" />
             <input type="hidden" formControlName="status" />
+            <input type="hidden" formControlName="boxId" />
 
             <div [hidden]="hideForm">
                 <div class="row without-padding">
@@ -23,7 +24,7 @@
                                 </div>
                                 <div class="col-6">
                                     <fieldset class="form-group">
-                                        <ss-multiselect-dropdown [options]="workers" formControlName="workers" [texts]="{
+                                        <ss-multiselect-dropdown [options]="workers | filterWorkersByBox:form.get('boxId').value" formControlName="workers" [texts]="{
                                             'defaultTitle': 'Выберите исполнителей',
                                             'searchEmptyResult': 'Нет сотрудников',
                                             'checkedPlural': 'исполнителя'

@@ -43,6 +43,7 @@ export class ModalOrderCompleteComponent implements OnInit {
     initForm(order: Order) {
         this.form = this.fb.group({
             'id': [order.id],
+            'boxId': order.box.id,
             'status': [OrderStatus.Completed, Validators.required],
             'services': this.fb.array(order.services.map(s => { return this.initService(s) }))
         });
