@@ -113,6 +113,7 @@ export class ModalOrderAddComponent implements OnInit {
         });
 
         this.form.controls['boxId'].valueChanges.subscribe(b => {
+            console.log('box is changed');
             this.checkBoxBusy();
         });
 

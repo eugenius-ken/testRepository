@@ -35,7 +35,7 @@ export class CarsComponent {
         this.subscriptions.push(
             this.carService.cars.subscribe(cars => {
                 this.cars = cars.slice();
-                if(this.cars.some(c => c.carClass === undefined))
+                if (this.cars.some(c => c.carClass === undefined))
                     this.carsExistWithoutClass = true;
             })
         );
@@ -46,7 +46,7 @@ export class CarsComponent {
 
         this.subscriptions.push(
             this.dragulaService.drop.subscribe(e => {
-                if(e[1].getAttribute('id') === 'withoutClass') return;
+                if (e[1].getAttribute('id') === 'withoutClass') return;
                 const currentCar = this.cars.find(c => c.id === e[1].getAttribute('id'));
                 this.carService.update(
                     new CarEdit(
@@ -64,6 +64,7 @@ export class CarsComponent {
         this.subscriptions.forEach(s => {
             s.unsubscribe();
         });
+        this.dragulaService.destroy('bag-one');
     }
 
     add() {
