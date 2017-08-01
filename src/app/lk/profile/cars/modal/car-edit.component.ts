@@ -17,7 +17,6 @@ import { Class } from '../../../../shared/models/class.model';
 export class ModalCarEditComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     form: FormGroup;
-    isSubmitting: boolean = false;
     classes: Class[];
 
     constructor(

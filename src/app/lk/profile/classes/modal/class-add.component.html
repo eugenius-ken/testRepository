@@ -3,7 +3,7 @@
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
-        <fieldset [disabled]="isSubmitting">
+        <fieldset>
             <fieldset class="form-group" [ngClass]="{'has-danger': 
                 form.get('name').touched && 
                 form.get('name').dirty && 

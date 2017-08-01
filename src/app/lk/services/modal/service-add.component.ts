@@ -14,7 +14,6 @@ import { Class } from '../../../shared/models/class.model';
 export class ModalServiceAddComponent implements OnInit {
     form: FormGroup;
     classes: Class[];
-    isSubmitting: boolean = false;
 
     constructor(
         private activeModal: NgbActiveModal,

@@ -3,7 +3,7 @@
 </div>
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="modal-body">
-        <fieldset [disabled]="isSubmitting">
+        <fieldset>
             <fieldset class="form-group" [ngClass]="{'has-danger': form.get('brand').touched && form.get('brand').dirty && form.get('brand').invalid}">
                 <input formControlName="brand" type="text" class="form-control" id="brand" placeholder="Марка машины" [ngClass]="{
                     'has-danger': form.get('brand').touched && form.get('brand').dirty && form.get('brand').invalid

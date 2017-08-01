@@ -14,7 +14,6 @@ import { Box } from '../../../../shared/models/box.model';
 export class ModalBoxEditComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     form: FormGroup;
-    isSubmitting: boolean = false;
 
     constructor(
         private activeModal: NgbActiveModal,

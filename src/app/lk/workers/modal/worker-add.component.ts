@@ -17,7 +17,6 @@ import { Box } from '../../../shared/models/box.model';
 export class ModalWorkerAddComponent implements OnInit {
     form: FormGroup;
     boxes: Box[];
-    isSubmitting: boolean = false;
     startDate;
 
     constructor(

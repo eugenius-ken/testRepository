@@ -33,7 +33,6 @@ export class ModalOrderEditComponent implements OnInit {
     classes: Class[];
     services: Service[];
     workers: Worker[];
-    isSubmitting: boolean = false;
     boxIsBusy: boolean = false;
     private discount: number = 0;
     brands: CarBase[];

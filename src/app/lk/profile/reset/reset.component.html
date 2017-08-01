@@ -13,7 +13,7 @@
     </div>
 
     <form [formGroup]="form" (ngSubmit)="submit()" style="padding: 0rem 0.75rem; margin-top: 20px;">
-        <fieldset [disabled]="isSubmitting">
+        <fieldset>
             <fieldset class="form-group">
                 <label>Введите ключ подтверждения</label>
                 <input formControlName="token" type="text" class="form-control" id="token" placeholder="ключ подтверждения" />

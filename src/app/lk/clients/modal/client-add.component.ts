@@ -17,7 +17,6 @@ import { ClientCarAdd } from '../../../shared/models/client.model';
 })
 export class ModalClientAddComponent implements OnInit {
     form: FormGroup;
-    isSubmitting: boolean = false;
     numberIsExist: boolean = false;
     brands: CarBase[];
     models: CarBase[];

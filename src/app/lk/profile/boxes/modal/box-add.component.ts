@@ -11,7 +11,6 @@ import { BoxService } from '../../../../shared/services/box.service';
 })
 export class ModalBoxAddComponent { 
     form: FormGroup;
-    isSubmitting: boolean = false;
 
     constructor(
         private activeModal: NgbActiveModal,

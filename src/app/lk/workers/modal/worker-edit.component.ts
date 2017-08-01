@@ -20,7 +20,6 @@ import { Box } from '../../../shared/models/box.model';
 export class ModalWorkerEditComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     form: FormGroup;
-    isSubmitting: boolean = false;
     boxes: Box[];
 
     constructor(

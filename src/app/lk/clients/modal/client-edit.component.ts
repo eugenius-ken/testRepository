@@ -22,7 +22,6 @@ export class ModalClientEditComponent implements OnInit, OnDestroy {
     form: FormGroup;
     brands: CarBase[];
     models: CarBase[];
-    isSubmitting: boolean = false;
     numberIsExist: boolean = false;
     startDate;
 
