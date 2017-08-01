@@ -1,0 +1,31 @@
+<div class="body-container">
+    <h6>Сброс данных компании</h6>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-danger" (click)="getToken()">Получить ключ подтверждения</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            Ключ подтверждения: {{token}}
+        </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" style="padding: 0rem 0.75rem; margin-top: 20px;">
+        <fieldset [disabled]="isSubmitting">
+            <fieldset class="form-group">
+                <label>Введите ключ подтверждения</label>
+                <input formControlName="token" type="text" class="form-control" id="token" placeholder="ключ подтверждения" />
+            </fieldset>
+        </fieldset>
+        <fieldset class="form-group" [ngClass]="{'has-danger': isError, 'has-success': isSuccess}">
+            <div class="form-control-feedback" *ngIf="isSuccess">Данные компании успешно сброшены</div>
+            <div class="form-control-feedback" *ngIf="isError">Ошибка при попытке сбросить данные компании</div>
+        </fieldset>
+        <fieldset class="form-group" style="margin-bottom: 0rem;">
+            <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Подтвердить</button>
+        </fieldset>
+    </form>
+
+</div>

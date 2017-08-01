@@ -39,7 +39,7 @@ export class ModalRegisterComponent {
             console.error(error.message);
             this.isSubmitting = false;
             switch(error.code) {
-                case 1000: this.errorMessage = 'Данный email занят другим пользователем';
+                case 1000: this.errorMessage = 'Данный email занят другим пользователем'; break;
                 default: this.errorMessage = 'Ошибка при выполнении запроса. Попробуйте позже';
             }
         });
