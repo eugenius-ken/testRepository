@@ -74,7 +74,7 @@ export class OrderService {
             }).subscribe();
     }
 
-    update(order: OrderEdit) {
+    update(order: OrderEdit, addClientFlag: boolean = false) {
         Observable.zip(
             this.apiService.put(this.path + '/' + order.id, this.mapToApiModel(order)),
             this.classService.classes.take(1),
@@ -92,7 +92,7 @@ export class OrderService {
                 }
 
                 //if new client was created when complete order
-                if (data.result.client) {
+                if (data.result.client && addClientFlag) {
                     this.clientService.addAfterOrderComplete(data.result.client);
                 }
             }).subscribe();
@@ -112,7 +112,6 @@ export class OrderService {
     complete(orderId: string, status: OrderStatus) {
         return this.apiService.put(this.path + '/' + orderId, { status: status })
             .subscribe(data => {
-                debugger;
                 let i = this._ordersStorage.findIndex(c => c.id === orderId);
                 if (i != -1) {
                     this._ordersStorage.splice(i, 1);

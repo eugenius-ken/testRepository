@@ -59,7 +59,7 @@ export class ModalOrderCompleteComponent implements OnInit {
     submit() {
         this.hideForm ?
             this.orderService.complete(this.form.controls['id'].value, OrderStatus.Completed) :
-            this.orderService.update(this.form.value); //complete order with update workers
+            this.orderService.update(this.form.value, true); //complete order with update workers
 
         this.activeModal.close();
     }
