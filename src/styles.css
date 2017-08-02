@@ -54,4 +54,11 @@ ngb-timepicker input {
   font-size: 0.875rem;
 }
 
+@media (min-width: 1200px) { 
+    .container {
+        width: 1540px;
+        max-width: 100%;
+    }
+}
+
 
