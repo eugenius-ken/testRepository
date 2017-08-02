@@ -31,7 +31,8 @@ export class ApiService {
 
     private formatErrors(error: any) {
         console.log(error);
-        return Observable.throw(error.json());
+        debugger;
+        return Observable.throw(error);
     }
 
     get(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {

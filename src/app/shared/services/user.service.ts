@@ -49,7 +49,6 @@ export class UserService {
         const timeToRefresh = this.jwtService.getTimeToRefresh();
         if (timeToRefresh) {
             const ms = timeToRefresh.getTime() - new Date().getTime();
-            console.log(timeToRefresh);
             this.refreshTimeout = setTimeout(() => {
                 this.refreshAuthData();
             }, ms);
@@ -71,6 +70,16 @@ export class UserService {
         return this.apiService.put('/company', this.mapToApiModel(user))
             .map(data => {
                 return this.mapFromApiModel(data.result);
+            });
+    }
+
+    changePassword(oldPassword: string, newPassword: string) {
+        return this.apiService.post('/user/password', { prev_password: oldPassword, password: newPassword })
+            .map(data => {
+                return data;
+            })
+            .catch(error => {
+                return Observable.throw(JSON.parse(error._body));
             });
     }
 

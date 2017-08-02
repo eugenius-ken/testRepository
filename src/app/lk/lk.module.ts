@@ -37,6 +37,8 @@ import { ModalOrderAddComponent } from './orders/modal/order-add.component';
 import { ModalOrderEditComponent } from './orders/modal/order-edit.component';
 import { ModalOrderCompleteComponent } from './orders/modal/order-complete.component';
 import { ResetComponent } from './profile/reset/reset.component';
+import { RemoveComponent } from './profile/remove/remove.component';
+import { ModalChangePasswordComponent } from './profile/data/modal/change-password.component';
 
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
@@ -48,6 +50,7 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
             { path: 'profile/classes', component: ClassesComponent },
             { path: 'profile/cars', component: CarsComponent },
             { path: 'profile/reset', component: ResetComponent },
+            { path: 'profile/remove', component: RemoveComponent },
             { path: 'services', component: ServicesComponent },
             { path: 'workers', component: WorkersComponent },
             { path: 'clients', component: ClientsComponent },
@@ -95,7 +98,9 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalOrderAddComponent,
         ModalOrderEditComponent,
         ModalOrderCompleteComponent,
-        ResetComponent
+        ResetComponent,
+        RemoveComponent,
+        ModalChangePasswordComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -113,7 +118,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalClientEditComponent,
         ModalOrderAddComponent,
         ModalOrderEditComponent,
-        ModalOrderCompleteComponent
+        ModalOrderCompleteComponent,
+        ModalChangePasswordComponent
     ]
 })
 export class LkModule { }

@@ -6,19 +6,8 @@
             <input type="hidden" formControlName="lat" />
             <input type="hidden" formControlName="lng" />
 
-            <fieldset class="form-group" [ngClass]="{'has-danger': 
-                form.get('email').touched && 
-                form.get('email').dirty && 
-                form.get('email').invalid}">
-                <input formControlName="email" type="text" class="form-control" id="email" placeholder="E-mail" [ngClass]="{'form-control-danger': 
-                    form.get('email').touched && 
-                    form.get('email').dirty && 
-                    form.get('email').invalid 
-                }" readonly />
-                <div class="form-control-feedback" *ngIf="
-                    form.get('email').touched && 
-                    form.get('email').dirty && 
-                    form.get('email').invalid">Некорректный email</div>
+            <fieldset class="form-group">
+                <input formControlName="email" type="text" class="form-control" id="email" placeholder="E-mail" readonly />
             </fieldset>
             <fieldset class="form-group" [ngClass]="{'has-danger': 
                 form.get('name').touched && 
@@ -64,6 +53,10 @@
             </fieldset>
         </fieldset>
         <fieldset class="form-group" style="margin-bottom: 0rem;">
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" (click)="changeEmail()">Изменить e-mail</button>
+                <button type="button" class="btn btn-secondary" (click)="changePassword()">Изменить пароль</button>
+            </div>
             <button type="submit" class="btn btn-success float-right">Сохранить</button>
         </fieldset>
     </form>

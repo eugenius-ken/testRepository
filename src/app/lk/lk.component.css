@@ -181,3 +181,7 @@ select {
 .error-container {
     color: red;
 }
+
+.success-container {
+    color: green;
+}

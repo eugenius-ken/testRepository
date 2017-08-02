@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalChangePasswordComponent } from './modal/change-password.component';
+
 import { UserService } from '../../../shared/services/user.service';
 import { User } from '../../../shared/models/user.model';
 
@@ -17,10 +20,9 @@ export class ProfileDataComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private userService: UserService
-    ) {
-
-    }
+        private userService: UserService,
+        private modalService: NgbModal
+    ) { }
 
     ngOnInit() {
         this.isSubmitting = true;
@@ -29,14 +31,12 @@ export class ProfileDataComponent implements OnInit {
             user => {
                 this.updateData(user);
                 this.isFormInitied = true;
-
                 ymaps.ready(() => {
-                    this.map = new ymaps.Map("map", {
+                    this.map = new ymaps.Map('map', {
                         center: [56.838560, 60.603712],
                         zoom: 12,
                         controls: ['zoomControl']
                     });
-
                     this.map.geoObjects.add(
                         new ymaps.GeoObject({
                             geometry: {
@@ -97,6 +97,10 @@ export class ProfileDataComponent implements OnInit {
                 this.form.controls['lng'].setValue(coordinates[1]);
             });
         }, 1000);
+    }
+
+    changePassword() {
+        let modal = this.modalService.open(ModalChangePasswordComponent);
     }
 
     private timer = 0;
