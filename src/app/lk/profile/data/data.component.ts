@@ -6,6 +6,7 @@ import { ModalChangePasswordComponent } from './modal/change-password.component'
 
 import { UserService } from '../../../shared/services/user.service';
 import { User } from '../../../shared/models/user.model';
+import { Time } from '../../../shared/models/time.model';
 
 @Component({
     selector: 'profile-data',
@@ -91,7 +92,10 @@ export class ProfileDataComponent implements OnInit {
             'phone': [user.phone, [Validators.required, Validators.pattern(/^((\+7)+([0-9]){10})$/gm)]],
             'address': [user.address, Validators.required],
             'lat': [user.lat],
-            'lng': [user.lng]
+            'lng': [user.lng],
+            'start': [user.start, Validators.required],
+            'end': [user.end, Validators.required],
+            'dayAndNight': [user.dayAndNight]
         });
     }
 

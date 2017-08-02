@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { User } from '../models/user.model';
-
+import { Time } from '../models/time.model';
 
 @Injectable()
 export class UserService {
@@ -90,7 +90,9 @@ export class UserService {
             phone: user.phone.substr(2, 10),
             address: user.address,
             lat: user.lat,
-            lng: user.lng
+            lng: user.lng,
+            start_time: user.dayAndNight ? '00:00' : Time.ToString(user.start),
+            end_time: user.dayAndNight ? '00:00' : Time.ToString(user.end)
         }
     }
 
@@ -101,7 +103,9 @@ export class UserService {
             '+7' + (user.phone == undefined ? '' : user.phone),
             user.address,
             user.lat,
-            user.lng
+            user.lng,
+            user.start_time ? Time.TryParse(user.start_time) : new Time(0, 0),
+            user.end_time ? Time.TryParse(user.end_time) : new Time(0, 0)
         );
     }
 }

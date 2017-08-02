@@ -51,13 +51,30 @@
                     form.get('address').dirty && 
                     form.get('address').invalid">Введите адрес автомойки</div>
             </fieldset>
+            <fieldset class="form-group" [hidden]="form.get('dayAndNight').value">
+                <div>Время работы</div>
+                <div class="float-left" style="margin-right: 10px; margin-top: 5px;">С</div>
+                <div class="float-left">
+                    <ngb-timepicker [spinners]="false" formControlName="start"></ngb-timepicker>
+                </div>
+                <div class="float-left" style="margin-right: 10px; margin-top: 5px; margin-left: 20px;">По</div>
+                <div>
+                    <ngb-timepicker [spinners]="false" formControlName="end"></ngb-timepicker>
+                </div>
+            </fieldset>
+            <fieldset class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" style="vertical-align: bottom" formControlName="dayAndNight" />
+                    Круглосуточно
+                </label>
+            </fieldset>
         </fieldset>
         <fieldset class="form-group" style="margin-bottom: 0rem;">
             <div class="btn-group">
                 <button type="button" class="btn btn-secondary" (click)="changeEmail()">Изменить e-mail</button>
                 <button type="button" class="btn btn-secondary" (click)="changePassword()">Изменить пароль</button>
             </div>
-            
+
             <button type="submit" class="btn btn-success float-right">Сохранить</button>
             <div class="pull-right" style="margin-top:7px; padding: 0px 15px;" *ngIf="message" [ngClass]="{'success-container': isSuccess, 'error-container': isError}">{{message}}</div>
         </fieldset>
