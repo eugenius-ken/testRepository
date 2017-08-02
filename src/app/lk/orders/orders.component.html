@@ -16,7 +16,7 @@
         <tbody>
             <tr *ngFor="let order of orders">
                 <td>{{getStringForDate(order.date, order.time)}}</td>
-                <td>{{order.box.name}}</td>
+                <td>{{order.box ? order.box.name : 'Не распределено'}}</td>
                 <td>{{order.price + ' руб.'}}</td>
                 <td>{{order.duration + ' мин.'}}</td>
                 <td>{{getStringForServices(order.services)}}</td>

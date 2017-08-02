@@ -12,7 +12,7 @@ import { ServiceService } from '../../../shared/services/service.service';
 import { WorkerService } from '../../../shared/services/worker.service';
 import { CarService } from '../../../shared/services/car.service';
 import { ClientService } from '../../../shared/services/client.service';
-import { Order, OrderServiceModel, OrderServiceModelAdd } from '../../../shared/models/order.model';
+import { Order, OrderServiceModel, OrderServiceModelAdd, OrderStatus } from '../../../shared/models/order.model';
 import { Box } from '../../../shared/models/box.model';
 import { Class } from '../../../shared/models/class.model';
 import { Service } from '../../../shared/models/service.model';
@@ -91,10 +91,10 @@ export class ModalOrderEditComponent implements OnInit {
     private initForm(order: Order) {
         this.form = this.fb.group({
             'id': [order.id, Validators.required],
-            'boxId': [order.box.id, Validators.required],
+            'boxId': [order.box ? order.box.id : '', Validators.required],
             'price': [order.price, Validators.required],
             'duration': [order.duration, Validators.required],
-            'status': [order.status, Validators.required],
+            'status': [OrderStatus.Accepted, Validators.required],
             'date': [order.date, Validators.required],
             'time': [order.time, Validators.required],
             'client': this.fb.group({
@@ -105,7 +105,7 @@ export class ModalOrderEditComponent implements OnInit {
                 'brand': [order.car.brand],
                 'model': [order.car.model],
                 'number': [order.car.number],
-                'classId': [order.car.carClass.id, Validators.required],
+                'classId': [order.car.carClass ? order.car.carClass.id : '', Validators.required]
             }),
             'services': this.fb.array(order.services.map(s => { return this.initService(s) }))
         });

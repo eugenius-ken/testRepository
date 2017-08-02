@@ -44,14 +44,6 @@ export class OrdersComponent {
         this.timelineInit();
         this.boxService.boxes.take(1).subscribe(boxes => {
 
-            // const groups = boxes.map((b, i) => {
-            //     return {
-            //         id: b.id,
-            //         content: b.name
-            //     };
-            // });
-            // this.timeline.setGroups(groups);
-
             const subscription = this.orderService.orders.subscribe(orders => {
 
                 const items = orders.map(o => {
@@ -65,7 +57,7 @@ export class OrdersComponent {
                         content: `<div style="font-size:12px; text-align:center;">
                                     ${this.getStringForTime(startDate, endDate)}
                                   </div>`,
-                        group: boxes.find(b => b.id === o.box.id).name
+                        group: o.box ? boxes.find(b => b.id === o.box.id).name : 'Не распределено'
                     };
                 });
                 this.timeline.setData(items);

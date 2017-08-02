@@ -57,7 +57,9 @@
                 <button type="button" class="btn btn-secondary" (click)="changeEmail()">Изменить e-mail</button>
                 <button type="button" class="btn btn-secondary" (click)="changePassword()">Изменить пароль</button>
             </div>
+            
             <button type="submit" class="btn btn-success float-right">Сохранить</button>
+            <div class="pull-right" style="margin-top:7px; padding: 0px 15px;" *ngIf="message" [ngClass]="{'success-container': isSuccess, 'error-container': isError}">{{message}}</div>
         </fieldset>
     </form>
     <div id="map"></div>

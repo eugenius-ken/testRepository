@@ -118,7 +118,7 @@ export class OrderService {
                     this._orders.next(this._ordersStorage);
                 }
 
-                 //if new client was created when complete order
+                //if new client was created when complete order
                 if (data.result.client) {
                     this.clientService.addAfterOrderComplete(data.result.client);
                 }
@@ -134,7 +134,7 @@ export class OrderService {
         return this._ordersStorage.some(o => {
             // debugger;
             //verified order is in another box
-            if (o.box.id !== boxId) return false;
+            if (!o.box || o.box.id !== boxId) return false;
             //o is currentOrder (it may be happened when edit order)
             if (o.id === orderId) return false;
 
@@ -215,7 +215,7 @@ export class OrderService {
             (order.services as any[]).map(service => {
                 return new OrderServiceModel(
                     services.find(s => s.id === service._id),
-                    workers.filter(w => (service.workers as any[]).includes(w.id))
+                    service.workers ? workers.filter(w => (service.workers as any[]).includes(w.id)) : []
                 );
             })
         );
@@ -231,13 +231,12 @@ export class OrderService {
                 order.time.minute
             ) : null;
 
-
         return {
             ts: date ? date.getTime() : null,
             box_id: order.boxId ? order.boxId : null,
             price: order.price ? order.price : null,
             duration: order.duration ? order.duration : null,
-            status: order.status ? order.status : null,
+            status: order.status != undefined ? order.status : null,
             client: order.client ? {
                 class_id: order.car.classId,
                 name: order.client.name,

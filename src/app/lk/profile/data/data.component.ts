@@ -17,6 +17,9 @@ export class ProfileDataComponent implements OnInit {
     form: FormGroup;
     isSubmitting: boolean = false;
     isFormInitied: boolean = false;
+    message: string = '';
+    isSuccess: boolean = false;
+    isError: boolean = false;
 
     constructor(
         private fb: FormBuilder,
@@ -57,13 +60,24 @@ export class ProfileDataComponent implements OnInit {
 
     submit() {
         this.isSubmitting = true;
+        this.isSuccess = false;
+        this.isError = false;
+        this.message = '';
         this.userService.updateUser(this.form.value)
             .subscribe(
             user => {
                 this.updateData(user);
+                this.message = 'Данные успешно изменены';
+                this.isSuccess = true;
+                setTimeout(() => {
+                    this.isSuccess = false;
+                    this.message = '';
+                }, 2000);
             },
             error => {
                 console.log(error.errors);
+                this.isError = true;
+                this.message = 'Ошибка при попытке изменить данные';
             },
             () => {
                 this.isSubmitting = false;
