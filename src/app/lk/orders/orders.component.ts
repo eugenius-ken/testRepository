@@ -151,6 +151,7 @@ export class OrdersComponent {
     }
 
     complete(order: Order) {
+        console.log(order.status);
         this.orderService.currentId = order.id;
         const modal = this.modalService.open(ModalOrderCompleteComponent);
     }
