@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PasswordFeedbackComponent implements OnInit {
 
   @Input()
-  feedback = {};
+  feedback = <any>{};
 
 
   constructor() { }
