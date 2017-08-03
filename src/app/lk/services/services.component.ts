@@ -46,7 +46,7 @@ export class ServicesComponent {
     }
 
     add() {
-        let modal = this.modalService.open(ModalServiceAddComponent);
+        let modal = this.modalService.open(ModalServiceAddComponent, {size: 'lg'});
     }
 
     edit(service: Service) {
