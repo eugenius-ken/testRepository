@@ -31,20 +31,11 @@ export class ChildServiceAdd {
 
 export class ServiceEdit {
     constructor(
-        public name: string,
-        public services: ChildServiceEdit[]
-    ) { }
-}
-
-export class ChildServiceEdit extends ChildServiceAdd {
-    constructor(
         public id: string,
-        price: number,
-        workerPercent: number,
-        duration: number,
-        classId: string,
-        enabled: boolean
-    ) {
-        super(price, workerPercent, duration, classId, enabled);
-    }
+        public name: string,
+        public price: number,
+        public workerPercent: number,
+        public duration: number,
+        public classId: string,
+    ) { }
 }

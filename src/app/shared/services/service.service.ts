@@ -48,18 +48,14 @@ export class ServiceService {
 
     update(service: ServiceEdit) {
         Observable.zip(
-            this.apiService.put(this.path, this.mapToApiModelFromEdit(service)),
+            this.apiService.put(this.path + '/' + service.id, this.mapToApiModelFromEdit(service)),
             this.classService.classes.take(1),
             (data, classes) => {
-                (data.result as any[]).forEach(current => {
-                    let i = this._servicesStorage.findIndex(s => s.id === current.id);
-                    if (i != -1) {
-                        this._servicesStorage.splice(i, 1, this.mapFromApiModel(current, classes));
-                        this._services.next(this._servicesStorage);
-                    }
-                })
-
-
+                let i = this._servicesStorage.findIndex(s => s.id === data.result._id);
+                if (i != -1) {
+                    this._servicesStorage.splice(i, 1, this.mapFromApiModel(data.result, classes));
+                    this._services.next(this._servicesStorage);
+                }
             }).subscribe();
     }
 
@@ -101,16 +97,12 @@ export class ServiceService {
 
     private mapToApiModelFromEdit(service: ServiceEdit) {
         return {
-            services: service.services.map(s => {
-                return {
-                    _id: s.id,
-                    name: service.name,
-                    price: s.price,
-                    worker_percent: s.workerPercent,
-                    duration: s.duration,
-                    class_id: s.classId
-                };
-            })
+            _id: service.id,
+            name: service.name,
+            price: service.price,
+            worker_percent: service.workerPercent,
+            duration: service.duration,
+            class_id: service.classId
         };
     }
 

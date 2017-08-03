@@ -31,7 +31,6 @@ export class ApiService {
 
     private formatErrors(error: any) {
         console.log(error);
-        debugger;
         return Observable.throw(error);
     }
 
