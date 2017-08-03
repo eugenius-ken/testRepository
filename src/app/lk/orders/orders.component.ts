@@ -27,6 +27,9 @@ export class OrdersComponent {
     @ViewChild('timeline') timelineDiv: ElementRef;
     orders: Order[] = [];
 
+    @ViewChild('tbody')
+    tbody: any;
+
     constructor(
         private orderService: OrderService,
         private modalService: NgbModal,
@@ -92,12 +95,24 @@ export class OrdersComponent {
         };
 
         this.timeline = new links.Timeline(this.timelineDiv.nativeElement, options);
-        
+
         const start = new Date();
         const end = new Date();
         start.setHours(new Date().getHours() - 1);
         end.setHours(new Date().getHours() + 3);
         this.timeline.setVisibleChartRange(start, end);
+
+        links.events.addListener(this.timeline, 'select', () => {
+            const selected: any[] = this.timeline.getSelection();
+            const rows = (this.tbody.nativeElement as HTMLElement).children;
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].classList.remove('order-selected');
+            }
+            if (selected.length > 0) {
+                const index = selected[0].row;
+                rows.item(index).classList.add('order-selected');
+            }
+        });
     }
 
     ngOnDestroy() {

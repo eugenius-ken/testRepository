@@ -61,4 +61,9 @@ ngb-timepicker input {
     }
 }
 
+div.timeline-event-selected {
+    background-color: #a3e6ff !important;
+    border-color: #177da3 !important;
+}
+
 

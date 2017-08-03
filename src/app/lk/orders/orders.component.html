@@ -13,7 +13,7 @@
                 <th>Действия</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="test" #tbody>
             <tr *ngFor="let order of orders">
                 <td>{{getStringForDate(order.date, order.time)}}</td>
                 <td>{{order.box ? order.box.name : 'Не распределено'}}</td>
