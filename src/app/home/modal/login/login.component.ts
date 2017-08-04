@@ -41,7 +41,7 @@ export class ModalLoginComponent {
             error => {
                 this.isSubmitting = false;
                 switch(error.code) {
-                    case 1002: this.errorMessage = 'Пользователь с данным email не зарегистрирован';
+                    case 1002: this.errorMessage = 'Пользователь с данным email не зарегистрирован'; break;
                     case 1003: this.errorMessage = 'Неверный пароль'; break;
                     default: this.errorMessage = 'Ошибка при попытке авторизации';
                 }

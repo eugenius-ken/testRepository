@@ -35,7 +35,7 @@ export class UserService {
             })
             .catch(error => {
                 return Observable.throw(JSON.parse(error._body));
-            });;
+            });
     }
 
     private refreshAuthData() {
