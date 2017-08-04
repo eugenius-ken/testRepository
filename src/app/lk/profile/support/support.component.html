@@ -1,0 +1,46 @@
+<div class="body-container">
+    <h6>Чат с техподдержкой</h6>
+    <hr />
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="messages-container" #container>
+                <div class="row" style="text-align: center;" *ngIf="isExistMore">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-default" (click)="getMore()">Загрузить еще</button>
+                    </div>
+                </div>
+                <div *ngFor="let message of messages">
+                    <div class="row">
+                        <div class="col-6" [ngClass]="{'offset-6': message.username !== myEmail}">
+                            <div class="support-message-container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="message-from float-left">{{message.username}}</div>
+                                        <div class="message-date float-right">{{message.time | date:'yyyy-MM-dd HH:mm'}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 message-text">
+                                        <pre>{{message.text}}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form (ngSubmit)="send(currentMessage)">
+                <div class="row without-padding">
+                    <div class="col-10">
+                         <textarea class="form-control" placeholder="Введите сообщение" name="currentMessage" [(ngModel)]="currentMessage" (keypress)="keyPress($event)" [disabled]="isSending"></textarea> 
+                    </div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-success btn-block" style="height:100%;" [disabled]="isSending">Отправить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
