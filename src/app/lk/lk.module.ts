@@ -40,6 +40,8 @@ import { ResetComponent } from './profile/reset/reset.component';
 import { RemoveComponent } from './profile/remove/remove.component';
 import { ModalChangePasswordComponent } from './profile/data/modal/change-password.component';
 import { SupportComponent } from './profile/support/support.component';
+import { ArchiveOrdersComponent } from './archive-orders/archive-orders.component';
+
 
 
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
@@ -56,7 +58,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
             { path: 'services', component: ServicesComponent },
             { path: 'workers', component: WorkersComponent },
             { path: 'clients', component: ClientsComponent },
-            { path: 'orders', component: OrdersComponent }
+            { path: 'orders', component: OrdersComponent },
+            { path: 'archive-orders', component: ArchiveOrdersComponent }
         ]
     }
 ]);
@@ -103,7 +106,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ResetComponent,
         RemoveComponent,
         ModalChangePasswordComponent,
-        SupportComponent
+        SupportComponent,
+        ArchiveOrdersComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,

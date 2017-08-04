@@ -33,6 +33,9 @@
                     <li class="nav-item" [ngClass]="{'active': activeRoute === 'services'}">
                         <a class="nav-link" routerLink="services">Услуги</a>
                     </li>
+                    <li class="nav-item" [ngClass]="{'active': activeRoute === 'archive-orders'}">
+                        <a class="nav-link" routerLink="archive-orders">Архив заказов</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav" *ngIf="isProfile">
                     <li class="nav-item" [ngClass]="{'active': activeRoute === 'data'}">

@@ -9,6 +9,7 @@ import { ServiceService } from './service.service';
 import { WorkerService } from './worker.service';
 import { BoxService } from './box.service';
 import { ClientService } from './client.service';
+import { ArchiveOrderService } from './archive-order.service';
 import { Order, OrderCar, OrderClient, OrderServiceModel, OrderAdd, OrderEdit, OrderStatus } from '../models/order.model';
 import { Class } from '../models/class.model';
 import { Service } from '../models/service.model';
@@ -33,7 +34,9 @@ export class OrderService {
         private serviceService: ServiceService,
         private workerService: WorkerService,
         private boxService: BoxService,
-        private clientService: ClientService
+        private clientService: ClientService,
+        private archiveOrderService: ArchiveOrderService
+
     ) {
         this.getAll()
             .subscribe(orders => {
@@ -84,9 +87,16 @@ export class OrderService {
             (data, classes, services, workers, boxes) => {
                 const i = this._ordersStorage.findIndex(o => o.id === order.id);
                 if (i != -1) {
-                    order.status == OrderStatus.Accepted ?
-                        this._ordersStorage.splice(i, 1, this.mapFromApiModel(data.result, classes, services, workers, boxes)) :
+                    if (order.status == OrderStatus.Accepted) {
+                        this._ordersStorage.splice(i, 1, this.mapFromApiModel(data.result, classes, services, workers, boxes));
+                    }
+                    else {
+                        if (order.status == OrderStatus.Completed) {
+                            //add order to archive
+                            this.archiveOrderService.add(this.mapFromApiModel(data.result, classes, services, workers, boxes));
+                        }
                         this._ordersStorage.splice(i, 1);
+                    }
 
                     this._orders.next(this._ordersStorage);
                 }
@@ -114,6 +124,11 @@ export class OrderService {
             .subscribe(data => {
                 let i = this._ordersStorage.findIndex(c => c.id === orderId);
                 if (i != -1) {
+                    //add order to archive
+                    const orderToArchive = Object.assign({}, this._ordersStorage[i]);
+                    orderToArchive.status = OrderStatus.Completed;
+                    this.archiveOrderService.add(orderToArchive);
+
                     this._ordersStorage.splice(i, 1);
                     this._orders.next(this._ordersStorage);
                 }
