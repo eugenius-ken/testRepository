@@ -19,7 +19,10 @@ export class UserService {
     }
 
     register(data: Object): Observable<any> {
-        return this.apiService.post('/company/register', data);
+        return this.apiService.post('/company/register', data)
+            .catch(error => {
+                return Observable.throw(JSON.parse(error._body));
+            });
     }
 
     attemptAuth(credentials): Observable<any> {
@@ -29,7 +32,10 @@ export class UserService {
                 this.jwtService.saveAuthData(data);
                 this.setTimerToRefreshToken();
                 return data;
-            });
+            })
+            .catch(error => {
+                return Observable.throw(JSON.parse(error._body));
+            });;
     }
 
     private refreshAuthData() {

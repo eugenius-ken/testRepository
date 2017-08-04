@@ -34,6 +34,9 @@ export class ModalRegisterComponent {
         .subscribe(data => {
             this.isSubmitting = false;
             this.isSuccess = true;
+            setTimeout(() => {
+                this.activeModal.close();
+            }, 2000);
         },
         error => {
             console.error(error.message);
