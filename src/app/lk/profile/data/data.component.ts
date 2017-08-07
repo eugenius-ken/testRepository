@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalChangePasswordComponent } from './modal/change-password.component';
+import { ModalChangeEmailComponent } from './modal/change-email.component';
 
 import { UserService } from '../../../shared/services/user.service';
 import { User } from '../../../shared/models/user.model';
@@ -118,7 +119,11 @@ export class ProfileDataComponent implements OnInit {
     }
 
     changePassword() {
-        let modal = this.modalService.open(ModalChangePasswordComponent);
+        const modal = this.modalService.open(ModalChangePasswordComponent);
+    }
+
+    changeEmail() {
+        const modal = this.modalService.open(ModalChangeEmailComponent);
     }
 
     private timer = 0;

@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h4>Изменение e-mail</h4>
+</div>
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="modal-body">
+        <fieldset>
+            <fieldset class="form-group" [ngClass]="{'has-danger': form.get('email').touched && form.get('email').dirty && form.get('email').invalid}">
+                <input formControlName="email" type="text" class="form-control" id="email" placeholder="Новый e-mail" [ngClass]="{
+                    'has-danger': form.get('email').touched && form.get('email').dirty && form.get('email').invalid
+                }" />
+                <div class="form-control-feedback" *ngIf="form.get('email').touched && form.get('email').dirty && form.get('email').invalid">Введите корректный e-mail</div>
+            </fieldset>
+            <fieldset class="form-group" *ngIf="message" [ngClass]="{'error-container': isError, 'success-container': isSuccess}">
+                {{message}}
+            </fieldset>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success float-right" [disabled]="!form.valid">Изменить</button>
+    </div>
+</form>

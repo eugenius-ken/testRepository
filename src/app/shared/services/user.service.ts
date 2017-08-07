@@ -89,6 +89,13 @@ export class UserService {
             });
     }
 
+    changeEmail(newEmail: string) {
+        return this.apiService.post('/user/email', {email: newEmail})
+        .catch(error => {
+            return Observable.throw(JSON.parse(error._body));
+        });
+    }
+
     mapToApiModel(user: User) {
         return {
             name: user.name,
