@@ -209,6 +209,7 @@ export class OrderService {
         boxes: Box[]
     ): Order {
         let orderDate = new Date(order.ts);
+        debugger;
         return new Order(
             order._id,
             new CustomDate(
@@ -220,13 +221,12 @@ export class OrderService {
             order.status,
             order.duration,
             boxes.find(b => b.id === order.box_id),
-            new OrderClient(order.client.name, order.client.phone),
-            new OrderCar(
+            order.client ? new OrderClient(order.client.name, order.client.phone) : undefined,
+            order.client ? new OrderCar(
                 order.client.brand,
                 order.client.model,
                 order.client.number,
-                classes.find(c => c.id === order.client.class_id)
-            ),
+                classes.find(c => c.id === order.client.class_id)) : undefined,
             (order.services as any[]).map(service => {
                 return new OrderServiceModel(
                     services.find(s => s.id === service._id),
