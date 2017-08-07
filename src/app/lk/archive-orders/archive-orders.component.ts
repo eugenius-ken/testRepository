@@ -9,6 +9,7 @@ import { Box } from '../../shared/models/box.model';
 import { Worker } from '../../shared/models/worker.model';
 import { Time } from '../../shared/models/time.model';
 import { CustomDate } from '../../shared/models/custom-date.model';
+import { ModalArchiveOrderDetailComponent } from './modal/archive-order-detail.component';
 
 @Component({
     selector: 'archive-orders',
@@ -78,7 +79,7 @@ export class ArchiveOrdersComponent {
     }
 
     show(order: Order) {
-        // this.archiveOrderService.currentId = order.id;
-        // let modal = this.modalService.open(ModalArchiveOrderComponent);
+        this.archiveOrderService.currentId = order.id;
+        let modal = this.modalService.open(ModalArchiveOrderDetailComponent);
     }
 }

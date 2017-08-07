@@ -10,6 +10,7 @@ import { WorkerService } from './worker.service';
 import { BoxService } from './box.service';
 import { ClientService } from './client.service';
 import { ArchiveOrderService } from './archive-order.service';
+import { CarService } from './car.service';
 import { Order, OrderCar, OrderClient, OrderServiceModel, OrderAdd, OrderEdit, OrderStatus } from '../models/order.model';
 import { Class } from '../models/class.model';
 import { Service } from '../models/service.model';
@@ -35,7 +36,8 @@ export class OrderService {
         private workerService: WorkerService,
         private boxService: BoxService,
         private clientService: ClientService,
-        private archiveOrderService: ArchiveOrderService
+        private archiveOrderService: ArchiveOrderService,
+        private carService: CarService
 
     ) {
         this.getAll()
@@ -91,19 +93,39 @@ export class OrderService {
                         this._ordersStorage.splice(i, 1, this.mapFromApiModel(data.result, classes, services, workers, boxes));
                     }
                     else {
+                        let isNewClient = false;
+                        //if new client was created when complete order
+                        if (data.result.client && data.result.client._id && addClientFlag) {
+                            this.clientService.addAfterOrderComplete(data.result.client);
+                            isNewClient = true;
+                        }
+
                         if (order.status == OrderStatus.Completed) {
                             //add order to archive
-                            this.archiveOrderService.add(this.mapFromApiModel(data.result, classes, services, workers, boxes));
+                            const o = this.mapFromApiModel(data.result, classes, services, workers, boxes);
+                            //client object is contains not order client but cars array. Need to map another way
+                            if (isNewClient) {
+                                const clientCar = data.result.client.cars[0];
+                                o.car.number = clientCar.number;
+                                //if selected brand and model
+                                if (clientCar.car_id) {
+                                    this.carService.cars.take(1).subscribe(cars => {
+                                        const car = cars.find(c => c.id === clientCar.car_id);
+                                        //if finded
+                                        if (car) {
+                                            o.car.brand = car.brand;
+                                            o.car.model = car.model;
+                                            o.car.carClass = car.carClass;
+                                        }
+                                    });
+                                }
+                            }
+                            this.archiveOrderService.add(o);
                         }
                         this._ordersStorage.splice(i, 1);
                     }
 
                     this._orders.next(this._ordersStorage);
-                }
-
-                //if new client was created when complete order
-                if (data.result.client && addClientFlag) {
-                    this.clientService.addAfterOrderComplete(data.result.client);
                 }
             }).subscribe();
     }
@@ -124,18 +146,21 @@ export class OrderService {
             .subscribe(data => {
                 let i = this._ordersStorage.findIndex(c => c.id === orderId);
                 if (i != -1) {
+                    let isNewClient = false;
+                    //if new client was created when complete order
+                    if (data.result.client && data.result.client._id) {
+                        this.clientService.addAfterOrderComplete(data.result.client);
+                        isNewClient = true;
+                    }
+                    
                     //add order to archive
                     const orderToArchive = Object.assign({}, this._ordersStorage[i]);
                     orderToArchive.status = OrderStatus.Completed;
+
                     this.archiveOrderService.add(orderToArchive);
 
                     this._ordersStorage.splice(i, 1);
                     this._orders.next(this._ordersStorage);
-                }
-
-                //if new client was created when complete order
-                if (data.result.client) {
-                    this.clientService.addAfterOrderComplete(data.result.client);
                 }
             });
     }
@@ -147,7 +172,6 @@ export class OrderService {
         endVerifiedDate.setMinutes(startVerifiedDate.getMinutes() + duration);
 
         return this._ordersStorage.some(o => {
-            // debugger;
             //verified order is in another box
             if (!o.box || o.box.id !== boxId) return false;
             //o is currentOrder (it may be happened when edit order)
@@ -209,7 +233,6 @@ export class OrderService {
         boxes: Box[]
     ): Order {
         let orderDate = new Date(order.ts);
-        debugger;
         return new Order(
             order._id,
             new CustomDate(
@@ -221,12 +244,12 @@ export class OrderService {
             order.status,
             order.duration,
             boxes.find(b => b.id === order.box_id),
-            order.client ? new OrderClient(order.client.name, order.client.phone) : undefined,
-            order.client ? new OrderCar(
-                order.client.brand,
-                order.client.model,
-                order.client.number,
-                classes.find(c => c.id === order.client.class_id)) : undefined,
+            new OrderClient(order.client ? order.client.name : '', order.client ? order.client.phone : ''),
+            new OrderCar(
+                order.client ? order.client.brand : '',
+                order.client ? order.client.model : '',
+                order.client ? order.client.number : '',
+                classes.find(c => c.id === order.client.class_id)),
             (order.services as any[]).map(service => {
                 return new OrderServiceModel(
                     services.find(s => s.id === service._id),

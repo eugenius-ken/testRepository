@@ -90,7 +90,7 @@ export class ArchiveOrderService {
             order.status,
             order.duration,
             boxes.find(b => b.id === order.box_id),
-            new OrderClient(order.client.name, order.client.phone),
+            new OrderClient(order.client.name, order.client.phone ? order.client.phone : ''),
             new OrderCar(
                 order.client.brand,
                 order.client.model,

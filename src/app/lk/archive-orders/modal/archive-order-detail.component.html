@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <h4>Информация о заказе</h4>
+</div>
+<form>
+    <div class="modal-body">
+        <fieldset>
+            <div class="row without-padding">
+                <div class="col-6">
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" value="{{getStringForDate(order.date, order.time)}}" readonly />
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" value="{{order.box.name}}" readonly />
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="addonPhone">+7</span>
+                            <input type="text" class="form-control" placeholder="Номер телефона" aria-describedby="addonPhone" value="{{order.client.phone}}" readonly />
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" placeholder="Марка машины" value="{{order.car.brand}}" readonly />
+                    </fieldset>
+                </div>
+                 <div class="col-6">
+
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" placeholder="Класс машины" value="{{order.car.carClass.name}}" readonly />
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" placeholder="Номер машины" value="{{order.car.number}}" readonly />
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" placeholder="ФИО клиента" value="{{order.client.name}}" readonly />
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" placeholder="Модель машины" value="{{order.car.model}}" readonly />
+                    </fieldset>
+                </div> 
+            </div>
+
+             <div class="row without-padding">
+                <div class="col-12">Услуги</div>
+            </div>
+
+            <div *ngFor="let service of order.services">
+                <div class="row without-padding">
+                    <div class="col-6">
+                        <fieldset class="form-group">
+                            <input type="text" class="form-control" value="{{service.name}}" readonly />
+                        </fieldset>
+                    </div>
+                    <div class="col-6">
+                        <fieldset class="form-group">
+                            <textarea class="form-control" readonly>{{getWorkerNames(service.workers)}}</textarea>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+            <div class="row without-padding">
+                <div class="col-6">
+                    {{'Общая сумма: ' + order.price + ' руб.'}}
+                </div>
+            </div> 
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success float-right" (click)="closeModal()">Закрыть</button>
+    </div>
+</form>
