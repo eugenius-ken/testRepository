@@ -41,7 +41,7 @@ export class ModalArchiveOrderDetailComponent implements OnInit {
         return names.join(', ');
     }
 
-    private getStringForDate(date: CustomDate, time: Time) {
+    getStringForDate(date: CustomDate, time: Time) {
         const month = date.month < 10 ? '0' + String(date.month) : String(date.month);
         const day = date.day < 10 ? '0' + String(date.day) : String(date.day);
         const hours = time.hour < 10 ? '0' + String(time.hour) : String(time.hour);
