@@ -34,6 +34,9 @@
                     form.get('password').dirty && 
                     form.get('password').invalid">Введите пароль</div>
             </fieldset>
+            <fieldset class="form-group">
+                <a (click)="restorePassword()">Забыли пароль?</a>
+            </fieldset>
             <fieldset class="form-group" [ngClass]="{'has-danger': errorMessage}">
                 <input type="hidden" class="form-control" id="error" [ngClass]="{'form-control-danger': errorMessage}" />
                 <div class="form-control-feedback" *ngIf="errorMessage">{{errorMessage}}</div>

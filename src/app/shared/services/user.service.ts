@@ -96,6 +96,20 @@ export class UserService {
         });
     }
 
+    getCodeToRestorePassword(email: string) {
+        return this.apiService.post('/oauth/password/temp', {email: email})
+        .catch(error => {
+            return Observable.throw(error);
+        });
+    }
+
+    setNewPassword(email: string, tempPassword: string, newPassword: string) {
+        return this.apiService.post('/oauth/password/new', {email: email, temp_password: tempPassword, password: newPassword})
+        .catch(error => {
+            return Observable.throw(JSON.parse(error._body));
+        });
+    }
+
     mapToApiModel(user: User) {
         return {
             name: user.name,

@@ -26,6 +26,10 @@ export class ModalLoginComponent {
             'password': ['', Validators.required]
         });
     }
+    
+    restorePassword() {
+        this.activeModal.close(true);
+    }
 
     submit() {
         this.isSubmitting = true;

@@ -46,6 +46,7 @@ import { ModalArchiveOrderDetailComponent } from './archive-orders/modal/archive
 
 
 
+
 const lkRouting: ModuleWithProviders = RouterModule.forChild([
     {
         path: 'lk', component: LkComponent,

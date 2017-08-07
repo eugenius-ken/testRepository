@@ -178,14 +178,6 @@ select {
     margin-top:20px;
 }
 
-.error-container {
-    color: red;
-}
-
-.success-container {
-    color: #7dc500;
-}
-
 .order-selected {
     background-color: #e1f4fb !important;
 }

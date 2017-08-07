@@ -66,4 +66,12 @@ div.timeline-event-selected {
     border-color: #177da3 !important;
 }
 
+.error-container {
+    color: red;
+}
+
+.success-container {
+    color: #7dc500;
+}
+
 

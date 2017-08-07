@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import { ModalLoginComponent } from './modal/login/login.component';
 import { ModalRegisterComponent } from './modal/register/register.component';
 import { ModalCallComponent } from './modal/call/call.component';
+import { ModalRestorePasswordComponent } from './modal/restore-password/restore-password.component';
 
 const homeRouting: ModuleWithProviders = RouterModule.forChild([
     { path: '', component: HomeComponent }
@@ -20,12 +21,14 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
         HomeComponent,
         ModalLoginComponent,
         ModalRegisterComponent,
-        ModalCallComponent
+        ModalCallComponent,
+        ModalRestorePasswordComponent
     ],
     entryComponents: [
         ModalLoginComponent,
         ModalRegisterComponent,
-        ModalCallComponent
+        ModalCallComponent,
+        ModalRestorePasswordComponent
     ]
 })
 export class HomeModule { }
