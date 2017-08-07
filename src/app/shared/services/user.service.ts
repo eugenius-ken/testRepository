@@ -105,7 +105,7 @@ export class UserService {
             lat: user.lat,
             lng: user.lng,
             start_time: user.dayAndNight ? '00:00' : Time.ToString(user.start),
-            end_time: user.dayAndNight ? '00:00' : Time.ToString(user.end)
+            end_time: user.dayAndNight ? '24:00' : Time.ToString(user.end)
         }
     }
 
@@ -118,7 +118,7 @@ export class UserService {
             user.lat,
             user.lng,
             user.start_time ? Time.TryParse(user.start_time) : new Time(0, 0),
-            user.end_time ? Time.TryParse(user.end_time) : new Time(0, 0)
+            user.end_time ? Time.TryParse(user.end_time) : new Time(24, 0)
         );
     }
 }
