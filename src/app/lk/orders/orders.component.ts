@@ -48,7 +48,6 @@ export class OrdersComponent {
         this.boxService.boxes.take(1).subscribe(boxes => {
 
             const subscription = this.orderService.orders.subscribe(orders => {
-
                 const items = orders.map(o => {
                     const startDate = new Date(o.date.year, o.date.month - 1, o.date.day, o.time.hour, o.time.minute);
                     const endDate = new Date(startDate);
@@ -63,6 +62,18 @@ export class OrdersComponent {
                         group: o.box ? boxes.find(b => b.id === o.box.id).name : 'Не распределено'
                     };
                 });
+
+                //insert empty items to timeline for displaying boxes without orders
+                boxes.forEach(b => {
+                    items.push({
+                        type: 'range',
+                        start: new Date(1),
+                        end: new Date(2),
+                        content: '',
+                        group: b.name
+                    });
+                });
+
                 this.timeline.setData(items);
             });
             this.subscriptions.push(subscription);
