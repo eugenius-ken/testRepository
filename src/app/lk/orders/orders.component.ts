@@ -63,17 +63,19 @@ export class OrdersComponent {
                     };
                 });
 
-                //insert empty items to timeline for displaying boxes without orders
-                // boxes.forEach(b => {
-                //     items.push({
-                //         type: 'range',
-                //         start: new Date(1),
-                //         end: new Date(2),
-                //         content: '',
-                //         group: b.name
-                //     });
-                // });
-
+                // insert empty items to timeline for displaying boxes without orders
+                boxes.forEach(b => {
+                    const date = new Date();
+                    date.setHours(date.getHours() - 1);
+                    
+                    items.push({
+                        type: 'range',
+                        start: date,
+                        end: date,
+                        content: '',
+                        group: b.name
+                    });
+                });
                 this.timeline.setData(items);
             });
             this.subscriptions.push(subscription);
