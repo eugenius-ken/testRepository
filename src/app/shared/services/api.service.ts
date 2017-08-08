@@ -40,8 +40,8 @@ export class ApiService {
             .map(this.formatResult);
     }
 
-    post(path: string, body: Object = {}): Observable<any> {
-        return this.http.post(`${environment.api_url}${path}`, JSON.stringify(body), { headers: this.setHeaders() })
+    post(path: string, body: Object = {}, params: URLSearchParams = new URLSearchParams()): Observable<any> {
+        return this.http.post(`${environment.api_url}${path}`, JSON.stringify(body), { params: params, headers: this.setHeaders() })
             .catch(this.formatErrors)
             .map(this.formatResult);
     }

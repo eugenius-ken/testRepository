@@ -98,10 +98,17 @@ export class ArchiveOrderService {
                 classes.find(c => c.id === order.client.class_id)
             ),
             (order.services as any[]).map(service => {
-                return new OrderServiceModel(
-                    services.find(s => s.id === service._id),
-                    service.workers ? workers.filter(w => (service.workers as any[]).includes(w.id)) : []
-                );
+                const current = services.find(s => s.id === service._id);
+
+                return current ?
+                    new OrderServiceModel(
+                        current,
+                        service.workers ? workers.filter(w => (service.workers as any[]).includes(w.id)) : []
+                    ) : 
+                    new OrderServiceModel(
+                        Service.RemovedService(),
+                        service.workers ? workers.filter(w => (service.workers as any[]).includes(w.id)) : []
+                    )
             })
         );
     }

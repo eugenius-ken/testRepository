@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { URLSearchParams } from '@angular/http';
 
 import { ApiService } from './api.service';
 import { ClassService } from './class.service';
 import { Service, ServiceAdd, ServiceEdit } from '../models/service.model';
 import { Class } from '../models/class.model';
+
 
 @Injectable()
 export class ServiceService {
@@ -15,7 +17,7 @@ export class ServiceService {
     private _services = new ReplaySubject<Service[]>(1);
     services = this._services.asObservable();
 
-    currentId: string; //for passing data between components
+    currentName: string; //for passing data between components
 
     constructor(
         private apiService: ApiService,
@@ -28,14 +30,9 @@ export class ServiceService {
             });
     }
 
-    getCurrent(): Observable<Service> {
-        return this.services
-            .map(services => services.find(s => s.id === this.currentId));
-    }
-
     add(service: ServiceAdd) {
         Observable.zip(
-            this.apiService.post(this.path, this.mapToApiModelFromAdd(service)),
+            this.apiService.post(this.path, this.mapToApiModel(service)),
             this.classService.classes.take(1),
             (data, classes) => {
                 (data.result as any[]).forEach(current => {
@@ -47,16 +44,30 @@ export class ServiceService {
     }
 
     update(service: ServiceEdit) {
+        let params = new URLSearchParams();
+        params.append('name', this.currentName);
+
         Observable.zip(
-            this.apiService.put(this.path + '/' + service.id, this.mapToApiModelFromEdit(service)),
+            this.apiService.post(this.path, this.mapToApiModel(service), params),
             this.classService.classes.take(1),
             (data, classes) => {
-                let i = this._servicesStorage.findIndex(s => s.id === data.result._id);
-                if (i != -1) {
-                    this._servicesStorage.splice(i, 1, this.mapFromApiModel(data.result, classes));
-                    this._services.next(this._servicesStorage);
-                }
+                this.removeByName(this.currentName);
+                (data.result as any[]).forEach(s => {
+                    this._servicesStorage.push(this.mapFromApiModel(s, classes));
+                });
+                this._services.next(this._servicesStorage);
             }).subscribe();
+    }
+
+    removeCurrent() {
+        let params = new URLSearchParams();
+        params.append('name', this.currentName);
+
+        return this.apiService.post(this.path + '/name', { services: [] }, params)
+            .subscribe(data => {
+                this.removeByName(this.currentName);
+                this._services.next(this._servicesStorage);
+            });
     }
 
     remove(id: string) {
@@ -70,6 +81,16 @@ export class ServiceService {
             });
     }
 
+    private removeByName(name: string) {
+        let index = 0;
+        while (index != -1) {
+            index = this._servicesStorage.findIndex(s => s.name === name);
+            if (index != -1) {
+                this._servicesStorage.splice(index, 1);
+            }
+        }
+    }
+
     private getAll(): Observable<Service[]> {
         return Observable.zip(
             this.classService.classes.take(1),
@@ -81,7 +102,7 @@ export class ServiceService {
             });
     }
 
-    private mapToApiModelFromAdd(service: ServiceAdd) {
+    private mapToApiModel(service: ServiceAdd | ServiceEdit) {
         return {
             services: service.services.map(s => {
                 return {
@@ -92,17 +113,6 @@ export class ServiceService {
                     class_id: s.classId
                 };
             })
-        };
-    }
-
-    private mapToApiModelFromEdit(service: ServiceEdit) {
-        return {
-            _id: service.id,
-            name: service.name,
-            price: service.price,
-            worker_percent: service.workerPercent,
-            duration: service.duration,
-            class_id: service.classId
         };
     }
 

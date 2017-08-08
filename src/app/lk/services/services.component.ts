@@ -46,12 +46,12 @@ export class ServicesComponent {
     }
 
     add() {
-        let modal = this.modalService.open(ModalServiceAddComponent, {size: 'lg'});
+        let modal = this.modalService.open(ModalServiceAddComponent, { size: 'lg' });
     }
 
     edit(service: Service) {
-        this.serviceService.currentId = service.id;
-        let modal = this.modalService.open(ModalServiceEditComponent);
+        this.serviceService.currentName = service.name;
+        let modal = this.modalService.open(ModalServiceEditComponent, { size: 'lg' });
     }
 
     remove(service: Service) {
