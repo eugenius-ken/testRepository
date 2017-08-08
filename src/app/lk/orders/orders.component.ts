@@ -64,15 +64,15 @@ export class OrdersComponent {
                 });
 
                 //insert empty items to timeline for displaying boxes without orders
-                boxes.forEach(b => {
-                    items.push({
-                        type: 'range',
-                        start: new Date(1),
-                        end: new Date(2),
-                        content: '',
-                        group: b.name
-                    });
-                });
+                // boxes.forEach(b => {
+                //     items.push({
+                //         type: 'range',
+                //         start: new Date(1),
+                //         end: new Date(2),
+                //         content: '',
+                //         group: b.name
+                //     });
+                // });
 
                 this.timeline.setData(items);
             });
