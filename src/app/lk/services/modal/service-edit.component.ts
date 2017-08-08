@@ -64,6 +64,7 @@ export class ModalServiceEditComponent implements OnInit, OnDestroy {
 
         const result = currentService ?
             this.fb.group({
+                'id': [currentService.id, Validators.required],
                 'classId': [currentService.carClass.id, Validators.required],
                 'className': [currentService.carClass.name, Validators.required],
                 'price': [currentService.price, Validators.required],

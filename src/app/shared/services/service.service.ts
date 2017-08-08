@@ -32,7 +32,7 @@ export class ServiceService {
 
     add(service: ServiceAdd) {
         Observable.zip(
-            this.apiService.post(this.path, this.mapToApiModel(service)),
+            this.apiService.post(this.path, this.mapToApiModelForAdd(service)),
             this.classService.classes.take(1),
             (data, classes) => {
                 (data.result as any[]).forEach(current => {
@@ -48,7 +48,7 @@ export class ServiceService {
         params.append('name', this.currentName);
 
         Observable.zip(
-            this.apiService.post(this.path, this.mapToApiModel(service), params),
+            this.apiService.post(this.path + '/name', this.mapToApiModelForEdit(service), params),
             this.classService.classes.take(1),
             (data, classes) => {
                 this.removeByName(this.currentName);
@@ -102,10 +102,25 @@ export class ServiceService {
             });
     }
 
-    private mapToApiModel(service: ServiceAdd | ServiceEdit) {
+    private mapToApiModelForAdd(service: ServiceAdd) {
         return {
             services: service.services.map(s => {
                 return {
+                    name: service.name,
+                    price: s.price,
+                    worker_percent: s.workerPercent,
+                    duration: s.duration,
+                    class_id: s.classId
+                };
+            })
+        };
+    }
+
+    private mapToApiModelForEdit(service: ServiceEdit) {
+        return {
+            services: service.services.map(s => {
+                return {
+                    _id: s.id,
                     name: service.name,
                     price: s.price,
                     worker_percent: s.workerPercent,

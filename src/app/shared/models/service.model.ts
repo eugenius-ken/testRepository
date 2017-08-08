@@ -25,13 +25,24 @@ export class Service {
 export class ServiceAdd {
     constructor(
         public name: string,
-        public services: ChildService[]
+        public services: ChildServiceAdd[]
     ) { }
 }
 
 //ChildService - item of services' list when create/update service
-export class ChildService {
+export class ChildServiceAdd {
     constructor(
+        public price: number,
+        public workerPercent: number,
+        public duration: number,
+        public classId: string,
+        public enabled: boolean
+    ) { }
+}
+
+export class ChildServiceEdit {
+    constructor(
+        public id: string,
         public price: number,
         public workerPercent: number,
         public duration: number,
@@ -43,6 +54,6 @@ export class ChildService {
 export class ServiceEdit {
     constructor(
         public name: string,
-        public services: ChildService[]
+        public services: ChildServiceEdit[]
     ) { }
 }
