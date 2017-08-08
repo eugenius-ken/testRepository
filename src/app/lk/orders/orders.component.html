@@ -14,7 +14,7 @@
             </tr>
         </thead>
         <tbody class="test" #tbody>
-            <tr *ngFor="let order of orders">
+            <tr *ngFor="let order of orders" [ngClass]="{'order-from-app': order.status === 3}">
                 <td>{{getStringForDate(order.date, order.time)}}</td>
                 <td>{{order.box ? order.box.name : 'Не распределено'}}</td>
                 <td>{{order.price + ' руб.'}}</td>
