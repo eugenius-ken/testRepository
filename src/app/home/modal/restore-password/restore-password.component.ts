@@ -45,10 +45,8 @@ export class ModalRestorePasswordComponent implements OnInit {
     }
 
     submit() {
-        // console.log(!this.isCodeSended && !this.form.valid ||  (this.isCodeSended && (!this.newPasswordIsStrength || !this.isPasswordConfirmed || !this.form.valid)));
         this.message = '';
         this.isError = false;
-        this.isCodeSended = false;
 
         if (!this.isCodeSended) {
             this.userService.getCodeToRestorePassword(this.form.get('email').value)
@@ -57,12 +55,12 @@ export class ModalRestorePasswordComponent implements OnInit {
                     this.message = 'На данный e-mail отправлен код подтверждения'
                     this.form.get('tempPassword').setValidators([Validators.required]);
                     this.form.get('newPassword').setValidators([Validators.required]);
-                    this.form.get('newPasswordConfirm').setValidators([Validators.required]);
+                    this.form.get('confirmNewPassword').setValidators([Validators.required]);
                 },
                 error => {
-                    console.log(error);
                     this.isError = true;
                     switch (error.code) {
+                        case 1002: this.message = "Данный e-mail не зарегистрирован"; break;
                         default: this.message = "Ошибка. Попробуйте позже.";
                     }
                 });

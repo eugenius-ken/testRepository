@@ -98,8 +98,11 @@ export class UserService {
 
     getCodeToRestorePassword(email: string) {
         return this.apiService.post('/oauth/password/temp', {email: email})
+        .map(data => {
+            return data;
+        })
         .catch(error => {
-            return Observable.throw(error);
+            return Observable.throw(JSON.parse(error._body));
         });
     }
 
