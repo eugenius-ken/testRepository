@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h5 *ngIf="worker">{{worker.name + ' - Информация о начислениях'}}</h5>
+</div>
+<div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row without-padding">
+            <div class="col-6">
+                <fieldset class="form-group">
+                    <div class="input-group">
+                        <input type="text" id="date" class="form-control" placeholder="Начальная дата" formControlName="startDate" ngbDatepicker
+                            #d1="ngbDatepicker" (blur)="validateDate(); d1.close();">
+                        <div class="input-group-addon" (click)="d1.toggle()">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="input-group">
+                        <input type="text" id="date" class="form-control" placeholder="Начальная дата" formControlName="endDate" ngbDatepicker #d2="ngbDatepicker"
+                            (blur)="validateDate(); d2.close();">
+                        <div class="input-group-addon" (click)="d2.toggle()">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="form-group">
+                    <button type="submit" class="btn btn-success" [disabled]="!form.valid">Применить</button>
+                </fieldset>
+            </div>
+            <div class="col-6">
+                <fieldset class="form-group">
+                    <ngb-timepicker [spinners]="false" formControlName="startTime"></ngb-timepicker>
+                </fieldset>
+                <fieldset class="form-group">
+                    <ngb-timepicker [spinners]="false" formControlName="endTime"></ngb-timepicker>
+                </fieldset>
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped" *ngIf="transactions">
+        <thead>
+            <tr>
+                <th>Дата/время</th>
+                <th>Сумма</th>
+                <th>Описание</th>
+            </tr>
+        </thead>
+        <tbody class="test">
+            <tr *ngFor="let t of transactions">
+                <td>{{t.ts | date:'yyyy-MM-dd HH:mm'}}</td>
+                <td>{{t.sum + ' руб.'}}</td>
+                <td>{{t.desc}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

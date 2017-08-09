@@ -13,14 +13,14 @@
                 <th>Действия</th>
             </tr>
         </thead>
-        <tbody class="test" #tbody>
+        <tbody class="test">
             <tr *ngFor="let order of orders">
                 <td>{{getStringForDate(order.date, order.time)}}</td>
                 <td>{{order.box ? order.box.name : 'Не распределено'}}</td>
                 <td>{{order.price + ' руб.'}}</td>
                 <td>{{order.duration + ' мин.'}}</td>
                 <td>{{getStringForServices(order.services)}}</td>
-                <td>{{getStringForWorkers(order.services)}}</td>
+                <td><div *ngFor="let w of order.workers"><a (click)="openTransaction(w.id)">{{w.name}}</a></div></td> 
                 <td>{{getStringForStatus(order.status)}}</td>
                 <td>
                     <a (click)="show(order)"><i class="fa fa-search"></i></a>

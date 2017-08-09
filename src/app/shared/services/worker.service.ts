@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { URLSearchParams } from '@angular/http';
 
 import { ApiService } from './api.service';
 import { BoxService } from './box.service';
@@ -66,6 +67,29 @@ export class WorkerService {
                     this._workers.next(this._workersStorage);
                 }
             });
+    }
+
+    getTransactions(workerId: string, startDate?: Date, endDate?: Date) {
+        if(!startDate || !endDate) {
+            startDate = new Date();
+            startDate.setHours(0);
+            startDate.setMinutes(0);
+            startDate.setSeconds(0);
+
+            endDate = new Date();
+            endDate.setHours(23);
+            endDate.setMinutes(59);
+            endDate.setSeconds(59);
+        }
+
+        let params = new URLSearchParams();
+        params.append('t0', startDate.getTime().toString());
+        params.append('t1', endDate.getTime().toString());
+        
+        return this.apiService.get(`${this.path}/${workerId}/transactions`, params)
+        .map(data => {
+            return data.result;
+        });
     }
 
     private getAll(): Observable<Worker[]> {

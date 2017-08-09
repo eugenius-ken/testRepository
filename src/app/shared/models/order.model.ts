@@ -21,6 +21,22 @@ export class Order {
     ) { }
 }
 
+export class ArchiveOrder {
+    constructor(
+        public id: string,
+        public date: CustomDate,
+        public time: Time,
+        public price: number,
+        public status: OrderStatus,
+        public duration: number,
+        public box: Box,
+        public client: OrderClient,
+        public car: OrderCar,
+        public services: OrderServiceModel[],
+        public workers: Worker[]
+    ) { }
+}
+
 export class OrderAdd {
     constructor(
         public id: string,

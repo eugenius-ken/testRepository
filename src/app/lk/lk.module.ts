@@ -43,6 +43,7 @@ import { ModalChangeEmailComponent } from './profile/data/modal/change-email.com
 import { SupportComponent } from './profile/support/support.component';
 import { ArchiveOrdersComponent } from './archive-orders/archive-orders.component';
 import { ModalArchiveOrderDetailComponent } from './archive-orders/modal/archive-order-detail.component';
+import { ModalTransactionsComponent } from './archive-orders/modal/transactions.component';
 import { EmailConfirmedComponent } from './profile/email-confirmed/email-confirmed.component';
 
 
@@ -115,7 +116,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ArchiveOrdersComponent,
         ModalArchiveOrderDetailComponent,
         ModalChangeEmailComponent,
-        EmailConfirmedComponent
+        EmailConfirmedComponent,
+        ModalTransactionsComponent
     ],
     entryComponents: [
         RemoveConfirmComponent,
@@ -137,7 +139,8 @@ const lkRouting: ModuleWithProviders = RouterModule.forChild([
         ModalChangePasswordComponent,
         ModalArchiveOrderDetailComponent,
         ModalChangeEmailComponent,
-        EmailConfirmedComponent
+        EmailConfirmedComponent,
+        ModalTransactionsComponent
     ]
 })
 export class LkModule { }
