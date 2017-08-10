@@ -20,7 +20,7 @@
                 <td>{{order.price + ' руб.'}}</td>
                 <td>{{order.duration + ' мин.'}}</td>
                 <td>{{getStringForServices(order.services)}}</td>
-                <td><div *ngFor="let w of order.workers"><a (click)="openTransaction(w.id)">{{w.name}}</a></div></td> 
+                <td><div *ngFor="let w of order.workers"><a class="hover-underline" (click)="openTransaction(w.id)">{{w.name}}</a></div></td> 
                 <td>{{getStringForStatus(order.status)}}</td>
                 <td>
                     <a (click)="show(order)"><i class="fa fa-search"></i></a>

@@ -218,3 +218,8 @@ select {
     overflow-x: hidden;
     padding: 15px;
 }
+
+.hover-underline:hover {
+    text-decoration: underline !important;
+    color: #19c0ff !important;
+}

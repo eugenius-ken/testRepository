@@ -23,6 +23,7 @@ export class ModalTransactionsComponent implements OnInit {
     form: FormGroup;
     worker: Worker;
     transactions: any[];
+    totalSum: number = 0;
 
     constructor(
         private workerService: WorkerService,
@@ -36,6 +37,7 @@ export class ModalTransactionsComponent implements OnInit {
             (worker, transactions) => {
                 this.worker = worker;
                 this.transactions = transactions;
+                this.getTotalSum();
             }).subscribe();
 
         const now = new Date();
@@ -58,6 +60,7 @@ export class ModalTransactionsComponent implements OnInit {
             new Date(startDate.year, startDate.month - 1, startDate.day, startTime.hour, startTime.minute),
             new Date(endDate.year, endDate.month - 1, endDate.day, endTime.hour, endTime.minute)).subscribe(transactions => {
                 this.transactions = transactions;
+                this.getTotalSum();
             });
     }
 
@@ -65,5 +68,12 @@ export class ModalTransactionsComponent implements OnInit {
         if (typeof (this.form.controls['date'].value) !== 'object') {
             this.form.controls['date'].setValue(null);
         }
+    }
+
+    private getTotalSum(){
+        this.totalSum = 0;
+        this.transactions.forEach(t => {
+            this.totalSum += t.sum;
+        });
     }
 }
