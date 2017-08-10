@@ -38,6 +38,7 @@ export class ArchiveOrderService {
         this.getAll()
             .subscribe(orders => {
                 this._ordersStorage = orders;
+
                 this._orders.next(this._ordersStorage);
             });
     }
@@ -48,7 +49,7 @@ export class ArchiveOrderService {
     }
 
     add(order: Order) {
-        this._ordersStorage.push(order);
+        this._ordersStorage.unshift(order);
         this._orders.next(this._ordersStorage);
     }
 
